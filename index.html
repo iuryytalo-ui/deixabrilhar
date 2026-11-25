@@ -1,0 +1,3324 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark" data-palette="ocean">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DEIXA BRILHAR 🌟 | Natação & Performance</title>
+<meta name="theme-color" content="#0891b2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Deixa Brilhar">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  /* =========================================================
+     THEME & PALETTE CSS VARIABLES
+     ========================================================= */
+  :root,
+  [data-theme="dark"] {
+    --bg-deep: #040c1f;
+    --bg-header: #07132c;
+    --bg-card: #081633;
+    --bg-card-alt: #0a1b3d;
+    --bg-input: #0e2249;
+    --bg-hover: #143066;
+    --border: #193873;
+    --border-light: #244b96;
+    --text: #f1f5f9;
+    --text-strong: #ffffff;
+    --text-muted: #93b4e0;
+    --text-dim: #6284b8;
+    --hero-top: #0b1e47;
+    --hero-bot: #071430;
+    --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.35);
+    --modal-bg: rgba(2, 6, 20, 0.82);
+
+    --emerald: #10b981;
+    --emerald-bg: rgba(16, 185, 129, 0.18);
+    --emerald-txt: #34d399;
+    --amber: #f59e0b;
+    --amber-bg: rgba(245, 158, 11, 0.2);
+    --amber-txt: #fbbf24;
+    --rose: #e11d48;
+    --rose-bg: rgba(225, 29, 72, 0.2);
+    --rose-txt: #fb7185;
+    --purple: #7c3aed;
+  }
+
+  [data-theme="light"] {
+    --bg-deep: #eef4fc;
+    --bg-header: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-alt: #f4f8ff;
+    --bg-input: #f1f5f9;
+    --bg-hover: #e2eaf8;
+    --border: #cbd5e1;
+    --border-light: #94a3b8;
+    --text: #0f172a;
+    --text-strong: #020617;
+    --text-muted: #475569;
+    --text-dim: #64748b;
+    --hero-top: #ffffff;
+    --hero-bot: #f1f7ff;
+    --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --modal-bg: rgba(15, 23, 42, 0.55);
+
+    --emerald: #059669;
+    --emerald-bg: rgba(5, 150, 105, 0.13);
+    --emerald-txt: #047857;
+    --amber: #d97706;
+    --amber-bg: rgba(217, 119, 6, 0.14);
+    --amber-txt: #b45309;
+    --rose: #e11d48;
+    --rose-bg: rgba(225, 29, 72, 0.12);
+    --rose-txt: #be123c;
+    --purple: #6d28d9;
+  }
+
+  /* PALETTES */
+  [data-palette="ocean"] {
+    --accent: #0891b2;
+    --accent-2: #2563eb;
+    --accent-bright: #22d3ee;
+    --accent-text: #0891b2;
+    --accent-soft: rgba(6, 182, 212, 0.18);
+    --accent-border: #38bdf8;
+    --accent-glow: rgba(6, 182, 212, 0.32);
+  }
+  [data-theme="dark"][data-palette="ocean"] { --accent-text: #22d3ee; }
+
+  [data-palette="royal"] {
+    --accent: #2563eb;
+    --accent-2: #4f46e5;
+    --accent-bright: #60a5fa;
+    --accent-text: #1d4ed8;
+    --accent-soft: rgba(37, 99, 235, 0.18);
+    --accent-border: #60a5fa;
+    --accent-glow: rgba(37, 99, 235, 0.35);
+  }
+  [data-theme="dark"][data-palette="royal"] { --accent-text: #60a5fa; }
+
+  [data-palette="emerald"] {
+    --accent: #059669;
+    --accent-2: #0d9488;
+    --accent-bright: #34d399;
+    --accent-text: #047857;
+    --accent-soft: rgba(16, 185, 129, 0.18);
+    --accent-border: #34d399;
+    --accent-glow: rgba(16, 185, 129, 0.32);
+  }
+  [data-theme="dark"][data-palette="emerald"] { --accent-text: #34d399; }
+
+  [data-palette="lime"] {
+    --accent: #65a30d;
+    --accent-2: #16a34a;
+    --accent-bright: #a3e635;
+    --accent-text: #4d7c0f;
+    --accent-soft: rgba(132, 204, 22, 0.18);
+    --accent-border: #a3e635;
+    --accent-glow: rgba(132, 204, 22, 0.32);
+  }
+  [data-theme="dark"][data-palette="lime"] { --accent-text: #a3e635; }
+
+  [data-palette="purple"] {
+    --accent: #7c3aed;
+    --accent-2: #a855f7;
+    --accent-bright: #c084fc;
+    --accent-text: #6d28d9;
+    --accent-soft: rgba(139, 92, 246, 0.18);
+    --accent-border: #c084fc;
+    --accent-glow: rgba(139, 92, 246, 0.34);
+  }
+  [data-theme="dark"][data-palette="purple"] { --accent-text: #c084fc; }
+
+  [data-palette="gold"] {
+    --accent: #d97706;
+    --accent-2: #ea580c;
+    --accent-bright: #fbbf24;
+    --accent-text: #b45309;
+    --accent-soft: rgba(245, 158, 11, 0.2);
+    --accent-border: #fbbf24;
+    --accent-glow: rgba(245, 158, 11, 0.32);
+  }
+  [data-theme="dark"][data-palette="gold"] { --accent-text: #fbbf24; }
+
+  [data-palette="crimson"] {
+    --accent: #e11d48;
+    --accent-2: #ea580c;
+    --accent-bright: #fb7185;
+    --accent-text: #be123c;
+    --accent-soft: rgba(225, 29, 72, 0.18);
+    --accent-border: #fb7185;
+    --accent-glow: rgba(225, 29, 72, 0.34);
+  }
+  [data-theme="dark"][data-palette="crimson"] { --accent-text: #fb7185; }
+
+  [data-palette="pink"] {
+    --accent: #db2777;
+    --accent-2: #9333ea;
+    --accent-bright: #f472b6;
+    --accent-text: #be185d;
+    --accent-soft: rgba(236, 72, 153, 0.18);
+    --accent-border: #f472b6;
+    --accent-glow: rgba(236, 72, 153, 0.34);
+  }
+  [data-theme="dark"][data-palette="pink"] { --accent-text: #f472b6; }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.4;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  button, select, input, textarea, label {
+    font-family: inherit;
+    touch-action: manipulation;
+  }
+
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Header & Top Nav */
+  .app-header {
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  }
+
+  .header-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 8px 12px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .brand-icon {
+    width: 36px; height: 36px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    box-shadow: 0 4px 14px var(--accent-glow);
+    flex-shrink: 0;
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: var(--text-strong);
+  }
+
+  .brand h1 span { color: var(--accent-text); }
+  .brand p { margin: 1px 0 0; font-size: 10px; color: var(--text-muted); }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  /* Navigation Grid (3x3 compact on mobile, 9x1 on desktop) */
+  .nav-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 4px 10px 8px;
+  }
+
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+
+  @media (min-width: 640px) {
+    .nav-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .nav-grid { grid-template-columns: repeat(9, 1fr); }
+  }
+
+  .nav-btn {
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 6px 5px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    user-select: none;
+  }
+
+  @media (min-width: 1024px) {
+    .nav-btn { flex-direction: column; padding: 7px 4px; gap: 3px; }
+  }
+
+  .nav-btn:hover { background: var(--bg-hover); }
+  .nav-btn:active { transform: scale(0.96); }
+  .nav-btn.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-color: var(--accent-border);
+    color: #ffffff;
+    box-shadow: 0 4px 12px var(--accent-glow);
+  }
+
+  .nav-btn .ico { font-size: 13px; line-height: 1; pointer-events: none; }
+  .nav-btn .lbl { pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+  /* Main Content */
+  .main-container {
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 14px 12px 125px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.16s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cards & Layout */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 15px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-highlight {
+    background: linear-gradient(135deg, var(--bg-card-alt), var(--bg-card));
+    border: 1px solid var(--accent);
+  }
+
+  .card-title {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-strong);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .subtext { font-size: 12px; color: var(--text-muted); margin: 0 0 12px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .grid-pb { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+
+  @media (min-width: 640px) {
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-pb { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-pb { grid-template-columns: repeat(6, 1fr); }
+  }
+
+  .row-flex { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+  /* Form Elements */
+  label.field-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  select, input[type="text"], input[type="number"], input[type="date"] {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-light);
+    color: var(--text-strong);
+    border-radius: 11px;
+    padding: 9px 11px;
+    font-size: 13px;
+    font-weight: 600;
+    outline: none;
+  }
+
+  select:focus, input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+
+  /* Buttons */
+  .btn {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.1s, opacity 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn:disabled { opacity: 0.38; pointer-events: none; }
+
+  .btn-lg { padding: 15px 16px; font-size: 15px; border-radius: 15px; width: 100%; }
+  .btn-sm { padding: 7px 10px; font-size: 12px; border-radius: 9px; }
+  .btn-xs { padding: 5px 8px; font-size: 11px; border-radius: 8px; }
+  .btn-icon { padding: 7px 9px; font-size: 14px; border-radius: 10px; }
+
+  .btn-accent { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; }
+  .btn-accent:hover { filter: brightness(1.08); }
+  .btn-emerald { background: #059669; }
+  .btn-emerald:hover { background: #10b981; }
+  .btn-rose { background: #e11d48; }
+  .btn-rose:hover { background: #f43f5e; }
+  .btn-amber { background: #f59e0b; color: #040c1f; }
+  .btn-amber:hover { background: #fbbf24; }
+  .btn-cyan { background: var(--accent); }
+  .btn-cyan:hover { filter: brightness(1.1); }
+  .btn-blue { background: var(--accent-2); }
+  .btn-blue:hover { filter: brightness(1.1); }
+  .btn-purple { background: var(--purple); }
+  .btn-purple:hover { filter: brightness(1.12); }
+  .btn-ghost { background: var(--bg-input); border: 1px solid var(--border-light); color: var(--text); }
+  .btn-ghost:hover { background: var(--bg-hover); }
+
+  /* Stopwatch Display */
+  .timer-hero {
+    background: linear-gradient(180deg, var(--hero-top) 0%, var(--hero-bot) 100%);
+    border: 1px solid var(--border-light);
+    border-radius: 22px;
+    padding: 18px 16px;
+    text-align: center;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .clock-readout {
+    font-size: clamp(46px, 11vw, 76px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: var(--text-strong);
+    margin: 12px 0;
+    line-height: 1.05;
+    user-select: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .badge-slate { background: var(--bg-input); color: var(--text-muted); border: 1px solid var(--border); }
+  .badge-emerald { background: var(--emerald-bg); color: var(--emerald-txt); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber-txt); }
+  .badge-cyan { background: var(--accent-soft); color: var(--accent-text); }
+  .badge-rose { background: var(--rose-bg); color: var(--rose-txt); }
+
+  .reaction-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px 14px;
+    margin-bottom: 16px;
+  }
+
+  /* List Items */
+  .list-item {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .stroke-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 5px;
+    margin-bottom: 14px;
+  }
+
+  .stroke-tab {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 9px 4px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .stroke-tab.active { background: var(--accent); color: #fff; }
+
+  .pb-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 11px;
+  }
+  .pb-box .dist { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+  .pb-box .val { font-size: 18px; font-weight: 800; color: var(--accent-text); margin-top: 3px; }
+  .pb-box .cnt { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+  /* Multi-lane card */
+  .lane-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: var(--shadow-card);
+  }
+  .lane-card.running {
+    border-color: var(--emerald);
+    box-shadow: 0 0 0 1px var(--emerald-bg), 0 8px 24px rgba(16, 185, 129, 0.14);
+  }
+  .lane-clock {
+    font-size: 36px;
+    font-weight: 800;
+    text-align: center;
+    margin: 6px 0 8px;
+    color: var(--text-strong);
+  }
+  .lane-splits-box {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 7px 9px;
+    margin-bottom: 9px;
+    max-height: 115px;
+    overflow-y: auto;
+    font-size: 11px;
+  }
+  .lane-split-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .lane-split-row:last-child { border-bottom: none; }
+
+  /* Athlete search chips */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .athlete-chip {
+    border: 1px solid var(--border-light);
+    background: var(--bg-input);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .athlete-chip.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-color: var(--accent-border);
+    color: #fff;
+  }
+
+  /* Split tags inside saved history */
+  .splits-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 7px;
+  }
+  .split-pill {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Palette swatches */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .swatch-btn {
+    border: 2px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: transform 0.1s, border-color 0.15s;
+  }
+  .swatch-btn:active { transform: scale(0.97); }
+  .swatch-btn.active { border-color: var(--accent-border); background: var(--accent-soft); }
+  .swatch-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+
+  /* Progress / Chart Bar */
+  .chart-wrap {
+    width: 100%;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-bg);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 16px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    max-width: 460px;
+    width: 100%;
+    padding: 18px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Toast notification */
+  #toast {
+    position: fixed;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 10px 18px;
+    border-radius: 999px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    z-index: 300;
+    display: none;
+    max-width: 92vw;
+    text-align: center;
+  }
+
+  @media print {
+    .no-print { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card, .list-item { background: #fff; border-color: #ccc; color: #000; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- HEADER + TOP NAVIGATION -->
+<header class="app-header no-print">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">🏊</div>
+      <div>
+        <h1>DEIXA <span>BRILHAR 🌟</span></h1>
+        <p>Cronometragem, Parciais & Progressão</p>
+      </div>
+    </div>
+    <div class="header-controls">
+      <select id="athleteSelect" style="width:auto; max-width:145px; padding:7px 9px; font-size:12px;"></select>
+      <button type="button" id="btnToggleTheme" class="btn btn-ghost btn-icon" title="Alternar Claro / Escuro">☀️</button>
+      <button type="button" id="btnOpenPaletteModal" class="btn btn-ghost btn-icon" title="Paleta de Cores">🎨</button>
+      <button type="button" id="btnOpenAthleteModal" class="btn btn-ghost btn-icon" title="Novo / Gerenciar Atleta">➕👤</button>
+      <button type="button" id="btnOpenBackupModal" class="btn btn-ghost btn-icon" title="Backup / Exportar">☁️</button>
+    </div>
+  </div>
+
+  <nav class="nav-wrap">
+    <div class="nav-grid" id="mainNav">
+      <button type="button" class="nav-btn active" data-tab="timer"><span class="ico">⏱️</span><span class="lbl">Cronômetro</span></button>
+      <button type="button" class="nav-btn" data-tab="multi"><span class="ico">🏁</span><span class="lbl">Multi-Raias</span></button>
+      <button type="button" class="nav-btn" data-tab="progression"><span class="ico">📈</span><span class="lbl">Progressão</span></button>
+      <button type="button" class="nav-btn" data-tab="strokes"><span class="ico">🏅</span><span class="lbl">Tempos</span></button>
+      <button type="button" class="nav-btn" data-tab="periodization"><span class="ico">📋</span><span class="lbl">Treino Dia</span></button>
+      <button type="button" class="nav-btn" data-tab="drills"><span class="ico">🎯</span><span class="lbl">Educativos</span></button>
+      <button type="button" class="nav-btn" data-tab="pace"><span class="ico">🧮</span><span class="lbl">Ritmo/Pace</span></button>
+      <button type="button" class="nav-btn" data-tab="calendar"><span class="ico">📅</span><span class="lbl">Calendário</span></button>
+      <button type="button" class="nav-btn" data-tab="tips"><span class="ico">💡</span><span class="lbl">Dicas/Ficha</span></button>
+    </div>
+  </nav>
+</header>
+
+<main class="main-container">
+
+  <!-- ================================================= -->
+  <!-- 1. CRONÔMETRO INDIVIDUAL & SAÍDA                  -->
+  <!-- ================================================= -->
+  <section id="sec-timer" class="section active">
+    <div class="card">
+      <div class="grid-4">
+        <div>
+          <label class="field-label">Nado / Prova</label>
+          <select id="timerStroke">
+            <option value="Livre">🏊 Livre (Crawl)</option>
+            <option value="Costas">🔄 Costas</option>
+            <option value="Peito">🐸 Peito</option>
+            <option value="Borboleta">🦋 Borboleta</option>
+            <option value="Medley">🏅 Medley (4 Estilos)</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Distância</label>
+          <select id="timerDistance"></select>
+        </div>
+        <div>
+          <label class="field-label">Tipo de Saída</label>
+          <select id="timerStartType">
+            <option value="Bloco (Track Start)">Bloco (Track Start)</option>
+            <option value="Bloco (Grab Start)">Bloco (Grab Start)</option>
+            <option value="Dentro d'água (Costas)">Dentro d'água (Costas)</option>
+            <option value="Empurrão na Parede">Empurrão na Parede</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Piscina</label>
+          <select id="timerPool">
+            <option value="25m">Curta (25m)</option>
+            <option value="50m">Olímpica (50m)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="timer-hero">
+      <div class="row-flex" style="justify-content:space-between; margin-bottom:6px;">
+        <span id="statusBadge" class="badge badge-slate">PRONTO PARA PARTIDA</span>
+        <div class="row-flex" style="gap:6px;">
+          <select id="hornType" style="width:auto; padding:5px 8px; font-size:11px;">
+            <option value="olympic">🔊 Buzina Olímpica (1.3s)</option>
+            <option value="sharp">📢 Sinal Agudo Forte</option>
+            <option value="whistle">🎺 Apito de Treino</option>
+          </select>
+          <button type="button" id="btnTestHorn" class="btn btn-ghost btn-sm" style="color:var(--accent-text);">🔊 Testar Som</button>
+        </div>
+      </div>
+
+      <div id="mainDisplay" class="clock-readout mono">00:00.00</div>
+
+      <div class="reaction-pill">
+        <div style="text-align:left;">
+          <div style="font-size:10px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Tempo de Reação / Saída</div>
+          <div id="reactionDisplay" class="mono" style="font-size:20px; font-weight:800; color:var(--amber-txt);">--.-- s</div>
+        </div>
+        <span id="reactionTag" class="badge badge-slate">Aguardando sinal</span>
+      </div>
+
+      <div class="grid-3" style="max-width:740px; margin:0 auto;">
+        <button type="button" id="btnStartStop" class="btn btn-emerald btn-lg">📢 Sinal / Iniciar</button>
+        <button type="button" id="btnBlockExit" class="btn btn-amber btn-lg" disabled>⚡ Saiu do Bloco</button>
+        <button type="button" id="btnLap" class="btn btn-cyan btn-lg" disabled>🏁 Parcial / Virada</button>
+      </div>
+
+      <div class="row-flex" style="justify-content:center; margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
+        <button type="button" id="btnCommandStart" class="btn btn-purple btn-sm">🎙️ "Aos seus lugares..." + Buzina</button>
+        <button type="button" id="btnSaveTime" class="btn btn-accent btn-sm" disabled>💾 Salvar Tempo & Parciais</button>
+        <button type="button" id="btnResetTimer" class="btn btn-ghost btn-sm">↺ Zerar</button>
+      </div>
+      <div style="margin-top:8px;">
+        <label style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--text-muted); cursor:pointer;">
+          <input type="checkbox" id="chkAutoSaveSingle" style="width:16px; height:16px; accent-color:var(--accent);">
+          Salvar automaticamente na ficha do atleta ao clicar em Chegada
+        </label>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Parciais -->
+      <div class="card">
+        <div class="card-title">
+          <span>📋 Parciais / Viradas da Série</span>
+          <span id="lapCount" style="font-size:11px; color:var(--text-muted);">0 parciais</span>
+        </div>
+        <div id="lapsList" style="max-height:240px; overflow-y:auto;"></div>
+      </div>
+
+      <!-- Frequência de Braçada + SWOLF -->
+      <div class="card">
+        <div class="card-title"><span>⚡ Frequência de Braçada & Eficiência (SWOLF)</span></div>
+        <p class="subtext">Toque ao iniciar o 1º ciclo e novamente ao completar 3 ciclos para medir ciclos/minuto.</p>
+        <div class="list-item">
+          <div>
+            <div id="strokeRateDisplay" class="mono" style="font-size:22px; font-weight:800; color:var(--accent-text);">-- cic/min</div>
+            <div id="strokeCycleTime" style="font-size:11px; color:var(--text-muted);">Tempo 3 ciclos: --</div>
+          </div>
+          <button type="button" id="btnStrokeRate" class="btn btn-purple btn-sm">Iniciar 3 Ciclos</button>
+        </div>
+
+        <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+          <label class="field-label">Calculadora Rápida de SWOLF (Tempo 25m/50m + Nº Braçadas)</label>
+          <div class="row-flex">
+            <input type="number" id="swolfSec" placeholder="Seg (ex: 18)" style="flex:1; min-width:85px;">
+            <input type="number" id="swolfStrokes" placeholder="Braçadas (ex: 16)" style="flex:1; min-width:95px;">
+            <button type="button" id="btnCalcSwolf" class="btn btn-cyan btn-sm">Calcular</button>
+          </div>
+          <div id="swolfResult" style="font-size:12px; color:var(--accent-text); font-weight:700; margin-top:6px;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 2. MULTI-RAIAS (REMANEJAMENTO + PARCIAIS SALVAS)  -->
+  <!-- ================================================= -->
+  <section id="sec-multi" class="section">
+    <div class="card">
+      <div class="card-title">
+        <span>🏁 Multi-Raias (Remanejamento & Parciais Simultâneas)</span>
+        <div class="row-flex">
+          <button type="button" id="btnStartAllLanes" class="btn btn-emerald btn-sm">📢 Largada Geral</button>
+          <button type="button" id="btnStaggerStart" class="btn btn-purple btn-sm">⏱️ Largada 5s</button>
+          <button type="button" id="btnSaveAllLanes" class="btn btn-accent btn-sm">💾 Salvar Todas</button>
+          <button type="button" id="btnResetAllLanes" class="btn btn-ghost btn-sm">↺ Zerar</button>
+        </div>
+      </div>
+      <p class="subtext">Troque qualquer atleta de raia na hora usando o seletor <strong>Raia ▾</strong> ou as setas <strong>⬆️/⬇️</strong>. Todas as viradas marcadas em <strong>Parcial</strong> ficam registradas e podem ser salvas direto no nome do atleta!</p>
+
+      <div class="row-flex" style="margin-bottom:10px;">
+        <select id="multiAddAthleteSelect" style="flex:2; min-width:150px;"></select>
+        <select id="multiAddStroke" style="flex:1; min-width:105px;">
+          <option value="Livre">Livre</option>
+          <option value="Costas">Costas</option>
+          <option value="Peito">Peito</option>
+          <option value="Borboleta">Borboleta</option>
+          <option value="Medley">Medley</option>
+        </select>
+        <select id="multiAddDist" style="flex:1; min-width:85px;"></select>
+        <button type="button" id="btnAddMultiLane" class="btn btn-accent">+ Adicionar Raia</button>
+      </div>
+
+      <label style="display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:700; color:var(--text-muted); cursor:pointer;">
+        <input type="checkbox" id="chkAutoSaveMulti" checked style="width:16px; height:16px; accent-color:var(--accent);">
+        ⚡ Salvar parciais e tempo final automaticamente na ficha do atleta ao clicar em Chegada
+      </label>
+    </div>
+
+    <div id="multiLanesGrid" class="grid-2"></div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 3. PROGRESSÃO & PESQUISA DE PARCIAIS POR ATLETA   -->
+  <!-- ================================================= -->
+  <section id="sec-progression" class="section">
+    <div class="card card-highlight">
+      <div class="card-title">
+        <span>📈 Progressão & Histórico de Parciais por Atleta</span>
+        <div class="row-flex">
+          <button type="button" id="btnCopyProgression" class="btn btn-emerald btn-sm">📲 Copiar Progressão</button>
+          <button type="button" id="btnProgManualTime" class="btn btn-accent btn-sm">+ Lançar Parciais</button>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div>
+          <label class="field-label">🔍 Pesquisar Atleta pelo Nome</label>
+          <input type="text" id="progSearchInput" placeholder="Digite o nome (ex: Francisco, Ana Clara)...">
+        </div>
+        <div>
+          <label class="field-label">Filtrar Nado</label>
+          <select id="progStrokeFilter">
+            <option value="ALL">Todos os Nados</option>
+            <option value="Livre">🏊 Livre</option>
+            <option value="Costas">🔄 Costas</option>
+            <option value="Peito">🐸 Peito</option>
+            <option value="Borboleta">🦋 Borboleta</option>
+            <option value="Medley">🏅 Medley</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Filtrar Distância</label>
+          <select id="progDistFilter">
+            <option value="ALL">Todas as Distâncias</option>
+            <option value="25m">25m</option>
+            <option value="50m">50m</option>
+            <option value="100m">100m</option>
+            <option value="200m">200m</option>
+            <option value="400m">400m</option>
+            <option value="800m">800m</option>
+            <option value="1500m">1500m</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="progAthleteChips" class="chip-row"></div>
+    </div>
+
+    <!-- KPIs de Progressão do Atleta Selecionado -->
+    <div id="progKpiGrid" class="grid-4" style="margin-bottom:14px;"></div>
+
+    <!-- Gráfico de Progressão (Sessões + Viradas da Última Tomada) -->
+    <div class="grid-2">
+      <div id="progSessionChart" class="chart-wrap"></div>
+      <div id="progSplitsChart" class="chart-wrap"></div>
+    </div>
+
+    <!-- Histórico Completo com todas as Viradas/Parciais Salvas -->
+    <div class="card">
+      <div class="card-title">
+        <span>🗂️ Tomadas & Viradas Salvas — <span id="progCurrentAthleteTitle" style="color:var(--accent-text);">Atleta</span></span>
+        <span id="progTotalCount" class="badge badge-slate">0 registros</span>
+      </div>
+      <div id="progHistoryList"></div>
+    </div>
+
+    <!-- Ranking Comparativo da Equipe -->
+    <div class="card">
+      <div class="card-title">
+        <span>🏆 Ranking Comparativo da Equipe</span>
+        <div class="row-flex">
+          <select id="rankStroke" style="width:auto; padding:5px 9px; font-size:12px;">
+            <option value="Livre">Livre</option>
+            <option value="Costas">Costas</option>
+            <option value="Peito">Peito</option>
+            <option value="Borboleta">Borboleta</option>
+            <option value="Medley">Medley</option>
+          </select>
+          <select id="rankDist" style="width:auto; padding:5px 9px; font-size:12px;">
+            <option value="25m">25m</option>
+            <option value="50m" selected>50m</option>
+            <option value="100m">100m</option>
+            <option value="200m">200m</option>
+            <option value="400m">400m</option>
+            <option value="800m">800m</option>
+            <option value="1500m">1500m</option>
+          </select>
+        </div>
+      </div>
+      <div id="teamRankingList"></div>
+    </div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 4. TEMPOS POR NADO (RECORDES PESSOAIS)            -->
+  <!-- ================================================= -->
+  <section id="sec-strokes" class="section">
+    <div class="stroke-tabs" id="strokeTabsBar">
+      <button type="button" class="stroke-tab" data-stroke="Borboleta">🦋 Borboleta</button>
+      <button type="button" class="stroke-tab" data-stroke="Costas">🔄 Costas</button>
+      <button type="button" class="stroke-tab" data-stroke="Peito">🐸 Peito</button>
+      <button type="button" class="stroke-tab active" data-stroke="Livre">🏊 Livre</button>
+      <button type="button" class="stroke-tab" data-stroke="Medley">🏅 Medley</button>
+    </div>
+
+    <div id="pbGrid" class="grid-pb"></div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Histórico de Tomadas — <span id="currentStrokeTitle" style="color:var(--accent-text);">Livre</span></span>
+        <button type="button" id="btnOpenManualTime" class="btn btn-ghost btn-sm" style="color:var(--accent-text);">+ Lançar Manual / Parciais</button>
+      </div>
+      <div id="strokeHistoryList"></div>
+    </div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 5. PERIODIZAÇÃO DO DIA (TREINOS)                  -->
+  <!-- ================================================= -->
+  <section id="sec-periodization" class="section">
+    <div class="card">
+      <div class="card-title">
+        <span>📋 Periodização do Dia (Planilha de Treino)</span>
+        <div class="row-flex">
+          <input type="date" id="workoutDate" style="width:auto; padding:6px 10px; font-size:12px;">
+          <span id="totalMetersBadge" class="badge badge-cyan" style="padding:7px 12px; font-size:12px;">Volume: 0m</span>
+          <button type="button" id="btnCopyWorkout" class="btn btn-emerald btn-sm">📲 Copiar p/ WhatsApp</button>
+        </div>
+      </div>
+
+      <div class="grid-4" style="margin-bottom:10px;">
+        <div>
+          <label class="field-label">Fase / Bloco</label>
+          <select id="woBlock">
+            <option value="1. Aquecimento">1. Aquecimento</option>
+            <option value="2. Educativo / Técnica">2. Educativo / Técnica</option>
+            <option value="3. Série Principal">3. Série Principal</option>
+            <option value="4. Velocidade / Saídas">4. Velocidade / Saídas</option>
+            <option value="5. Soltura (Regenerativo)">5. Soltura (Regenerativo)</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Zona / Estímulo</label>
+          <select id="woZone">
+            <option value="A1 - Aeróbio Leve">A1 - Aeróbio Leve</option>
+            <option value="A2 - Aeróbio Moderado">A2 - Aeróbio Moderado</option>
+            <option value="A3 - Limiar Anaeróbio">A3 - Limiar Anaeróbio</option>
+            <option value="AN1 - Tolerância Lactato">AN1 - Tolerância Lactato</option>
+            <option value="AN2 - Potência / Sprint">AN2 - Potência / Sprint</option>
+            <option value="TÉC - Técnica / Educativo">TÉC - Técnica / Educativo</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Metragem (m)</label>
+          <input type="number" id="woMeters" step="25" placeholder="Ex: 400">
+        </div>
+        <div>
+          <label class="field-label">Intervalo / Saída</label>
+          <input type="text" id="woInterval" placeholder="Ex: a cada 1m30s">
+        </div>
+      </div>
+
+      <div class="row-flex">
+        <input type="text" id="woDesc" placeholder="Descrição da série (ex: 8x100m Livre ritmo forte com 20s descanso)" style="flex:1; min-width:200px;">
+        <button type="button" id="btnAddWorkout" class="btn btn-accent">+ Adicionar Bloco</button>
+      </div>
+    </div>
+
+    <div id="zoneSummaryBar" class="card" style="display:none; padding:12px 16px;"></div>
+    <div id="workoutBlocksList"></div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 6. EDUCATIVOS TRABALHADOS                         -->
+  <!-- ================================================= -->
+  <section id="sec-drills" class="section">
+    <div class="card card-highlight">
+      <div class="card-title" style="color:var(--accent-text);">
+        <span>✨ Cadastrar Novo Educativo Personalizado</span>
+      </div>
+      <div class="row-flex">
+        <select id="newDrillStroke" style="width:auto; min-width:140px;">
+          <option value="Livre">🏊 Livre</option>
+          <option value="Costas">🔄 Costas</option>
+          <option value="Peito">🐸 Peito</option>
+          <option value="Borboleta">🦋 Borboleta</option>
+          <option value="Medley">🏅 Medley / Viradas</option>
+        </select>
+        <input type="text" id="newDrillNameInput" placeholder="Digite o nome do educativo (ex: Palmar + Pullbuoy unilateral)..." style="flex:1; min-width:180px;">
+        <button type="button" id="btnCreateDrill" class="btn btn-emerald">+ Salvar Educativo</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>🎯 Aplicar Educativo no Treino do Atleta</span></div>
+      <div class="grid-4" style="margin-bottom:10px;">
+        <div>
+          <label class="field-label">Nado</label>
+          <select id="drillStrokeFilter">
+            <option value="Livre">🏊 Livre</option>
+            <option value="Costas">🔄 Costas</option>
+            <option value="Peito">🐸 Peito</option>
+            <option value="Borboleta">🦋 Borboleta</option>
+            <option value="Medley">🏅 Medley / Viradas</option>
+          </select>
+        </div>
+        <div style="grid-column: span 2;">
+          <label class="field-label">Educativo</label>
+          <select id="drillNameSelect"></select>
+        </div>
+        <div>
+          <label class="field-label">Metragem</label>
+          <select id="drillMeters">
+            <option value="100m">4x25m (100m)</option>
+            <option value="200m" selected>4x50m (200m)</option>
+            <option value="300m">6x50m (300m)</option>
+            <option value="400m">8x50m (400m)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-flex" style="justify-content:space-between; padding-top:10px; border-top:1px solid var(--border);">
+        <div class="row-flex">
+          <span style="font-size:12px; font-weight:700; color:var(--text-muted);">Execução:</span>
+          <select id="drillQuality" style="width:auto; color:var(--amber-txt);">
+            <option value="⭐⭐⭐ Excelente">⭐⭐⭐ Excelente</option>
+            <option value="⭐⭐ Boa (Em evolução)" selected>⭐⭐ Boa (Em evolução)</option>
+            <option value="⭐ Precisa corrigir">⭐ Precisa corrigir</option>
+          </select>
+        </div>
+        <button type="button" id="btnLogDrill" class="btn btn-accent">Registrar na Ficha</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>Histórico de Educativos do Atleta</span></div>
+      <div id="loggedDrillsList"></div>
+    </div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 7. CALCULADORA DE RITMO (PACE) & ZONAS CSS        -->
+  <!-- ================================================= -->
+  <section id="sec-pace" class="section">
+    <div class="card">
+      <div class="card-title"><span>🧮 Calculadora de Ritmo (Pace) & Meta de Parciais</span></div>
+      <p class="subtext">Planeje as passagens de 25m, 50m ou 100m para provas de velocidade, Medley ou fundo (800m e 1500m).</p>
+
+      <div class="grid-4" style="margin-bottom:12px;">
+        <div>
+          <label class="field-label">Prova / Distância</label>
+          <select id="paceDistance">
+            <option value="50">50m</option>
+            <option value="100">100m</option>
+            <option value="200" selected>200m</option>
+            <option value="400">400m</option>
+            <option value="800">800m</option>
+            <option value="1500">1500m</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Tempo-Alvo (MM:SS.CC)</label>
+          <input type="text" id="paceTargetTime" value="02:10.00" class="mono">
+        </div>
+        <div>
+          <label class="field-label">Quebra de Parcial</label>
+          <select id="paceSplitSize">
+            <option value="25">A cada 25m</option>
+            <option value="50" selected>A cada 50m</option>
+            <option value="100">A cada 100m</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Estratégia</label>
+          <select id="paceStrategy">
+            <option value="even">Ritmo Constante (Even)</option>
+            <option value="negative">Negative Split (2ª + rápida)</option>
+            <option value="faststart">Saída Forte (1ª parcial)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="paceSummaryCards" class="grid-3"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>Tabela de Passagem Ideal</span></div>
+      <div id="paceSplitsTable" style="max-height:300px; overflow-y:auto;"></div>
+    </div>
+
+    <div class="card card-highlight">
+      <div class="card-title" style="color:var(--accent-text);"><span>🔥 Velocidade Crítica de Nado (Teste CSS 400m + 200m)</span></div>
+      <p class="subtext">Descubra o ritmo exato de limiar aeróbio (A3) do atleta a cada 100m com base nos melhores tempos de 400m e 200m Livre.</p>
+      <div class="grid-3" style="align-items:end;">
+        <div>
+          <label class="field-label">Tempo 400m (ex: 05:20)</label>
+          <input type="text" id="css400" value="05:20" class="mono">
+        </div>
+        <div>
+          <label class="field-label">Tempo 200m (ex: 02:30)</label>
+          <input type="text" id="css200" value="02:30" class="mono">
+        </div>
+        <button type="button" id="btnCalcCSS" class="btn btn-accent">Calcular Ritmo CSS</button>
+      </div>
+      <div id="cssResultBox" style="margin-top:12px;"></div>
+    </div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 8. CALENDÁRIO DE PROVAS & COMPETIÇÕES             -->
+  <!-- ================================================= -->
+  <section id="sec-calendar" class="section">
+    <div class="card">
+      <div class="card-title"><span>📅 Calendário de Provas & Competições</span></div>
+      <div class="grid-4" style="margin-bottom:10px;">
+        <div style="grid-column: span 2;">
+          <label class="field-label">Nome da Competição / Festival</label>
+          <input type="text" id="compName" placeholder="Ex: Torneio Regional Centro-Oeste">
+        </div>
+        <div>
+          <label class="field-label">Data</label>
+          <input type="date" id="compDate">
+        </div>
+        <div>
+          <label class="field-label">Piscina / Local</label>
+          <input type="text" id="compLocation" placeholder="Ex: 50m - Brasília/DF">
+        </div>
+      </div>
+      <div class="row-flex">
+        <input type="text" id="compEvents" placeholder="Provas inscritas / metas (ex: 50m Livre, 200m Medley, 800m Livre)" style="flex:1; min-width:200px;">
+        <button type="button" id="btnAddComp" class="btn btn-accent">+ Agendar Competição</button>
+      </div>
+    </div>
+
+    <div id="competitionsList"></div>
+  </section>
+
+  <!-- ================================================= -->
+  <!-- 9. DICAS, DIAGNÓSTICO & FICHA TÉCNICA             -->
+  <!-- ================================================= -->
+  <section id="sec-tips" class="section">
+    <div class="card card-highlight">
+      <div class="card-title" style="color:var(--accent-text);">
+        <span>✨ Diagnóstico Automático — <span id="diagAthleteName">Atleta</span></span>
+        <div class="row-flex no-print">
+          <button type="button" id="btnShareAthlete" class="btn btn-emerald btn-sm">📲 Copiar Ficha WhatsApp</button>
+          <button type="button" id="btnPrintSheet" class="btn btn-accent btn-sm">🖨️ Imprimir</button>
+        </div>
+      </div>
+      <div id="autoDiagnosisBox" style="font-size:13px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Checklist Técnico & Correções por Nado</span>
+        <select id="tipsStrokeSelect" style="width:auto; padding:6px 10px; font-size:12px;">
+          <option value="Livre">🏊 Livre</option>
+          <option value="Costas">🔄 Costas</option>
+          <option value="Peito">🐸 Peito</option>
+          <option value="Borboleta">🦋 Borboleta</option>
+          <option value="Medley">🏅 Medley</option>
+        </select>
+      </div>
+      <div id="biomechanicsChecklist"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>📝 Observações do Treinador</span></div>
+      <div class="row-flex no-print" style="margin-bottom:10px;">
+        <input type="text" id="coachNoteInput" placeholder="Ex: Controlar respiração nos últimos 5m dos 50m Livre..." style="flex:1; min-width:180px;">
+        <button type="button" id="btnAddNote" class="btn btn-amber">Adicionar</button>
+      </div>
+      <div id="coachNotesList"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- MODAL: PALETA DE CORES & TEMA CLARO/ESCURO -->
+<div id="paletteModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="card-title">
+      <span>🎨 Aparência & Paleta de Cores</span>
+      <button type="button" class="btn btn-ghost btn-sm" data-close="paletteModal">✕</button>
+    </div>
+
+    <label class="field-label">Modo de Exibição</label>
+    <div class="grid-2" style="margin-bottom:14px;">
+      <button type="button" id="btnSetDark" class="btn btn-ghost">🌙 Modo Escuro (Noturno)</button>
+      <button type="button" id="btnSetLight" class="btn btn-ghost">☀️ Modo Claro (Piscina/Sol)</button>
+    </div>
+
+    <label class="field-label">Escolha a Paleta de Cores</label>
+    <div class="palette-grid" id="paletteGrid">
+      <button type="button" class="swatch-btn" data-palette-pick="ocean"><span class="swatch-dot" style="background:linear-gradient(135deg,#06b6d4,#2563eb);"></span>Azul Piscina</button>
+      <button type="button" class="swatch-btn" data-palette-pick="royal"><span class="swatch-dot" style="background:linear-gradient(135deg,#2563eb,#4f46e5);"></span>Azul Olímpico</button>
+      <button type="button" class="swatch-btn" data-palette-pick="emerald"><span class="swatch-dot" style="background:linear-gradient(135deg,#10b981,#0d9488);"></span>Esmeralda Aqua</button>
+      <button type="button" class="swatch-btn" data-palette-pick="lime"><span class="swatch-dot" style="background:linear-gradient(135deg,#84cc16,#16a34a);"></span>Verde Energia</button>
+      <button type="button" class="swatch-btn" data-palette-pick="purple"><span class="swatch-dot" style="background:linear-gradient(135deg,#7c3aed,#a855f7);"></span>Roxo Performance</button>
+      <button type="button" class="swatch-btn" data-palette-pick="gold"><span class="swatch-dot" style="background:linear-gradient(135deg,#f59e0b,#ea580c);"></span>Ouro Pódio</button>
+      <button type="button" class="swatch-btn" data-palette-pick="crimson"><span class="swatch-dot" style="background:linear-gradient(135deg,#e11d48,#ea580c);"></span>Vermelho Turbo</button>
+      <button type="button" class="swatch-btn" data-palette-pick="pink"><span class="swatch-dot" style="background:linear-gradient(135deg,#ec4899,#9333ea);"></span>Magenta Flash</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: NOVO / GERENCIAR ATLETA -->
+<div id="athleteModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="card-title">
+      <span>👤 Cadastrar Novo Atleta</span>
+      <button type="button" class="btn btn-ghost btn-sm" data-close="athleteModal">✕</button>
+    </div>
+    <div style="margin-bottom:10px;">
+      <label class="field-label">Nome Completo</label>
+      <input type="text" id="newAthleteName" placeholder="Ex: Francisco Silva ou Ana Clara">
+    </div>
+    <div class="grid-2" style="margin-bottom:14px;">
+      <div>
+        <label class="field-label">Categoria</label>
+        <input type="text" id="newAthleteCat" placeholder="Ex: Infantil / Juvenil">
+      </div>
+      <div>
+        <label class="field-label">Especialidade</label>
+        <select id="newAthleteMainStroke">
+          <option value="Livre">Livre</option>
+          <option value="Costas">Costas</option>
+          <option value="Peito">Peito</option>
+          <option value="Borboleta">Borboleta</option>
+          <option value="Medley">Medley</option>
+        </select>
+      </div>
+    </div>
+    <div class="row-flex" style="justify-content:space-between;">
+      <button type="button" id="btnDeleteCurrentAthlete" class="btn btn-rose btn-sm">🗑️ Excluir Atleta Atual</button>
+      <div class="row-flex">
+        <button type="button" class="btn btn-ghost btn-sm" data-close="athleteModal">Cancelar</button>
+        <button type="button" id="btnCreateAthlete" class="btn btn-accent btn-sm">Salvar Atleta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: LANÇAR TEMPO & PARCIAIS MANUAIS -->
+<div id="manualTimeModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="card-title">
+      <span>⏱️ Lançar Tempo & Parciais Manual</span>
+      <button type="button" class="btn btn-ghost btn-sm" data-close="manualTimeModal">✕</button>
+    </div>
+    <div style="margin-bottom:10px;">
+      <label class="field-label">Atleta</label>
+      <select id="manAthlete"></select>
+    </div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div>
+        <label class="field-label">Nado</label>
+        <select id="manStroke">
+          <option value="Livre">Livre</option>
+          <option value="Costas">Costas</option>
+          <option value="Peito">Peito</option>
+          <option value="Borboleta">Borboleta</option>
+          <option value="Medley">Medley</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Distância</label>
+        <select id="manDist"></select>
+      </div>
+      <div>
+        <label class="field-label">Tempo Total (opcional se preencher viradas)</label>
+        <input type="text" id="manTime" placeholder="Ex: 01:22.00" class="mono">
+      </div>
+      <div>
+        <label class="field-label">Saída (seg, opcional)</label>
+        <input type="number" id="manReaction" step="0.01" placeholder="0.68" class="mono">
+      </div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label class="field-label">Parciais / Viradas isoladas (separadas por vírgula)</label>
+      <input type="text" id="manSplitsInput" placeholder="Ex: 55, 53, 50  ou  40.2, 42.1" class="mono">
+      <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">Dica: Se digitar as viradas (ex: 55, 53, 50), o tempo total é somado automaticamente!</div>
+    </div>
+    <div class="row-flex" style="justify-content:flex-end;">
+      <button type="button" class="btn btn-ghost btn-sm" data-close="manualTimeModal">Cancelar</button>
+      <button type="button" id="btnSaveManualTime" class="btn btn-accent btn-sm">Salvar na Ficha</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: BACKUP & PUBLICAÇÃO -->
+<div id="backupModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="card-title">
+      <span>☁️ Backup & Publicação</span>
+      <button type="button" class="btn btn-ghost btn-sm" data-close="backupModal">✕</button>
+    </div>
+    <p class="subtext">Seus dados ficam salvos automaticamente no aparelho. Use os botões abaixo para exportar backup ou baixar o código completo da plataforma.</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button type="button" id="btnExportJSON" class="btn btn-emerald">⬇️ Exportar Backup dos Atletas (.json)</button>
+      <label class="btn btn-amber" style="cursor:pointer;">
+        ⬆️ Importar Backup (.json)
+        <input type="file" id="inputImportJSON" accept=".json" style="display:none;">
+      </label>
+      <button type="button" id="btnDownloadZip" class="btn btn-accent">📦 Baixar App Compactado (.zip)</button>
+      <button type="button" id="btnDownloadHtml" class="btn btn-ghost">📄 Baixar Arquivo Direto (index.html)</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  "use strict";
+
+  // =======================================================
+  // 1. CONSTANTES E DADOS INICIAIS
+  // =======================================================
+  const STROKE_DISTANCES = {
+    Livre: ["25m", "50m", "100m", "200m", "400m", "800m", "1500m"],
+    Costas: ["25m", "50m", "100m", "200m"],
+    Peito: ["25m", "50m", "100m", "200m"],
+    Borboleta: ["25m", "50m", "100m", "200m"],
+    Medley: ["100m", "200m", "400m"]
+  };
+
+  const DEFAULT_DRILLS = {
+    Livre: [
+      "Ponto Morto (Catch-Up)",
+      "Braçada Unilateral (Dir/Esq)",
+      "Fingertip Drag (Arrastar ponta dos dedos)",
+      "Polo Aquático (Cabeça fora / Visão frontal)",
+      "Punho Cerrado (Sensibilidade de antebraço)",
+      "Troca de Ritmo 12.5m Forte / 12.5m Solto"
+    ],
+    Costas: [
+      "Costas Unilateral com Braço Estendido",
+      "Equilíbrio com Copo na Testa",
+      "Duplo Costas (Braçada Simultânea)",
+      "Rotação de Tronco + 6 Pernadas Laterais",
+      "Saída Submersa + 5 Ondulações"
+    ],
+    Peito: [
+      "2 Pernadas + 1 Braçada",
+      "Braçada de Peito + Pernada de Borboleta",
+      "Deslize Longo (2 segundos em Streamline)",
+      "Filipina Completa + 1 Ciclo",
+      "Cotovelo Alto (Sculling Frontal)"
+    ],
+    Borboleta: [
+      "Borboleta Unilateral (3 Dir / 3 Esq / 3 Completa)",
+      "Ondulação Submersa em Streamline",
+      "Ondulação com Mãos ao Lado do Corpo",
+      "2 Braçadas + 1 Respiração Frontal Baixa",
+      "Entrada Suave das Mãos na Largura dos Ombros"
+    ],
+    Medley: [
+      "Transição Borboleta -> Costas (Toque e Giro)",
+      "Virada Olímpica Costas -> Peito (Crossover Turn)",
+      "Transição Peito -> Livre (Filipina + Saída Rápida)",
+      "4x50m Medley Ordem Inversa",
+      "Controle de Ritmo 200m Medley (Parciais por Estilo)"
+    ]
+  };
+
+  const BIOMECHANICS_TIPS = {
+    Livre: [
+      "Cotovelo alto na fase de puxada (EVF - Early Vertical Forearm)",
+      "Não cruzar a linha média na entrada da mão na água",
+      "Respiração bilateral mantendo um olho na água",
+      "Nos 800m e 1500m: ritmo constante (negative split) e pernada econômica",
+      "Chegada sem respirar nos últimos 5 metros em provas de velocidade"
+    ],
+    Costas: [
+      "Entrada do dedo mínimo primeiro com braço estendido",
+      "Rotação de ombros de 45 graus para puxada profunda",
+      "Manter o queixo afastado do peito e olhar para cima",
+      "Saída submersa eficiente até próximo da marca dos 15m"
+    ],
+    Peito: [
+      "Sincronia: puxa -> respira -> lança braços -> dá a pernada -> desliza",
+      "Evitar abrir demais os joelhos na recuperação da pernada",
+      "Manter quadril alto e cabeça alinhada no deslize",
+      "Filipina potente na saída e em todas as viradas"
+    ],
+    Borboleta: [
+      "Duas ondulações por ciclo: 1a na entrada das mãos, 2a na finalização",
+      "Queixo rente à superfície durante a respiração",
+      "Recuperação dos braços baixa e relaxada acima da água",
+      "Evitar respirar na primeira braçada após a saída ou virada"
+    ],
+    Medley: [
+      "Não queimar a largada no Borboleta: guardar energia para Peito e Livre",
+      "Treinar virada Costas -> Peito (tocar de costas antes de girar)",
+      "No Peito do Medley, priorizar deslize longo e eficiência",
+      "Atacar os últimos 50m/100m de Livre com alta frequência de braçada"
+    ]
+  };
+
+  const todayISO = new Date().toISOString().slice(0, 10);
+
+  function loadInitialData() {
+    try {
+      const raw = localStorage.getItem("deixa_brilhar_v3") || localStorage.getItem("deixa_brilhar_v2") || localStorage.getItem("swimpro_data_v1");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.athletes) && parsed.athletes.length > 0) {
+          if (!parsed.customDrills) parsed.customDrills = { Livre: [], Costas: [], Peito: [], Borboleta: [], Medley: [] };
+          if (!parsed.customDrills.Medley) parsed.customDrills.Medley = [];
+          if (!Array.isArray(parsed.workouts)) parsed.workouts = [];
+          if (!Array.isArray(parsed.competitions)) parsed.competitions = [];
+          if (!parsed.theme) parsed.theme = "dark";
+          if (!parsed.palette) parsed.palette = "ocean";
+          return parsed;
+        }
+      }
+    } catch (e) {}
+
+    return {
+      theme: "dark",
+      palette: "ocean",
+      activeAthleteId: "ath_1",
+      customDrills: { Livre: [], Costas: [], Peito: [], Borboleta: [], Medley: [] },
+      workouts: [
+        { id: 1, date: todayISO, block: "1. Aquecimento", zone: "A1 - Aeróbio Leve", meters: 400, interval: "Contínuo", desc: "200m Livre + 100m Costas + 100m Educativos", done: false },
+        { id: 2, date: todayISO, block: "3. Série Principal", zone: "A3 - Limiar Anaeróbio", meters: 800, interval: "a cada 1m25s", desc: "8x100m Livre ritmo constante de prova", done: false }
+      ],
+      competitions: [
+        { id: 1, name: "Torneio Regional de Natação", date: todayISO, location: "Piscina Olímpica 50m", events: "50m Livre, 200m Medley, 800m Livre" }
+      ],
+      athletes: [
+        {
+          id: "ath_1",
+          name: "Francisco",
+          category: "Juvenil",
+          mainStroke: "Livre",
+          times: [
+            { id: 1, stroke: "Livre", distance: "100m", ms: 82000, reaction: 0.68, startType: "Bloco (Track Start)", pool: "25m", laps: [40000, 82000], date: new Date().toLocaleDateString("pt-BR") }
+          ],
+          drills: [
+            { id: 101, stroke: "Livre", name: "Ponto Morto (Catch-Up)", meters: "200m", quality: "⭐⭐⭐ Excelente", date: new Date().toLocaleDateString("pt-BR") }
+          ],
+          checkedTips: {},
+          notes: ["Manter ritmo forte na 2ª virada dos 100m Livre."]
+        },
+        {
+          id: "ath_2",
+          name: "Ana Clara",
+          category: "Juvenil",
+          mainStroke: "Livre",
+          times: [
+            { id: 2, stroke: "Livre", distance: "150m", ms: 158000, reaction: 0.65, startType: "Bloco (Track Start)", pool: "25m", laps: [55000, 108000, 158000], date: new Date().toLocaleDateString("pt-BR") }
+          ],
+          drills: [],
+          checkedTips: {},
+          notes: ["Excelente progressão negativa: 55s -> 53s -> 50s!"]
+        }
+      ]
+    };
+  }
+
+  let appData = loadInitialData();
+
+  function saveData() {
+    try {
+      localStorage.setItem("deixa_brilhar_v3", JSON.stringify(appData));
+    } catch (e) {}
+  }
+
+  function getActiveAthlete() {
+    return appData.athletes.find(function(a) { return a.id === appData.activeAthleteId; }) || appData.athletes[0];
+  }
+
+  let toastTimer = null;
+  function showToast(msg) {
+    const el = document.getElementById("toast");
+    el.textContent = msg;
+    el.style.display = "block";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { el.style.display = "none"; }, 2800);
+  }
+
+  // =======================================================
+  // 2. TEMA CLARO/ESCURO & PALETA DE CORES
+  // =======================================================
+  function applyAppearance() {
+    const theme = appData.theme === "light" ? "light" : "dark";
+    const palette = appData.palette || "ocean";
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-palette", palette);
+
+    const themeBtn = document.getElementById("btnToggleTheme");
+    themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+    themeBtn.title = theme === "dark" ? "Mudar para Modo Claro" : "Mudar para Modo Escuro";
+
+    document.getElementById("btnSetDark").className = theme === "dark" ? "btn btn-accent" : "btn btn-ghost";
+    document.getElementById("btnSetLight").className = theme === "light" ? "btn btn-accent" : "btn btn-ghost";
+
+    document.querySelectorAll("#paletteGrid .swatch-btn").forEach(function(b) {
+      b.classList.toggle("active", b.getAttribute("data-palette-pick") === palette);
+    });
+  }
+
+  function setTheme(mode) {
+    appData.theme = mode;
+    saveData();
+    applyAppearance();
+  }
+
+  function setPalette(pal) {
+    appData.palette = pal;
+    saveData();
+    applyAppearance();
+    showToast("Paleta atualizada!");
+  }
+
+  // =======================================================
+  // 3. SISTEMA DE ÁUDIO (BUZINA OFICIAL DE ALTA POTÊNCIA)
+  // =======================================================
+  let audioCtx = null;
+  function ensureAudioContext() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    if (!audioCtx) audioCtx = new AC();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+
+  function playStartHorn(modeOverride) {
+    try {
+      const ctx = ensureAudioContext();
+      if (!ctx) return;
+
+      const mode = modeOverride || (document.getElementById("hornType") ? document.getElementById("hornType").value : "olympic");
+      const now = ctx.currentTime + 0.01;
+
+      const compressor = ctx.createDynamicsCompressor();
+      compressor.threshold.setValueAtTime(-14, now);
+      compressor.knee.setValueAtTime(6, now);
+      compressor.ratio.setValueAtTime(16, now);
+      compressor.attack.setValueAtTime(0.002, now);
+      compressor.release.setValueAtTime(0.1, now);
+      compressor.connect(ctx.destination);
+
+      const master = ctx.createGain();
+      master.connect(compressor);
+
+      if (mode === "whistle") {
+        const dur = 0.85;
+        master.gain.setValueAtTime(0.01, now);
+        master.gain.linearRampToValueAtTime(1.0, now + 0.02);
+        master.gain.setValueAtTime(1.0, now + dur - 0.08);
+        master.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+        const osc = ctx.createOscillator();
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(2850, now);
+        lfo.frequency.setValueAtTime(36, now);
+        lfoGain.gain.setValueAtTime(140, now);
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc.frequency);
+        osc.connect(master);
+        osc.start(now); lfo.start(now);
+        osc.stop(now + dur); lfo.stop(now + dur);
+      } else if (mode === "sharp") {
+        const dur = 1.25;
+        master.gain.setValueAtTime(0.01, now);
+        master.gain.linearRampToValueAtTime(1.0, now + 0.015);
+        master.gain.setValueAtTime(1.0, now + dur - 0.08);
+        master.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+        [1046.5, 1567.98, 2093.0].forEach(function(f, i) {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = i === 0 ? "square" : "sawtooth";
+          osc.frequency.setValueAtTime(f, now);
+          g.gain.setValueAtTime(i === 0 ? 0.65 : 0.4, now);
+          osc.connect(g); g.connect(master);
+          osc.start(now); osc.stop(now + dur);
+        });
+      } else {
+        const dur = 1.35;
+        master.gain.setValueAtTime(0.01, now);
+        master.gain.linearRampToValueAtTime(1.0, now + 0.015);
+        master.gain.setValueAtTime(1.0, now + dur - 0.10);
+        master.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = "peaking";
+        filter.frequency.setValueAtTime(1180, now);
+        filter.Q.setValueAtTime(1.4, now);
+        filter.gain.setValueAtTime(7, now);
+        filter.connect(master);
+
+        [
+          { f: 740, type: "sawtooth", vol: 0.72 },
+          { f: 1108.73, type: "square", vol: 0.55 },
+          { f: 1480, type: "sawtooth", vol: 0.45 }
+        ].forEach(function(t) {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = t.type;
+          osc.frequency.setValueAtTime(t.f * 0.95, now);
+          osc.frequency.linearRampToValueAtTime(t.f, now + 0.03);
+          g.gain.setValueAtTime(t.vol, now);
+          osc.connect(g); g.connect(filter);
+          osc.start(now); osc.stop(now + dur);
+        });
+      }
+
+      if (navigator.vibrate) navigator.vibrate([220, 50, 220]);
+    } catch (e) {}
+  }
+
+  function speakCommandAndStart() {
+    ensureAudioContext();
+    if (isRunning) return;
+    resetTimer();
+    const badge = document.getElementById("statusBadge");
+    badge.textContent = "AOS SEUS LUGARES...";
+    badge.className = "badge badge-amber";
+
+    if ("speechSynthesis" in window) {
+      try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance("Aos seus lugares");
+        u.lang = "pt-BR";
+        u.rate = 0.95;
+        window.speechSynthesis.speak(u);
+      } catch (e) {}
+    }
+    setTimeout(function() { if (!isRunning) toggleTimer(); }, 2200);
+  }
+
+  // =======================================================
+  // 4. UTILITÁRIOS DE TEMPO, PARCIAIS E FORMATAÇÃO
+  // =======================================================
+  function formatMs(ms) {
+    const safe = Math.max(0, Math.floor(ms));
+    const totalCentis = Math.floor(safe / 10);
+    const centis = totalCentis % 100;
+    const totalSecs = Math.floor(totalCentis / 100);
+    const secs = totalSecs % 60;
+    const mins = Math.floor(totalSecs / 60);
+    return String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0") + "." + String(centis).padStart(2, "0");
+  }
+
+  function formatSecShort(ms) {
+    const secs = ms / 1000;
+    if (secs < 60) return secs.toFixed(2) + "s";
+    return formatMs(ms);
+  }
+
+  function parseTimeToMs(str) {
+    const clean = String(str || "").trim().replace(",", ".");
+    if (!clean) return NaN;
+    const parts = clean.split(":");
+    if (parts.length === 2) {
+      const m = parseInt(parts[0], 10);
+      const s = parseFloat(parts[1]);
+      if (isNaN(m) || isNaN(s)) return NaN;
+      return (m * 60 + s) * 1000;
+    }
+    const sec = parseFloat(clean);
+    return isNaN(sec) ? NaN : sec * 1000;
+  }
+
+  // Converte vetor de tempos acumulados [40000, 82000] em parciais isoladas [40000, 42000]
+  function getIsolatedSplits(laps) {
+    if (!Array.isArray(laps) || !laps.length) return [];
+    const out = [];
+    for (let i = 0; i < laps.length; i++) {
+      out.push(i === 0 ? laps[0] : Math.max(0, laps[i] - laps[i - 1]));
+    }
+    return out;
+  }
+
+  function renderSplitsPillsHtml(laps, stroke) {
+    const splits = getIsolatedSplits(laps);
+    if (!splits.length) return "";
+    const medleyStyles = ["Borb", "Costas", "Peito", "Livre"];
+    return '<div class="splits-grid">' + splits.map(function(spMs, idx) {
+      let deltaHtml = "";
+      if (idx > 0) {
+        const diff = (spMs - splits[idx - 1]) / 1000;
+        if (diff < -0.05) {
+          deltaHtml = '<span style="color:var(--emerald-txt);">(' + diff.toFixed(2) + 's ⬇)</span>';
+        } else if (diff > 0.05) {
+          deltaHtml = '<span style="color:var(--amber-txt);">(+' + diff.toFixed(2) + 's ⬆)</span>';
+        }
+      }
+      const lbl = (stroke === "Medley" && idx < 4) ? medleyStyles[idx] : ("V" + (idx + 1));
+      return '<span class="split-pill mono">' +
+        '<span style="color:var(--text-muted);">' + lbl + ':</span> ' +
+        '<strong style="color:var(--text-strong);">' + formatSecShort(spMs) + '</strong> ' + deltaHtml +
+      '</span>';
+    }).join("") + '</div>';
+  }
+
+  function checkPersonalBest(ath, stroke, distance, newMs) {
+    const prev = ath.times.filter(function(t) { return t.stroke === stroke && t.distance === distance; });
+    if (!prev.length) return true;
+    const minPrev = Math.min.apply(null, prev.map(function(t) { return t.ms; }));
+    return newMs < minPrev;
+  }
+
+  function syncDistancesForStroke(strokeElId, distElId) {
+    const stroke = document.getElementById(strokeElId).value;
+    const distEl = document.getElementById(distElId);
+    const list = STROKE_DISTANCES[stroke] || STROKE_DISTANCES.Livre;
+    const current = distEl.value;
+    distEl.innerHTML = list.map(function(d) { return '<option value="' + d + '">' + d + '</option>'; }).join("");
+    if (list.indexOf(current) >= 0) distEl.value = current;
+    else if (stroke === "Medley") distEl.value = "200m";
+    else if (list.indexOf("50m") >= 0) distEl.value = "50m";
+  }
+
+  function escapeHtml(text) {
+    return String(text || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  // =======================================================
+  // 5. NAVEGAÇÃO PRINCIPAL
+  // =======================================================
+  function switchMainTab(tab) {
+    document.querySelectorAll(".section").forEach(function(sec) { sec.classList.remove("active"); });
+    document.querySelectorAll("#mainNav .nav-btn").forEach(function(btn) {
+      btn.classList.toggle("active", btn.getAttribute("data-tab") === tab);
+    });
+    const target = document.getElementById("sec-" + tab);
+    if (target) target.classList.add("active");
+
+    if (tab === "multi") renderMultiLanes();
+    if (tab === "progression") renderProgressionSection();
+    if (tab === "strokes") renderStrokeSection();
+    if (tab === "periodization") renderPeriodization();
+    if (tab === "drills") renderDrillsSection();
+    if (tab === "pace") calculatePacePlan();
+    if (tab === "calendar") renderCalendar();
+    if (tab === "tips") renderTipsSection();
+  }
+
+  // =======================================================
+  // 6. CRONÔMETRO INDIVIDUAL
+  // =======================================================
+  let timerInterval = null;
+  let isRunning = false;
+  let startTime = 0;
+  let elapsedMs = 0;
+  let blockReactionSec = null;
+  let currentLaps = [];
+
+  function toggleTimer() {
+    ensureAudioContext();
+    const btn = document.getElementById("btnStartStop");
+    const badge = document.getElementById("statusBadge");
+
+    if (!isRunning) {
+      if (elapsedMs === 0) playStartHorn();
+      startTime = performance.now() - elapsedMs;
+      isRunning = true;
+      timerInterval = setInterval(function() {
+        elapsedMs = performance.now() - startTime;
+        document.getElementById("mainDisplay").textContent = formatMs(elapsedMs);
+      }, 20);
+
+      btn.textContent = "⏹️ Parar / Chegada";
+      btn.className = "btn btn-rose btn-lg";
+      badge.textContent = "EM PROVA / CRONOMETRANDO";
+      badge.className = "badge badge-emerald";
+
+      document.getElementById("btnBlockExit").disabled = blockReactionSec !== null;
+      document.getElementById("btnLap").disabled = false;
+      document.getElementById("btnSaveTime").disabled = true;
+    } else {
+      clearInterval(timerInterval);
+      isRunning = false;
+      elapsedMs = performance.now() - startTime;
+      document.getElementById("mainDisplay").textContent = formatMs(elapsedMs);
+
+      if (currentLaps.length === 0 || currentLaps[currentLaps.length - 1] !== Math.floor(elapsedMs)) {
+        currentLaps.push(Math.floor(elapsedMs));
+        renderLaps();
+      }
+      btn.textContent = "▶️ Continuar";
+      btn.className = "btn btn-emerald btn-lg";
+      badge.textContent = "FINALIZADO";
+      badge.className = "badge badge-amber";
+
+      document.getElementById("btnBlockExit").disabled = true;
+      document.getElementById("btnLap").disabled = true;
+      document.getElementById("btnSaveTime").disabled = false;
+
+      if (document.getElementById("chkAutoSaveSingle").checked) {
+        saveCurrentTime();
+      }
+    }
+  }
+
+  function recordBlockExit() {
+    if (!isRunning || blockReactionSec !== null) return;
+    blockReactionSec = +((performance.now() - startTime) / 1000).toFixed(2);
+    document.getElementById("reactionDisplay").textContent = blockReactionSec.toFixed(2) + " s";
+    document.getElementById("btnBlockExit").disabled = true;
+
+    const tag = document.getElementById("reactionTag");
+    if (blockReactionSec <= 0.65) { tag.textContent = "⚡ Saída Explosiva!"; tag.className = "badge badge-emerald"; }
+    else if (blockReactionSec <= 0.78) { tag.textContent = "✅ Boa Reação"; tag.className = "badge badge-cyan"; }
+    else { tag.textContent = "⚠️ Saída Lenta (>0.78s)"; tag.className = "badge badge-rose"; }
+  }
+
+  function recordLap() {
+    if (!isRunning) return;
+    currentLaps.push(Math.floor(performance.now() - startTime));
+    renderLaps();
+  }
+
+  function renderLaps() {
+    const list = document.getElementById("lapsList");
+    document.getElementById("lapCount").textContent = currentLaps.length + " parciais";
+    if (!currentLaps.length) {
+      list.innerHTML = '<p style="font-size:12px; color:var(--text-dim); margin:0;">Nenhuma parcial marcada nesta tomada.</p>';
+      return;
+    }
+    const stroke = document.getElementById("timerStroke").value;
+    const medleyStyles = ["Borboleta", "Costas", "Peito", "Livre"];
+    const splits = getIsolatedSplits(currentLaps);
+    list.innerHTML = currentLaps.map(function(lapMs, idx) {
+      const splitMs = splits[idx];
+      let delta = "";
+      if (idx > 0) {
+        const d = (splitMs - splits[idx - 1]) / 1000;
+        delta = d < 0
+          ? ' <span class="badge badge-emerald">' + d.toFixed(2) + 's</span>'
+          : ' <span class="badge badge-amber">+' + d.toFixed(2) + 's</span>';
+      }
+      const tag = (stroke === "Medley" && idx < 4) ? ' <span style="color:var(--amber-txt);">(' + medleyStyles[idx] + ')</span>' : "";
+      return '<div class="list-item">' +
+        '<span style="font-size:12px; font-weight:700; color:var(--text-muted);">Virada #' + (idx + 1) + tag + delta + '</span>' +
+        '<div style="text-align:right;">' +
+          '<span class="mono" style="font-weight:800; font-size:14px; color:var(--accent-text);">' + formatMs(splitMs) + '</span> ' +
+          '<span class="mono" style="font-size:11px; color:var(--text-muted);">(acum. ' + formatMs(lapMs) + ')</span>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    isRunning = false;
+    elapsedMs = 0;
+    blockReactionSec = null;
+    currentLaps = [];
+    document.getElementById("mainDisplay").textContent = "00:00.00";
+    document.getElementById("reactionDisplay").textContent = "--.-- s";
+    const tag = document.getElementById("reactionTag");
+    tag.textContent = "Aguardando sinal"; tag.className = "badge badge-slate";
+    const badge = document.getElementById("statusBadge");
+    badge.textContent = "PRONTO PARA PARTIDA"; badge.className = "badge badge-slate";
+    const btn = document.getElementById("btnStartStop");
+    btn.textContent = "📢 Sinal / Iniciar"; btn.className = "btn btn-emerald btn-lg";
+    document.getElementById("btnBlockExit").disabled = true;
+    document.getElementById("btnLap").disabled = true;
+    document.getElementById("btnSaveTime").disabled = true;
+    renderLaps();
+  }
+
+  function saveCurrentTime() {
+    if (elapsedMs <= 0) return;
+    const ath = getActiveAthlete();
+    const stroke = document.getElementById("timerStroke").value;
+    const distance = document.getElementById("timerDistance").value;
+    const msFinal = Math.floor(elapsedMs);
+    const isPB = checkPersonalBest(ath, stroke, distance, msFinal);
+
+    ath.times.unshift({
+      id: Date.now(),
+      stroke: stroke,
+      distance: distance,
+      ms: msFinal,
+      reaction: blockReactionSec,
+      startType: document.getElementById("timerStartType").value,
+      pool: document.getElementById("timerPool").value,
+      laps: currentLaps.slice(),
+      date: new Date().toLocaleDateString("pt-BR")
+    });
+    saveData();
+    showToast((isPB ? "🏆 NOVO RECORDE! " : "✅ ") + ath.name + ": " + formatMs(msFinal) + " (" + currentLaps.length + " parciais salvas)");
+    resetTimer();
+  }
+
+  // Frequência de Braçada & SWOLF
+  let srStart = null;
+  function measureStrokeRate() {
+    const btn = document.getElementById("btnStrokeRate");
+    if (!srStart) {
+      srStart = performance.now();
+      btn.textContent = "Parar no 3º Ciclo";
+      btn.className = "btn btn-rose btn-sm";
+    } else {
+      const sec = (performance.now() - srStart) / 1000;
+      srStart = null;
+      const cpm = Math.round((3 / sec) * 60);
+      document.getElementById("strokeRateDisplay").textContent = cpm + " cic/min";
+      document.getElementById("strokeCycleTime").textContent = "Tempo 3 ciclos: " + sec.toFixed(2) + "s";
+      btn.textContent = "Iniciar 3 Ciclos";
+      btn.className = "btn btn-purple btn-sm";
+    }
+  }
+
+  function calcSwolf() {
+    const sec = parseFloat(document.getElementById("swolfSec").value);
+    const strokes = parseFloat(document.getElementById("swolfStrokes").value);
+    const box = document.getElementById("swolfResult");
+    if (isNaN(sec) || isNaN(strokes) || sec <= 0 || strokes <= 0) {
+      box.textContent = "Informe o tempo em segundos e o número de braçadas.";
+      return;
+    }
+    const score = Math.round(sec + strokes);
+    let label = "Nível Bom";
+    if (score <= 34) label = "🔥 Excelente Eficiência!";
+    else if (score >= 48) label = "🎯 Focar em alongar a braçada";
+    box.textContent = "SWOLF = " + score + " pontos (" + label + " — quanto menor, mais eficiente)";
+  }
+
+  // =======================================================
+  // 7. MULTI-RAIAS COM REMANEJAMENTO E SALVAMENTO DE PARCIAIS
+  // =======================================================
+  let multiLanes = [];
+  let multiLoop = null;
+
+  function initDefaultMultiLanes() {
+    if (!multiLanes.length && appData.athletes.length) {
+      appData.athletes.slice(0, 2).forEach(function(ath, i) {
+        multiLanes.push({
+          laneId: "lane_" + (Date.now() + i),
+          athleteId: ath.id,
+          stroke: ath.mainStroke || "Livre",
+          distance: "100m",
+          isRunning: false,
+          startTime: 0,
+          elapsedMs: 0,
+          reaction: null,
+          laps: [],
+          savedRecordId: null
+        });
+      });
+    }
+  }
+
+  function ensureMultiLoop() {
+    if (multiLoop) return;
+    multiLoop = setInterval(function() {
+      let any = false;
+      const now = performance.now();
+      multiLanes.forEach(function(lane) {
+        if (lane.isRunning) {
+          any = true;
+          lane.elapsedMs = now - lane.startTime;
+          const el = document.getElementById("lclock-" + lane.laneId);
+          if (el) el.textContent = formatMs(lane.elapsedMs);
+        }
+      });
+      if (!any) {
+        clearInterval(multiLoop);
+        multiLoop = null;
+      }
+    }, 25);
+  }
+
+  function moveLaneToIndex(fromIdx, toIdx) {
+    if (fromIdx === toIdx || fromIdx < 0 || toIdx < 0 || fromIdx >= multiLanes.length || toIdx >= multiLanes.length) return;
+    // Troca direta de raia (swap) para que colocar Francisco na Raia 2 troque instantaneamente com quem estava lá
+    const temp = multiLanes[fromIdx];
+    multiLanes[fromIdx] = multiLanes[toIdx];
+    multiLanes[toIdx] = temp;
+    const ath = appData.athletes.find(function(a) { return a.id === temp.athleteId; });
+    showToast((ath ? ath.name : "Atleta") + " movido para a Raia " + (toIdx + 1) + "!");
+    renderMultiLanes();
+  }
+
+  function saveLaneToAthlete(lane, silent) {
+    if (!lane) return false;
+    const msToSave = lane.elapsedMs > 0 ? Math.floor(lane.elapsedMs) : (lane.laps.length ? lane.laps[lane.laps.length - 1] : 0);
+    if (msToSave <= 0 && !lane.laps.length) return false;
+
+    const ath = appData.athletes.find(function(a) { return a.id === lane.athleteId; });
+    if (!ath) return false;
+
+    // Se já salvou esta tomada antes (ex: salvou parcial intermediária e depois finalizou), atualiza o mesmo registro sem duplicar!
+    const existing = lane.savedRecordId ? ath.times.find(function(t) { return t.id === lane.savedRecordId; }) : null;
+    if (existing) {
+      existing.ms = msToSave;
+      existing.reaction = lane.reaction;
+      existing.laps = lane.laps.slice();
+      existing.stroke = lane.stroke;
+      existing.distance = lane.distance;
+    } else {
+      const recId = Date.now() + Math.floor(Math.random() * 1000);
+      lane.savedRecordId = recId;
+      ath.times.unshift({
+        id: recId,
+        stroke: lane.stroke,
+        distance: lane.distance,
+        ms: msToSave,
+        reaction: lane.reaction,
+        startType: "Multi-Raias",
+        pool: document.getElementById("timerPool").value || "25m",
+        laps: lane.laps.slice(),
+        date: new Date().toLocaleDateString("pt-BR")
+      });
+    }
+    saveData();
+    if (!silent) {
+      showToast("💾 " + ath.name + ": " + formatMs(msToSave) + " (" + lane.laps.length + " parciais salvas!)");
+    }
+    return true;
+  }
+
+  function renderMultiLanes() {
+    const grid = document.getElementById("multiLanesGrid");
+    if (!multiLanes.length) {
+      grid.innerHTML = '<div class="card" style="grid-column:1/-1; text-align:center; color:var(--text-muted); font-size:13px;">Nenhuma raia adicionada. Selecione um atleta acima e clique em <strong>+ Adicionar Raia</strong>.</div>';
+      return;
+    }
+
+    const totalLanes = multiLanes.length;
+    grid.innerHTML = multiLanes.map(function(lane, idx) {
+      const ath = appData.athletes.find(function(a) { return a.id === lane.athleteId; }) || { name: "Atleta" };
+      const splits = getIsolatedSplits(lane.laps);
+
+      // Dropdown de remanejamento de raia
+      let laneOptions = "";
+      for (let n = 0; n < totalLanes; n++) {
+        laneOptions += '<option value="' + n + '"' + (n === idx ? " selected" : "") + '>Raia ' + (n + 1) + '</option>';
+      }
+
+      // Dropdown para trocar o atleta naquela raia rapidamente
+      const athOptions = appData.athletes.map(function(a) {
+        return '<option value="' + a.id + '"' + (a.id === lane.athleteId ? " selected" : "") + '>' + escapeHtml(a.name) + '</option>';
+      }).join("");
+
+      // Lista ao vivo das viradas / parciais
+      let splitsHtml = '<div style="color:var(--text-dim); text-align:center;">Toque em <strong>🏁 Parcial</strong> a cada virada para registrar</div>';
+      if (splits.length) {
+        splitsHtml = splits.map(function(spMs, sIdx) {
+          let diffBadge = "";
+          if (sIdx > 0) {
+            const d = (spMs - splits[sIdx - 1]) / 1000;
+            diffBadge = d < 0
+              ? '<span style="color:var(--emerald-txt); font-weight:800;">' + d.toFixed(2) + 's</span>'
+              : '<span style="color:var(--amber-txt); font-weight:800;">+' + d.toFixed(2) + 's</span>';
+          }
+          return '<div class="lane-split-row mono">' +
+            '<span><strong>Virada ' + (sIdx + 1) + ':</strong> <span style="color:var(--accent-text); font-weight:800;">' + formatSecShort(spMs) + '</span> ' + diffBadge + '</span>' +
+            '<span style="color:var(--text-muted);">acum. ' + formatMs(lane.laps[sIdx]) + '</span>' +
+          '</div>';
+        }).join("");
+      }
+
+      return '<div class="lane-card ' + (lane.isRunning ? "running" : "") + '">' +
+        '<div class="row-flex" style="justify-content:space-between; margin-bottom:8px; gap:5px;">' +
+          '<div class="row-flex" style="gap:5px; flex:1; min-width:0;">' +
+            '<select data-lane-move="' + idx + '" title="Remanejar para outra raia" style="width:auto; padding:4px 7px; font-size:11px; font-weight:800; background:var(--accent-soft); color:var(--accent-text); border-color:var(--accent);">' + laneOptions + '</select>' +
+            '<select data-lane-athlete="' + lane.laneId + '" style="flex:1; min-width:105px; padding:5px 8px; font-size:12px; font-weight:800;">' + athOptions + '</select>' +
+          '</div>' +
+          '<div class="row-flex" style="gap:3px;">' +
+            '<button type="button" class="btn btn-ghost btn-xs" title="Mover para raia anterior" data-lane-act="up" data-lane="' + lane.laneId + '" ' + (idx === 0 ? "disabled" : "") + '>⬆️</button>' +
+            '<button type="button" class="btn btn-ghost btn-xs" title="Mover para próxima raia" data-lane-act="down" data-lane="' + lane.laneId + '" ' + (idx === totalLanes - 1 ? "disabled" : "") + '>⬇️</button>' +
+            '<button type="button" class="btn btn-ghost btn-xs" title="Remover raia" data-lane-act="remove" data-lane="' + lane.laneId + '">✕</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="list-item" style="font-size:11px; margin-bottom:6px; padding:6px 10px;">' +
+          '<strong style="color:var(--accent-text);">' + lane.distance + ' ' + lane.stroke + '</strong>' +
+          '<span>Saída: <strong class="mono" style="color:var(--amber-txt);">' + (lane.reaction !== null ? lane.reaction.toFixed(2) + "s" : "--") + '</strong></span>' +
+          '<span>Viradas: <strong>' + lane.laps.length + '</strong></span>' +
+        '</div>' +
+
+        '<div id="lclock-' + lane.laneId + '" class="lane-clock mono">' + formatMs(lane.elapsedMs) + '</div>' +
+
+        '<div class="lane-splits-box">' + splitsHtml + '</div>' +
+
+        '<div class="grid-3" style="gap:6px; margin-bottom:8px;">' +
+          '<button type="button" class="btn ' + (lane.isRunning ? "btn-rose" : "btn-emerald") + ' btn-sm" data-lane-act="toggle" data-lane="' + lane.laneId + '">' + (lane.isRunning ? "⏹️ Chegada" : "▶️ Iniciar") + '</button>' +
+          '<button type="button" class="btn btn-amber btn-sm" data-lane-act="exit" data-lane="' + lane.laneId + '" ' + ((!lane.isRunning || lane.reaction !== null) ? "disabled" : "") + '>⚡ Saída</button>' +
+          '<button type="button" class="btn btn-cyan btn-sm" data-lane-act="lap" data-lane="' + lane.laneId + '" ' + (!lane.isRunning ? "disabled" : "") + '>🏁 Parcial</button>' +
+        '</div>' +
+
+        '<div class="row-flex">' +
+          '<button type="button" class="btn ' + (lane.savedRecordId ? "btn-emerald" : "btn-accent") + ' btn-sm" style="flex:1;" data-lane-act="save" data-lane="' + lane.laneId + '" ' + ((lane.elapsedMs <= 0 && !lane.laps.length) ? "disabled" : "") + '>' + (lane.savedRecordId ? "✅ Parciais Salvas (Atualizar)" : "💾 Salvar Parciais em " + escapeHtml(ath.name)) + '</button>' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-lane-act="reset" data-lane="' + lane.laneId + '">↺ Zerar</button>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+  }
+
+  function handleLaneAction(act, laneId) {
+    ensureAudioContext();
+    const idx = multiLanes.findIndex(function(l) { return l.laneId === laneId; });
+    if (idx < 0) return;
+    const lane = multiLanes[idx];
+
+    if (act === "remove") {
+      multiLanes.splice(idx, 1);
+      renderMultiLanes();
+      return;
+    }
+    if (act === "up") { moveLaneToIndex(idx, idx - 1); return; }
+    if (act === "down") { moveLaneToIndex(idx, idx + 1); return; }
+
+    if (act === "toggle") {
+      if (!lane.isRunning) {
+        if (lane.elapsedMs === 0) playStartHorn();
+        lane.startTime = performance.now() - lane.elapsedMs;
+        lane.isRunning = true;
+        ensureMultiLoop();
+      } else {
+        lane.isRunning = false;
+        lane.elapsedMs = performance.now() - lane.startTime;
+        if (!lane.laps.length || Math.abs(lane.laps[lane.laps.length - 1] - Math.floor(lane.elapsedMs)) > 150) {
+          lane.laps.push(Math.floor(lane.elapsedMs));
+        }
+        if (document.getElementById("chkAutoSaveMulti").checked) {
+          saveLaneToAthlete(lane, false);
+        }
+      }
+    } else if (act === "exit" && lane.isRunning && lane.reaction === null) {
+      lane.reaction = +((performance.now() - lane.startTime) / 1000).toFixed(2);
+    } else if (act === "lap" && lane.isRunning) {
+      lane.laps.push(Math.floor(performance.now() - lane.startTime));
+      // Se auto-save ligado, já grava/atualiza a parcial na ficha do atleta instantaneamente!
+      if (document.getElementById("chkAutoSaveMulti").checked) {
+        saveLaneToAthlete(lane, true);
+      }
+    } else if (act === "reset") {
+      lane.isRunning = false;
+      lane.elapsedMs = 0;
+      lane.reaction = null;
+      lane.laps = [];
+      lane.savedRecordId = null;
+    } else if (act === "save") {
+      saveLaneToAthlete(lane, false);
+    }
+    renderMultiLanes();
+  }
+
+  function startAllLanes() {
+    if (!multiLanes.length) return;
+    ensureAudioContext();
+    playStartHorn();
+    const now = performance.now();
+    multiLanes.forEach(function(lane) {
+      if (!lane.isRunning) {
+        lane.startTime = now - lane.elapsedMs;
+        lane.isRunning = true;
+      }
+    });
+    ensureMultiLoop();
+    renderMultiLanes();
+  }
+
+  function startStaggeredLanes() {
+    if (!multiLanes.length) return;
+    ensureAudioContext();
+    showToast("Largada escalonada: 1 raia a cada 5s!");
+    multiLanes.forEach(function(lane, idx) {
+      setTimeout(function() {
+        const cur = multiLanes.find(function(l) { return l.laneId === lane.laneId; });
+        if (cur && !cur.isRunning) {
+          playStartHorn("whistle");
+          cur.startTime = performance.now() - cur.elapsedMs;
+          cur.isRunning = true;
+          ensureMultiLoop();
+          renderMultiLanes();
+        }
+      }, idx * 5000);
+    });
+  }
+
+  // =======================================================
+  // 8. PROGRESSÃO & HISTÓRICO DE PARCIAIS POR ATLETA
+  // =======================================================
+  let progSelectedAthleteId = null;
+
+  function renderProgressionSection() {
+    const query = (document.getElementById("progSearchInput").value || "").trim().toLowerCase();
+    const strokeFilter = document.getElementById("progStrokeFilter").value;
+    const distFilter = document.getElementById("progDistFilter").value;
+
+    const matching = appData.athletes.filter(function(a) {
+      return !query || a.name.toLowerCase().indexOf(query) >= 0;
+    });
+
+    if (!progSelectedAthleteId || !appData.athletes.some(function(a) { return a.id === progSelectedAthleteId; })) {
+      progSelectedAthleteId = appData.activeAthleteId || appData.athletes[0].id;
+    }
+    if (query && matching.length > 0 && !matching.some(function(a) { return a.id === progSelectedAthleteId; })) {
+      progSelectedAthleteId = matching[0].id;
+    }
+
+    // Chips de seleção rápida de atleta
+    const chipsBox = document.getElementById("progAthleteChips");
+    if (!matching.length) {
+      chipsBox.innerHTML = '<span style="font-size:12px; color:var(--rose-txt);">Nenhum atleta encontrado com "' + escapeHtml(query) + '".</span>';
+    } else {
+      chipsBox.innerHTML = matching.map(function(a) {
+        return '<button type="button" class="athlete-chip ' + (a.id === progSelectedAthleteId ? "active" : "") + '" data-prog-ath="' + a.id + '">' +
+          '🏊 ' + escapeHtml(a.name) + ' (' + a.times.length + ')' +
+        '</button>';
+      }).join("");
+    }
+
+    const ath = appData.athletes.find(function(a) { return a.id === progSelectedAthleteId; }) || getActiveAthlete();
+    document.getElementById("progCurrentAthleteTitle").textContent = ath.name;
+
+    const filtered = ath.times.filter(function(t) {
+      const okS = strokeFilter === "ALL" || t.stroke === strokeFilter;
+      const okD = distFilter === "ALL" || t.distance === distFilter;
+      return okS && okD;
+    });
+
+    document.getElementById("progTotalCount").textContent = filtered.length + " registro(s)";
+
+    // KPIs
+    const kpiBox = document.getElementById("progKpiGrid");
+    const bestMs = filtered.length ? Math.min.apply(null, filtered.map(function(t) { return t.ms; })) : null;
+    const latest = filtered.length ? filtered[0] : null;
+    let evolutionTxt = "--";
+    let evolutionColor = "var(--accent-text)";
+    if (filtered.length >= 2) {
+      // Comparar última tomada com a mais antiga do filtro (ou mesma prova)
+      const sameEvent = filtered.filter(function(t) { return t.stroke === latest.stroke && t.distance === latest.distance; });
+      if (sameEvent.length >= 2) {
+        const oldest = sameEvent[sameEvent.length - 1];
+        const diffSec = (latest.ms - oldest.ms) / 1000;
+        evolutionTxt = (diffSec <= 0 ? diffSec.toFixed(2) : "+" + diffSec.toFixed(2)) + "s";
+        evolutionColor = diffSec <= 0 ? "var(--emerald-txt)" : "var(--amber-txt)";
+      }
+    }
+    const totalSplitsSaved = filtered.reduce(function(acc, t) { return acc + (Array.isArray(t.laps) ? t.laps.length : 0); }, 0);
+
+    kpiBox.innerHTML =
+      '<div class="pb-box"><div class="dist">🏆 Melhor Tempo</div><div class="val mono">' + (bestMs ? formatMs(bestMs) : "--:--.--") + '</div><div class="cnt">' + (strokeFilter === "ALL" ? "Filtro atual" : strokeFilter) + '</div></div>' +
+      '<div class="pb-box"><div class="dist">⏱️ Última Tomada</div><div class="val mono">' + (latest ? formatMs(latest.ms) : "--:--.--") + '</div><div class="cnt">' + (latest ? latest.distance + " " + latest.stroke : "Sem dados") + '</div></div>' +
+      '<div class="pb-box"><div class="dist">📈 Evolução na Prova</div><div class="val mono" style="color:' + evolutionColor + ';">' + evolutionTxt + '</div><div class="cnt">Última vs 1ª tomada</div></div>' +
+      '<div class="pb-box"><div class="dist">🏁 Parciais Salvas</div><div class="val mono">' + totalSplitsSaved + '</div><div class="cnt">Viradas registradas</div></div>';
+
+    // Gráfico 1: Evolução entre sessões
+    const sessChart = document.getElementById("progSessionChart");
+    const sameSeries = latest
+      ? filtered.filter(function(t) { return t.stroke === latest.stroke && t.distance === latest.distance; }).slice(0, 7).reverse()
+      : [];
+    if (sameSeries.length >= 1) {
+      const maxM = Math.max.apply(null, sameSeries.map(function(s) { return s.ms; }));
+      const minM = Math.min.apply(null, sameSeries.map(function(s) { return s.ms; }));
+      sessChart.innerHTML = '<div style="font-size:12px; font-weight:800; color:var(--accent-text); margin-bottom:8px;">📊 Evolução por Data — ' + latest.distance + ' ' + latest.stroke + '</div>' +
+        sameSeries.map(function(s) {
+          const pct = maxM === minM ? 70 : Math.round(35 + ((s.ms - minM) / (maxM - minM)) * 65);
+          const isBest = s.ms === minM;
+          return '<div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:11px;">' +
+            '<span style="width:68px; color:var(--text-muted);">' + s.date + '</span>' +
+            '<div style="flex:1; background:var(--bg-input); border-radius:99px; height:14px; overflow:hidden;">' +
+              '<div style="width:' + pct + '%; height:100%; background:' + (isBest ? "var(--emerald)" : "var(--accent)") + '; border-radius:99px;"></div>' +
+            '</div>' +
+            '<span class="mono" style="width:70px; text-align:right; font-weight:800; color:' + (isBest ? "var(--emerald-txt)" : "var(--text-strong)") + ';">' + formatMs(s.ms) + '</span>' +
+          '</div>';
+        }).join("");
+    } else {
+      sessChart.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center; padding:12px;">Salve tempos para visualizar o gráfico de evolução por data.</div>';
+    }
+
+    // Gráfico 2: Progressão das Viradas (Parciais) da última tomada com parciais
+    const splitsChart = document.getElementById("progSplitsChart");
+    const withSplits = filtered.find(function(t) { return Array.isArray(t.laps) && t.laps.length >= 1; });
+    if (withSplits) {
+      const iso = getIsolatedSplits(withSplits.laps);
+      const maxS = Math.max.apply(null, iso);
+      const minS = Math.min.apply(null, iso);
+      splitsChart.innerHTML = '<div style="font-size:12px; font-weight:800; color:var(--accent-text); margin-bottom:8px;">🏁 Progressão das Viradas — ' + withSplits.distance + ' ' + withSplits.stroke + ' (' + withSplits.date + ')</div>' +
+        iso.map(function(spMs, idx) {
+          const pct = maxS === minS ? 72 : Math.round(38 + ((spMs - minS) / (maxS - minS)) * 62);
+          const fasterThanPrev = idx > 0 && spMs < iso[idx - 1];
+          const barColor = (spMs === minS || fasterThanPrev) ? "var(--emerald)" : "var(--accent)";
+          return '<div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:11px;">' +
+            '<span style="width:68px; color:var(--text-muted);">Virada #' + (idx + 1) + '</span>' +
+            '<div style="flex:1; background:var(--bg-input); border-radius:99px; height:14px; overflow:hidden;">' +
+              '<div style="width:' + pct + '%; height:100%; background:' + barColor + '; border-radius:99px;"></div>' +
+            '</div>' +
+            '<span class="mono" style="width:70px; text-align:right; font-weight:800; color:' + (spMs === minS ? "var(--emerald-txt)" : "var(--text-strong)") + ';">' + formatSecShort(spMs) + '</span>' +
+          '</div>';
+        }).join("");
+    } else {
+      splitsChart.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center; padding:12px;">Marque parciais/viradas no Cronômetro ou Multi-Raias para ver a progressão de cada virada.</div>';
+    }
+
+    // Lista detalhada com TODAS as parciais salvas
+    const histBox = document.getElementById("progHistoryList");
+    if (!filtered.length) {
+      histBox.innerHTML = '<p style="font-size:12px; color:var(--text-dim); margin:0;">Nenhum tempo salvo para ' + escapeHtml(ath.name) + ' neste filtro.</p>';
+    } else {
+      histBox.innerHTML = filtered.map(function(t) {
+        return '<div class="list-item" style="align-items:flex-start;">' +
+          '<div style="flex:1;">' +
+            '<div class="row-flex" style="gap:6px;">' +
+              '<span class="badge badge-cyan">' + escapeHtml(t.distance) + ' ' + escapeHtml(t.stroke) + '</span>' +
+              '<strong class="mono" style="font-size:16px; color:var(--text-strong);">' + formatMs(t.ms) + '</strong>' +
+              (t.reaction ? '<span class="badge badge-amber">Saída: ' + t.reaction + 's</span>' : '') +
+              '<span style="font-size:11px; color:var(--text-muted);">' + t.date + ' • ' + (t.startType || "Treino") + '</span>' +
+            '</div>' +
+            renderSplitsPillsHtml(t.laps, t.stroke) +
+          '</div>' +
+          '<button type="button" class="btn btn-ghost btn-xs" data-prog-del="' + t.id + '" title="Excluir tomada">🗑️</button>' +
+        '</div>';
+      }).join("");
+    }
+
+    renderTeamRanking();
+  }
+
+  function renderTeamRanking() {
+    const stroke = document.getElementById("rankStroke").value;
+    const dist = document.getElementById("rankDist").value;
+    const rows = [];
+
+    appData.athletes.forEach(function(ath) {
+      const matching = ath.times.filter(function(t) { return t.stroke === stroke && t.distance === dist; });
+      if (matching.length) {
+        const bestRec = matching.reduce(function(best, cur) { return cur.ms < best.ms ? cur : best; }, matching[0]);
+        rows.push({ name: ath.name, category: ath.category, ms: bestRec.ms, reaction: bestRec.reaction, date: bestRec.date, laps: bestRec.laps });
+      }
+    });
+    rows.sort(function(a, b) { return a.ms - b.ms; });
+
+    const box = document.getElementById("teamRankingList");
+    if (!rows.length) {
+      box.innerHTML = '<p style="font-size:12px; color:var(--text-dim); margin:0;">Nenhum atleta com tempo registrado em ' + dist + ' ' + stroke + '.</p>';
+      return;
+    }
+    const medals = ["🥇", "🥈", "🥉"];
+    box.innerHTML = rows.map(function(r, idx) {
+      return '<div class="list-item">' +
+        '<div>' +
+          '<strong>' + (medals[idx] || ("#" + (idx + 1))) + ' ' + escapeHtml(r.name) + '</strong> ' +
+          '<span style="font-size:11px; color:var(--text-muted);">(' + escapeHtml(r.category || "Geral") + ' • ' + r.date + ')</span>' +
+        '</div>' +
+        '<div class="row-flex" style="gap:8px;">' +
+          (r.reaction ? '<span class="badge badge-amber">Saída ' + r.reaction + 's</span>' : '') +
+          '<strong class="mono" style="font-size:15px; color:var(--accent-text);">' + formatMs(r.ms) + '</strong>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+  }
+
+  function copyProgressionWhatsApp() {
+    const ath = appData.athletes.find(function(a) { return a.id === progSelectedAthleteId; }) || getActiveAthlete();
+    if (!ath.times.length) return showToast("Este atleta ainda não possui tempos salvos.");
+
+    const lines = [
+      "🌟 *DEIXA BRILHAR — PROGRESSÃO DE " + ath.name.toUpperCase() + "*",
+      ""
+    ];
+    ath.times.slice(0, 6).forEach(function(t) {
+      const splits = getIsolatedSplits(t.laps);
+      const splitTxt = splits.length ? " | Viradas: " + splits.map(function(s, i) { return "V" + (i + 1) + " " + formatSecShort(s); }).join(" → ") : "";
+      lines.push("• " + t.date + " — *" + t.distance + " " + t.stroke + "*: *" + formatMs(t.ms) + "*" + splitTxt);
+    });
+    const txt = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function() { showToast("Progressão copiada para o WhatsApp!"); });
+    } else {
+      prompt("Copie a progressão:", txt);
+    }
+  }
+
+  // =======================================================
+  // 9. TEMPOS POR NADO (RECORDES)
+  // =======================================================
+  let activeStrokeTab = "Livre";
+  function selectStrokeTab(stroke) {
+    activeStrokeTab = stroke;
+    document.querySelectorAll("#strokeTabsBar .stroke-tab").forEach(function(b) {
+      b.classList.toggle("active", b.getAttribute("data-stroke") === stroke);
+    });
+    document.getElementById("currentStrokeTitle").textContent = stroke;
+    renderStrokeSection();
+  }
+
+  function renderStrokeSection() {
+    const ath = getActiveAthlete();
+    const strokeTimes = ath.times.filter(function(t) { return t.stroke === activeStrokeTab; });
+    const distances = activeStrokeTab === "Medley"
+      ? ["100m", "200m", "400m"]
+      : activeStrokeTab === "Livre"
+        ? ["50m", "100m", "200m", "400m", "800m", "1500m"]
+        : ["25m", "50m", "100m", "200m"];
+
+    document.getElementById("pbGrid").innerHTML = distances.map(function(dist) {
+      const dTimes = strokeTimes.filter(function(t) { return t.distance === dist; });
+      const best = dTimes.length ? Math.min.apply(null, dTimes.map(function(t) { return t.ms; })) : null;
+      return '<div class="pb-box">' +
+        '<div class="dist">Recorde ' + dist + '</div>' +
+        '<div class="val mono">' + (best ? formatMs(best) : "--:--.--") + '</div>' +
+        '<div class="cnt">' + dTimes.length + ' registro(s)</div>' +
+      '</div>';
+    }).join("");
+
+    const list = document.getElementById("strokeHistoryList");
+    if (!strokeTimes.length) {
+      list.innerHTML = '<p style="font-size:12px; color:var(--text-dim); margin:0;">Nenhum tempo registrado para ' + activeStrokeTab + '.</p>';
+      return;
+    }
+
+    list.innerHTML = strokeTimes.map(function(t) {
+      return '<div class="list-item" style="align-items:flex-start;">' +
+        '<div style="flex:1;">' +
+          '<div class="row-flex" style="gap:6px;">' +
+            '<span class="badge badge-cyan">' + t.distance + '</span>' +
+            '<strong class="mono" style="font-size:16px;">' + formatMs(t.ms) + '</strong>' +
+            (t.reaction ? '<span class="badge badge-amber">Saída: ' + t.reaction + 's</span>' : '') +
+          '</div>' +
+          '<div style="font-size:11px; color:var(--text-muted); margin-top:4px;">' + t.date + ' • Piscina ' + (t.pool || "25m") + '</div>' +
+          renderSplitsPillsHtml(t.laps, t.stroke) +
+        '</div>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-del-time="' + t.id + '">🗑️</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  // =======================================================
+  // 10. PERIODIZAÇÃO DO DIA (TREINOS)
+  // =======================================================
+  function renderPeriodization() {
+    const dateEl = document.getElementById("workoutDate");
+    if (!dateEl.value) dateEl.value = todayISO;
+    const selectedDate = dateEl.value;
+
+    const blocks = appData.workouts
+      .filter(function(w) { return w.date === selectedDate; })
+      .sort(function(a, b) { return a.block.localeCompare(b.block); });
+
+    const total = blocks.reduce(function(acc, b) { return acc + (parseInt(b.meters, 10) || 0); }, 0);
+    document.getElementById("totalMetersBadge").textContent = "Volume: " + total + "m";
+
+    const zoneBox = document.getElementById("zoneSummaryBar");
+    if (blocks.length > 0 && total > 0) {
+      const byZone = {};
+      blocks.forEach(function(b) {
+        const z = b.zone.split(" ")[0];
+        byZone[z] = (byZone[z] || 0) + (parseInt(b.meters, 10) || 0);
+      });
+      zoneBox.innerHTML = '<div style="font-size:11px; font-weight:800; color:var(--text-muted); margin-bottom:6px;">DISTRIBUIÇÃO POR ZONA</div>' +
+        '<div class="row-flex">' + Object.keys(byZone).map(function(k) {
+          const pct = Math.round((byZone[k] / total) * 100);
+          return '<span class="badge badge-slate">' + k + ': <strong style="color:var(--accent-text);">' + byZone[k] + 'm</strong> (' + pct + '%)</span>';
+        }).join("") + '</div>';
+      zoneBox.style.display = "block";
+    } else {
+      zoneBox.style.display = "none";
+    }
+
+    const list = document.getElementById("workoutBlocksList");
+    if (!blocks.length) {
+      list.innerHTML = '<div class="card" style="text-align:center; color:var(--text-muted); font-size:12px;">Nenhuma série cadastrada para esta data. Monte o treino do dia acima!</div>';
+      return;
+    }
+
+    list.innerHTML = blocks.map(function(w) {
+      return '<div class="list-item" style="' + (w.done ? "opacity:0.65; border-color:var(--emerald);" : "") + '">' +
+        '<label style="display:flex; align-items:flex-start; gap:10px; flex:1; cursor:pointer;">' +
+          '<input type="checkbox" data-toggle-wo="' + w.id + '" ' + (w.done ? "checked" : "") + ' style="width:18px; height:18px; margin-top:2px; accent-color:var(--accent);">' +
+          '<div>' +
+            '<div class="row-flex" style="gap:5px; margin-bottom:4px;">' +
+              '<span class="badge badge-cyan">' + escapeHtml(w.block) + '</span>' +
+              '<span class="badge badge-amber">' + escapeHtml(w.zone) + '</span>' +
+              '<strong class="mono" style="font-size:12px;">' + w.meters + 'm</strong>' +
+              '<span style="font-size:11px; color:var(--text-muted);">• ' + escapeHtml(w.interval) + '</span>' +
+            '</div>' +
+            '<div style="font-size:13px; ' + (w.done ? "text-decoration:line-through; color:var(--text-dim);" : "") + '">' + escapeHtml(w.desc) + '</div>' +
+          '</div>' +
+        '</label>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-del-wo="' + w.id + '">🗑️</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  function copyWorkoutWhatsApp() {
+    const selectedDate = document.getElementById("workoutDate").value || todayISO;
+    const blocks = appData.workouts
+      .filter(function(w) { return w.date === selectedDate; })
+      .sort(function(a, b) { return a.block.localeCompare(b.block); });
+    if (!blocks.length) return showToast("Cadastre ao menos 1 bloco no treino de hoje.");
+
+    const total = blocks.reduce(function(acc, b) { return acc + (parseInt(b.meters, 10) || 0); }, 0);
+    const lines = [
+      "🌟 *DEIXA BRILHAR — TREINO DO DIA (" + selectedDate.split("-").reverse().join("/") + ")*",
+      "🏊 *Volume Total:* " + total + "m",
+      ""
+    ];
+    blocks.forEach(function(b) {
+      lines.push("*" + b.block + "* (" + b.meters + "m | " + b.zone + ")");
+      lines.push("• " + b.desc + " — Saída: " + b.interval);
+      lines.push("");
+    });
+    const text = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() { showToast("Treino copiado para o WhatsApp!"); });
+    } else {
+      prompt("Copie o treino:", text);
+    }
+  }
+
+  // =======================================================
+  // 11. EDUCATIVOS, PACE, CALENDÁRIO, DICAS
+  // =======================================================
+  function populateDrillSelect() {
+    const stroke = document.getElementById("drillStrokeFilter").value;
+    const list = (DEFAULT_DRILLS[stroke] || []).concat(appData.customDrills[stroke] || []);
+    document.getElementById("drillNameSelect").innerHTML = list.map(function(d) {
+      return '<option value="' + escapeHtml(d) + '">' + escapeHtml(d) + '</option>';
+    }).join("");
+  }
+
+  function renderDrillsSection() {
+    const ath = getActiveAthlete();
+    const list = document.getElementById("loggedDrillsList");
+    if (!ath.drills.length) {
+      list.innerHTML = '<p style="font-size:12px; color:var(--text-dim); margin:0;">Nenhum educativo registrado ainda.</p>';
+      return;
+    }
+    list.innerHTML = ath.drills.map(function(d) {
+      return '<div class="list-item">' +
+        '<div>' +
+          '<div class="row-flex" style="gap:6px;"><span class="badge badge-cyan">' + escapeHtml(d.stroke) + '</span><strong style="font-size:13px;">' + escapeHtml(d.name) + '</strong></div>' +
+          '<div style="font-size:11px; color:var(--text-muted); margin-top:4px;">Volume: <strong>' + escapeHtml(d.meters) + '</strong> • ' + escapeHtml(d.quality) + ' • ' + d.date + '</div>' +
+        '</div>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-del-drill="' + d.id + '">🗑️</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  function calculatePacePlan() {
+    const totalDist = parseInt(document.getElementById("paceDistance").value, 10) || 200;
+    const totalMs = parseTimeToMs(document.getElementById("paceTargetTime").value);
+    const splitSize = parseInt(document.getElementById("paceSplitSize").value, 10) || 50;
+    const strategy = document.getElementById("paceStrategy").value;
+    const sumBox = document.getElementById("paceSummaryCards");
+    const tblBox = document.getElementById("paceSplitsTable");
+
+    if (!totalMs || isNaN(totalMs) || totalMs <= 0) {
+      sumBox.innerHTML = "";
+      tblBox.innerHTML = '<p style="font-size:12px; color:var(--rose-txt);">Digite um tempo válido (ex: 02:10.00).</p>';
+      return;
+    }
+
+    const pace50 = (totalMs / totalDist) * 50;
+    const pace100 = (totalMs / totalDist) * 100;
+    const speed = (totalDist / (totalMs / 1000)).toFixed(2);
+
+    sumBox.innerHTML =
+      '<div class="pb-box"><div class="dist">Média / 50m</div><div class="val mono">' + formatMs(pace50) + '</div></div>' +
+      '<div class="pb-box"><div class="dist">Média / 100m</div><div class="val mono" style="color:var(--emerald-txt);">' + formatMs(pace100) + '</div></div>' +
+      '<div class="pb-box"><div class="dist">Velocidade</div><div class="val mono" style="color:var(--amber-txt);">' + speed + ' m/s</div></div>';
+
+    const numSplits = Math.max(1, Math.floor(totalDist / splitSize));
+    const weights = [];
+    for (let i = 0; i < numSplits; i++) {
+      if (strategy === "negative" && numSplits > 1) weights.push(i < numSplits / 2 ? 1.015 : 0.985);
+      else if (strategy === "faststart" && numSplits > 1) weights.push(i === 0 ? 0.94 : 1.0 + (0.06 / (numSplits - 1)));
+      else weights.push(1.0);
+    }
+    const wSum = weights.reduce(function(a, b) { return a + b; }, 0);
+    let acc = 0;
+    tblBox.innerHTML = weights.map(function(w, idx) {
+      const sp = (totalMs * w) / wSum;
+      acc += sp;
+      return '<div class="list-item">' +
+        '<strong>' + ((idx + 1) * splitSize) + 'm</strong>' +
+        '<div class="row-flex" style="gap:12px;">' +
+          '<span class="mono" style="color:var(--accent-text); font-weight:700; font-size:12px;">Parcial: ' + formatMs(sp) + '</span>' +
+          '<span class="mono" style="font-weight:800; font-size:13px;">Passagem: ' + formatMs(acc) + '</span>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+  }
+
+  function calculateCSS() {
+    const t400 = parseTimeToMs(document.getElementById("css400").value) / 1000;
+    const t200 = parseTimeToMs(document.getElementById("css200").value) / 1000;
+    const box = document.getElementById("cssResultBox");
+    if (isNaN(t400) || isNaN(t200) || t400 <= t200) {
+      box.innerHTML = '<span style="font-size:12px; color:var(--rose-txt);">Informe tempos válidos (400m deve ser maior que 200m).</span>';
+      return;
+    }
+    const pace100Sec = (t400 - t200) / 2;
+    box.innerHTML = '<div class="grid-4">' +
+      '<div class="pb-box"><div class="dist">A1 (Solto/100m)</div><div class="val mono" style="font-size:15px;">' + formatMs((pace100Sec + 8) * 1000) + '</div></div>' +
+      '<div class="pb-box"><div class="dist">A2 (Aeróbio/100m)</div><div class="val mono" style="font-size:15px; color:var(--emerald-txt);">' + formatMs((pace100Sec + 4) * 1000) + '</div></div>' +
+      '<div class="pb-box"><div class="dist">CSS / A3 (100m)</div><div class="val mono" style="font-size:15px;">' + formatMs(pace100Sec * 1000) + '</div></div>' +
+      '<div class="pb-box"><div class="dist">AN1 (Forte/100m)</div><div class="val mono" style="font-size:15px; color:var(--amber-txt);">' + formatMs(Math.max(20, pace100Sec - 4) * 1000) + '</div></div>' +
+    '</div>';
+  }
+
+  function renderCalendar() {
+    const list = document.getElementById("competitionsList");
+    if (!appData.competitions.length) {
+      list.innerHTML = '<div class="card" style="text-align:center; color:var(--text-muted); font-size:12px;">Nenhuma competição agendada.</div>';
+      return;
+    }
+    const now = new Date(); now.setHours(0, 0, 0, 0);
+    list.innerHTML = appData.competitions.map(function(c) {
+      const target = new Date(c.date + "T00:00:00");
+      const diff = Math.round((target - now) / 86400000);
+      let badge = '<span class="badge badge-slate">Realizada</span>';
+      if (diff > 0) badge = '<span class="badge badge-cyan">Faltam ' + diff + ' dia(s)</span>';
+      else if (diff === 0) badge = '<span class="badge badge-emerald">🔥 É HOJE!</span>';
+      return '<div class="card" style="padding:14px; display:flex; align-items:center; justify-content:space-between; gap:10px;">' +
+        '<div>' +
+          '<div class="row-flex" style="margin-bottom:4px;"><strong style="font-size:15px;">' + escapeHtml(c.name) + '</strong>' + badge + '</div>' +
+          '<div style="font-size:12px; color:var(--text-muted);">📅 ' + target.toLocaleDateString("pt-BR") + ' • 📍 ' + escapeHtml(c.location) + '</div>' +
+          '<div style="font-size:12px; margin-top:4px;"><strong>Provas:</strong> ' + escapeHtml(c.events) + '</div>' +
+        '</div>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-del-comp="' + c.id + '">🗑️</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  function renderTipsSection() {
+    const ath = getActiveAthlete();
+    document.getElementById("diagAthleteName").textContent = ath.name;
+    const reactions = ath.times.filter(function(t) { return t.reaction; }).map(function(t) { return t.reaction; });
+    const avgR = reactions.length ? (reactions.reduce(function(a, b) { return a + b; }, 0) / reactions.length).toFixed(2) : null;
+
+    const insights = [];
+    if (avgR) {
+      if (parseFloat(avgR) > 0.75) insights.push("⏱️ <strong>Tempo de Saída (" + avgR + "s):</strong> Acima de 0.75s. Trabalhar reação auditiva no bloco e entrada limpa.");
+      else insights.push("⚡ <strong>Ótima Saída (" + avgR + "s):</strong> Manter foco nas ondulações submersas em streamline antes da 1ª braçada.");
+    } else {
+      insights.push("📊 Use o botão <strong>Saiu do Bloco</strong> no cronômetro para gerar diagnóstico automático de reação.");
+    }
+    const weak = ath.drills.filter(function(d) { return d.quality.indexOf("Precisa") >= 0; });
+    if (weak.length) insights.push("🎯 <strong>Prioridade Técnica:</strong> Reforçar <em>" + escapeHtml(weak[0].name) + "</em> (" + escapeHtml(weak[0].stroke) + ").");
+    insights.push("🏊 <strong>Resumo da Ficha:</strong> " + ath.times.length + " tomada(s) de tempo e " + ath.drills.length + " educativo(s).");
+
+    document.getElementById("autoDiagnosisBox").innerHTML = insights.map(function(i) { return '<p style="margin:0 0 6px;">• ' + i + '</p>'; }).join("");
+
+    const stroke = document.getElementById("tipsStrokeSelect").value;
+    const tips = BIOMECHANICS_TIPS[stroke] || [];
+    document.getElementById("biomechanicsChecklist").innerHTML = tips.map(function(tip, idx) {
+      const key = stroke + "_" + idx;
+      const checked = !!(ath.checkedTips && ath.checkedTips[key]);
+      return '<label class="list-item" style="justify-content:flex-start; cursor:pointer;">' +
+        '<input type="checkbox" data-tip-key="' + key + '" ' + (checked ? "checked" : "") + ' style="width:18px; height:18px; accent-color:var(--accent);">' +
+        '<span style="font-size:13px; ' + (checked ? "text-decoration:line-through; color:var(--text-dim);" : "") + '">' + escapeHtml(tip) + '</span>' +
+      '</label>';
+    }).join("");
+
+    document.getElementById("coachNotesList").innerHTML = ath.notes.length
+      ? ath.notes.map(function(note, idx) {
+          return '<div class="list-item">' +
+            '<span style="font-size:13px;">▸ ' + escapeHtml(note) + '</span>' +
+            '<button type="button" class="btn btn-ghost btn-sm no-print" data-del-note="' + idx + '">✕</button>' +
+          '</div>';
+        }).join("")
+      : '<p style="font-size:12px; color:var(--text-dim); margin:0;">Nenhuma observação registrada.</p>';
+  }
+
+  function shareAthleteWhatsApp() {
+    const ath = getActiveAthlete();
+    const lines = [
+      "🌟 *DEIXA BRILHAR — FICHA DO ATLETA*",
+      "👤 *Atleta:* " + ath.name + " (" + (ath.category || "Geral") + ")",
+      "🏊 *Especialidade:* " + (ath.mainStroke || "Livre"),
+      ""
+    ];
+    if (ath.times.length) {
+      lines.push("⏱️ *Últimos Tempos & Viradas:*");
+      ath.times.slice(0, 5).forEach(function(t) {
+        const sp = getIsolatedSplits(t.laps);
+        const spTxt = sp.length ? " [" + sp.map(function(x) { return formatSecShort(x); }).join(" / ") + "]" : "";
+        lines.push("• " + t.distance + " " + t.stroke + ": *" + formatMs(t.ms) + "*" + spTxt);
+      });
+      lines.push("");
+    }
+    if (ath.notes.length) {
+      lines.push("💡 *Pontos de Melhoria:*");
+      ath.notes.slice(0, 4).forEach(function(n) { lines.push("• " + n); });
+    }
+    const txt = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function() { showToast("Ficha copiada para o WhatsApp!"); });
+    } else {
+      prompt("Copie a ficha:", txt);
+    }
+  }
+
+  // =======================================================
+  // 12. ATLETAS, MODAIS E EXPORTAÇÃO
+  // =======================================================
+  function renderAthleteSelect() {
+    const html = appData.athletes.map(function(a) {
+      return '<option value="' + a.id + '"' + (a.id === appData.activeAthleteId ? " selected" : "") + '>' + escapeHtml(a.name) + '</option>';
+    }).join("");
+    document.getElementById("athleteSelect").innerHTML = html;
+    const plain = appData.athletes.map(function(a) {
+      return '<option value="' + a.id + '">' + escapeHtml(a.name) + '</option>';
+    }).join("");
+    document.getElementById("multiAddAthleteSelect").innerHTML = plain;
+    document.getElementById("manAthlete").innerHTML = html;
+  }
+
+  function openModal(id) { document.getElementById(id).classList.add("open"); }
+  function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+
+  function openManualModalFor(athleteId, stroke) {
+    renderAthleteSelect();
+    document.getElementById("manAthlete").value = athleteId || appData.activeAthleteId;
+    document.getElementById("manStroke").value = stroke || activeStrokeTab || "Livre";
+    syncDistancesForStroke("manStroke", "manDist");
+    openModal("manualTimeModal");
+  }
+
+  function makeCrc32Table() {
+    const table = [];
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      table[n] = c;
+    }
+    return table;
+  }
+  const crcTable = makeCrc32Table();
+  function crc32(buf) {
+    let crc = -1;
+    for (let i = 0; i < buf.length; i++) crc = (crc >>> 8) ^ crcTable[(crc ^ buf[i]) & 0xFF];
+    return (crc ^ -1) >>> 0;
+  }
+
+  function downloadSelfHtml() {
+    const content = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    const blob = new Blob([content], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "index.html";
+    a.click();
+  }
+
+  function downloadSelfZip() {
+    const content = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    const enc = new TextEncoder();
+    const data = enc.encode(content);
+    const name = enc.encode("index.html");
+    const crc = crc32(data);
+    const size = data.length;
+
+    const lfh = new Uint8Array(30 + name.length);
+    const lfv = new DataView(lfh.buffer);
+    lfv.setUint32(0, 0x04034b50, true);
+    lfv.setUint16(4, 20, true);
+    lfv.setUint32(14, crc, true);
+    lfv.setUint32(18, size, true);
+    lfv.setUint32(22, size, true);
+    lfv.setUint16(26, name.length, true);
+    lfh.set(name, 30);
+
+    const cdh = new Uint8Array(46 + name.length);
+    const cdv = new DataView(cdh.buffer);
+    cdv.setUint32(0, 0x02014b50, true);
+    cdv.setUint16(4, 20, true);
+    cdv.setUint16(6, 20, true);
+    cdv.setUint32(16, crc, true);
+    cdv.setUint32(20, size, true);
+    cdv.setUint32(24, size, true);
+    cdv.setUint16(28, name.length, true);
+    cdv.setUint32(42, 0, true);
+    cdh.set(name, 46);
+
+    const eocd = new Uint8Array(22);
+    const eov = new DataView(eocd.buffer);
+    eov.setUint32(0, 0x06054b50, true);
+    eov.setUint16(8, 1, true);
+    eov.setUint16(10, 1, true);
+    eov.setUint32(12, cdh.length, true);
+    eov.setUint32(16, lfh.length + size, true);
+
+    const blob = new Blob([lfh, data, cdh, eocd], { type: "application/zip" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "Deixa_Brilhar_App-v7.zip";
+    a.click();
+  }
+
+  // =======================================================
+  // 13. REGISTRO DE TODOS OS EVENTOS
+  // =======================================================
+  document.getElementById("mainNav").addEventListener("click", function(e) {
+    const btn = e.target.closest(".nav-btn");
+    if (btn) switchMainTab(btn.getAttribute("data-tab"));
+  });
+
+  document.getElementById("athleteSelect").addEventListener("change", function(e) {
+    appData.activeAthleteId = e.target.value;
+    progSelectedAthleteId = e.target.value;
+    saveData();
+    renderStrokeSection();
+    renderDrillsSection();
+    renderTipsSection();
+    renderProgressionSection();
+  });
+
+  // Tema & Paleta
+  document.getElementById("btnToggleTheme").addEventListener("click", function() {
+    setTheme(appData.theme === "dark" ? "light" : "dark");
+  });
+  document.getElementById("btnOpenPaletteModal").addEventListener("click", function() { openModal("paletteModal"); });
+  document.getElementById("btnSetDark").addEventListener("click", function() { setTheme("dark"); });
+  document.getElementById("btnSetLight").addEventListener("click", function() { setTheme("light"); });
+  document.getElementById("paletteGrid").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-palette-pick]");
+    if (btn) setPalette(btn.getAttribute("data-palette-pick"));
+  });
+
+  document.getElementById("btnOpenAthleteModal").addEventListener("click", function() { openModal("athleteModal"); });
+  document.getElementById("btnOpenBackupModal").addEventListener("click", function() { openModal("backupModal"); });
+  document.getElementById("btnOpenManualTime").addEventListener("click", function() { openManualModalFor(appData.activeAthleteId, activeStrokeTab); });
+  document.getElementById("btnProgManualTime").addEventListener("click", function() {
+    const s = document.getElementById("progStrokeFilter").value;
+    openManualModalFor(progSelectedAthleteId || appData.activeAthleteId, s === "ALL" ? "Livre" : s);
+  });
+
+  document.querySelectorAll("[data-close]").forEach(function(btn) {
+    btn.addEventListener("click", function() { closeModal(btn.getAttribute("data-close")); });
+  });
+
+  document.getElementById("timerStroke").addEventListener("change", function() { syncDistancesForStroke("timerStroke", "timerDistance"); });
+  document.getElementById("multiAddStroke").addEventListener("change", function() { syncDistancesForStroke("multiAddStroke", "multiAddDist"); });
+  document.getElementById("manStroke").addEventListener("change", function() { syncDistancesForStroke("manStroke", "manDist"); });
+
+  // Cronômetro Individual
+  document.getElementById("btnTestHorn").addEventListener("click", function() { playStartHorn(); });
+  document.getElementById("btnStartStop").addEventListener("click", toggleTimer);
+  document.getElementById("btnBlockExit").addEventListener("click", recordBlockExit);
+  document.getElementById("btnLap").addEventListener("click", recordLap);
+  document.getElementById("btnSaveTime").addEventListener("click", saveCurrentTime);
+  document.getElementById("btnResetTimer").addEventListener("click", resetTimer);
+  document.getElementById("btnCommandStart").addEventListener("click", speakCommandAndStart);
+  document.getElementById("btnStrokeRate").addEventListener("click", measureStrokeRate);
+  document.getElementById("btnCalcSwolf").addEventListener("click", calcSwolf);
+
+  // Multi-Raias
+  document.getElementById("btnStartAllLanes").addEventListener("click", startAllLanes);
+  document.getElementById("btnStaggerStart").addEventListener("click", startStaggeredLanes);
+  document.getElementById("btnSaveAllLanes").addEventListener("click", function() {
+    let savedCount = 0;
+    multiLanes.forEach(function(l) { if (saveLaneToAthlete(l, true)) savedCount++; });
+    renderMultiLanes();
+    showToast(savedCount ? ("💾 " + savedCount + " raia(s) salva(s) nas fichas dos atletas!") : "Nenhuma raia com tempo para salvar.");
+  });
+  document.getElementById("btnResetAllLanes").addEventListener("click", function() {
+    multiLanes.forEach(function(l) { l.isRunning = false; l.elapsedMs = 0; l.reaction = null; l.laps = []; l.savedRecordId = null; });
+    renderMultiLanes();
+  });
+  document.getElementById("btnAddMultiLane").addEventListener("click", function() {
+    multiLanes.push({
+      laneId: "lane_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+      athleteId: document.getElementById("multiAddAthleteSelect").value,
+      stroke: document.getElementById("multiAddStroke").value,
+      distance: document.getElementById("multiAddDist").value,
+      isRunning: false,
+      startTime: 0,
+      elapsedMs: 0,
+      reaction: null,
+      laps: [],
+      savedRecordId: null
+    });
+    renderMultiLanes();
+  });
+  document.getElementById("multiLanesGrid").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-lane-act]");
+    if (btn) handleLaneAction(btn.getAttribute("data-lane-act"), btn.getAttribute("data-lane"));
+  });
+  document.getElementById("multiLanesGrid").addEventListener("change", function(e) {
+    if (e.target.hasAttribute("data-lane-move")) {
+      const fromIdx = Number(e.target.getAttribute("data-lane-move"));
+      const toIdx = Number(e.target.value);
+      moveLaneToIndex(fromIdx, toIdx);
+    } else if (e.target.hasAttribute("data-lane-athlete")) {
+      const lid = e.target.getAttribute("data-lane-athlete");
+      const lane = multiLanes.find(function(l) { return l.laneId === lid; });
+      if (lane) {
+        lane.athleteId = e.target.value;
+        lane.savedRecordId = null;
+        renderMultiLanes();
+      }
+    }
+  });
+
+  // Progressão
+  document.getElementById("progSearchInput").addEventListener("input", renderProgressionSection);
+  document.getElementById("progStrokeFilter").addEventListener("change", renderProgressionSection);
+  document.getElementById("progDistFilter").addEventListener("change", renderProgressionSection);
+  document.getElementById("btnCopyProgression").addEventListener("click", copyProgressionWhatsApp);
+  document.getElementById("rankStroke").addEventListener("change", renderTeamRanking);
+  document.getElementById("rankDist").addEventListener("change", renderTeamRanking);
+  document.getElementById("progAthleteChips").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-prog-ath]");
+    if (btn) {
+      progSelectedAthleteId = btn.getAttribute("data-prog-ath");
+      renderProgressionSection();
+    }
+  });
+  document.getElementById("progHistoryList").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-prog-del]");
+    if (btn) {
+      const id = Number(btn.getAttribute("data-prog-del"));
+      const ath = appData.athletes.find(function(a) { return a.id === progSelectedAthleteId; }) || getActiveAthlete();
+      ath.times = ath.times.filter(function(t) { return t.id !== id; });
+      saveData();
+      renderProgressionSection();
+      renderStrokeSection();
+    }
+  });
+
+  // Tempos por nado + Modal Manual com Parciais
+  document.getElementById("strokeTabsBar").addEventListener("click", function(e) {
+    const btn = e.target.closest(".stroke-tab");
+    if (btn) selectStrokeTab(btn.getAttribute("data-stroke"));
+  });
+  document.getElementById("strokeHistoryList").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-del-time]");
+    if (btn) {
+      const id = Number(btn.getAttribute("data-del-time"));
+      const ath = getActiveAthlete();
+      ath.times = ath.times.filter(function(t) { return t.id !== id; });
+      saveData();
+      renderStrokeSection();
+      renderProgressionSection();
+    }
+  });
+  document.getElementById("btnSaveManualTime").addEventListener("click", function() {
+    const targetAthId = document.getElementById("manAthlete").value;
+    const ath = appData.athletes.find(function(a) { return a.id === targetAthId; }) || getActiveAthlete();
+    const stroke = document.getElementById("manStroke").value;
+    const dist = document.getElementById("manDist").value;
+    const reaction = parseFloat(document.getElementById("manReaction").value) || null;
+    const rawSplits = document.getElementById("manSplitsInput").value.trim();
+
+    let lapsAccum = [];
+    let ms = parseTimeToMs(document.getElementById("manTime").value);
+
+    if (rawSplits) {
+      const tokens = rawSplits.split(/[,;]+/).map(function(s) { return s.trim(); }).filter(Boolean);
+      let runningSum = 0;
+      for (let i = 0; i < tokens.length; i++) {
+        const spMs = parseTimeToMs(tokens[i]);
+        if (isNaN(spMs) || spMs <= 0) return showToast("Parcial inválida: " + tokens[i]);
+        runningSum += Math.round(spMs);
+        lapsAccum.push(runningSum);
+      }
+      if (!ms || isNaN(ms)) ms = runningSum;
+    }
+
+    if (!ms || isNaN(ms)) return showToast("Informe o tempo total ou as viradas (ex: 55, 53, 50).");
+
+    ath.times.unshift({
+      id: Date.now(),
+      stroke: stroke,
+      distance: dist,
+      ms: Math.round(ms),
+      reaction: reaction,
+      startType: "Manual",
+      pool: "25m",
+      laps: lapsAccum,
+      date: new Date().toLocaleDateString("pt-BR")
+    });
+    saveData();
+    closeModal("manualTimeModal");
+    document.getElementById("manTime").value = "";
+    document.getElementById("manSplitsInput").value = "";
+    progSelectedAthleteId = ath.id;
+    selectStrokeTab(stroke);
+    renderProgressionSection();
+    showToast("✅ Salvo em " + ath.name + " (" + lapsAccum.length + " parciais)!");
+  });
+
+  // Periodização
+  document.getElementById("workoutDate").addEventListener("change", renderPeriodization);
+  document.getElementById("btnCopyWorkout").addEventListener("click", copyWorkoutWhatsApp);
+  document.getElementById("btnAddWorkout").addEventListener("click", function() {
+    const desc = document.getElementById("woDesc").value.trim();
+    if (!desc) return showToast("Descreva a série do treino.");
+    appData.workouts.push({
+      id: Date.now(),
+      date: document.getElementById("workoutDate").value || todayISO,
+      block: document.getElementById("woBlock").value,
+      zone: document.getElementById("woZone").value,
+      meters: parseInt(document.getElementById("woMeters").value, 10) || 0,
+      interval: document.getElementById("woInterval").value.trim() || "Livre",
+      desc: desc,
+      done: false
+    });
+    document.getElementById("woDesc").value = "";
+    document.getElementById("woMeters").value = "";
+    saveData();
+    renderPeriodization();
+  });
+  document.getElementById("workoutBlocksList").addEventListener("change", function(e) {
+    if (e.target.hasAttribute("data-toggle-wo")) {
+      const id = Number(e.target.getAttribute("data-toggle-wo"));
+      const item = appData.workouts.find(function(w) { return w.id === id; });
+      if (item) { item.done = e.target.checked; saveData(); renderPeriodization(); }
+    }
+  });
+  document.getElementById("workoutBlocksList").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-del-wo]");
+    if (btn) {
+      const id = Number(btn.getAttribute("data-del-wo"));
+      appData.workouts = appData.workouts.filter(function(w) { return w.id !== id; });
+      saveData();
+      renderPeriodization();
+    }
+  });
+
+  // Educativos
+  document.getElementById("drillStrokeFilter").addEventListener("change", populateDrillSelect);
+  document.getElementById("btnCreateDrill").addEventListener("click", function() {
+    const stroke = document.getElementById("newDrillStroke").value;
+    const inp = document.getElementById("newDrillNameInput");
+    const name = inp.value.trim();
+    if (!name) return showToast("Digite o nome do educativo.");
+    if (!appData.customDrills[stroke]) appData.customDrills[stroke] = [];
+    appData.customDrills[stroke].unshift(name);
+    saveData();
+    inp.value = "";
+    document.getElementById("drillStrokeFilter").value = stroke;
+    populateDrillSelect();
+    document.getElementById("drillNameSelect").value = name;
+    showToast("Educativo salvo em " + stroke + "!");
+  });
+  document.getElementById("btnLogDrill").addEventListener("click", function() {
+    const ath = getActiveAthlete();
+    ath.drills.unshift({
+      id: Date.now(),
+      stroke: document.getElementById("drillStrokeFilter").value,
+      name: document.getElementById("drillNameSelect").value,
+      meters: document.getElementById("drillMeters").value,
+      quality: document.getElementById("drillQuality").value,
+      date: new Date().toLocaleDateString("pt-BR")
+    });
+    saveData();
+    renderDrillsSection();
+    showToast("Educativo registrado!");
+  });
+  document.getElementById("loggedDrillsList").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-del-drill]");
+    if (btn) {
+      const id = Number(btn.getAttribute("data-del-drill"));
+      const ath = getActiveAthlete();
+      ath.drills = ath.drills.filter(function(d) { return d.id !== id; });
+      saveData();
+      renderDrillsSection();
+    }
+  });
+
+  // Pace & CSS
+  document.getElementById("paceDistance").addEventListener("change", calculatePacePlan);
+  document.getElementById("paceTargetTime").addEventListener("input", calculatePacePlan);
+  document.getElementById("paceSplitSize").addEventListener("change", calculatePacePlan);
+  document.getElementById("paceStrategy").addEventListener("change", calculatePacePlan);
+  document.getElementById("btnCalcCSS").addEventListener("click", calculateCSS);
+
+  // Calendário
+  document.getElementById("btnAddComp").addEventListener("click", function() {
+    const name = document.getElementById("compName").value.trim();
+    const date = document.getElementById("compDate").value;
+    if (!name || !date) return showToast("Informe o nome e a data da competição.");
+    appData.competitions.push({
+      id: Date.now(), name: name, date: date,
+      location: document.getElementById("compLocation").value.trim() || "Local a definir",
+      events: document.getElementById("compEvents").value.trim() || "Provas gerais"
+    });
+    appData.competitions.sort(function(a, b) { return a.date.localeCompare(b.date); });
+    document.getElementById("compName").value = "";
+    document.getElementById("compEvents").value = "";
+    saveData();
+    renderCalendar();
+    showToast("Competição agendada!");
+  });
+  document.getElementById("competitionsList").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-del-comp]");
+    if (btn) {
+      const id = Number(btn.getAttribute("data-del-comp"));
+      appData.competitions = appData.competitions.filter(function(c) { return c.id !== id; });
+      saveData();
+      renderCalendar();
+    }
+  });
+
+  // Dicas & Ficha
+  document.getElementById("tipsStrokeSelect").addEventListener("change", renderTipsSection);
+  document.getElementById("btnShareAthlete").addEventListener("click", shareAthleteWhatsApp);
+  document.getElementById("btnPrintSheet").addEventListener("click", function() { window.print(); });
+  document.getElementById("biomechanicsChecklist").addEventListener("change", function(e) {
+    if (e.target.hasAttribute("data-tip-key")) {
+      const ath = getActiveAthlete();
+      if (!ath.checkedTips) ath.checkedTips = {};
+      ath.checkedTips[e.target.getAttribute("data-tip-key")] = e.target.checked;
+      saveData();
+      renderTipsSection();
+    }
+  });
+  document.getElementById("btnAddNote").addEventListener("click", function() {
+    const inp = document.getElementById("coachNoteInput");
+    if (!inp.value.trim()) return;
+    const ath = getActiveAthlete();
+    ath.notes.unshift(inp.value.trim());
+    inp.value = "";
+    saveData();
+    renderTipsSection();
+  });
+  document.getElementById("coachNotesList").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-del-note]");
+    if (btn) {
+      const idx = Number(btn.getAttribute("data-del-note"));
+      const ath = getActiveAthlete();
+      ath.notes.splice(idx, 1);
+      saveData();
+      renderTipsSection();
+    }
+  });
+
+  // Novo / Excluir Atleta
+  document.getElementById("btnCreateAthlete").addEventListener("click", function() {
+    const name = document.getElementById("newAthleteName").value.trim();
+    if (!name) return showToast("Informe o nome do atleta.");
+    const id = "ath_" + Date.now();
+    appData.athletes.push({
+      id: id, name: name,
+      category: document.getElementById("newAthleteCat").value.trim() || "Geral",
+      mainStroke: document.getElementById("newAthleteMainStroke").value,
+      times: [], drills: [], checkedTips: {}, notes: []
+    });
+    appData.activeAthleteId = id;
+    progSelectedAthleteId = id;
+    saveData();
+    renderAthleteSelect();
+    renderStrokeSection();
+    renderDrillsSection();
+    renderTipsSection();
+    renderProgressionSection();
+    renderMultiLanes();
+    closeModal("athleteModal");
+    document.getElementById("newAthleteName").value = "";
+    showToast("Atleta " + name + " cadastrado!");
+  });
+
+  document.getElementById("btnDeleteCurrentAthlete").addEventListener("click", function() {
+    if (appData.athletes.length <= 1) return showToast("Mantenha ao menos 1 atleta cadastrado.");
+    const ath = getActiveAthlete();
+    if (confirm("Excluir o atleta " + ath.name + " e todos os seus tempos?")) {
+      appData.athletes = appData.athletes.filter(function(a) { return a.id !== ath.id; });
+      appData.activeAthleteId = appData.athletes[0].id;
+      progSelectedAthleteId = appData.athletes[0].id;
+      saveData();
+      renderAthleteSelect();
+      renderStrokeSection();
+      renderDrillsSection();
+      renderTipsSection();
+      renderProgressionSection();
+      renderMultiLanes();
+      closeModal("athleteModal");
+      showToast("Atleta removido.");
+    }
+  });
+
+  // Backup / Export
+  document.getElementById("btnExportJSON").addEventListener("click", function() {
+    const blob = new Blob([JSON.stringify(appData, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "Deixa_Brilhar_Backup_" + todayISO + ".json";
+    a.click();
+  });
+  document.getElementById("inputImportJSON").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        if (parsed.athletes) {
+          appData = parsed;
+          saveData();
+          applyAppearance();
+          renderAthleteSelect();
+          renderStrokeSection();
+          renderProgressionSection();
+          renderDrillsSection();
+          renderPeriodization();
+          renderCalendar();
+          renderTipsSection();
+          renderMultiLanes();
+          closeModal("backupModal");
+          showToast("Dados importados com sucesso!");
+        }
+      } catch (err) {
+        showToast("Arquivo JSON inválido.");
+      }
+    };
+    reader.readAsText(file);
+  });
+  document.getElementById("btnDownloadHtml").addEventListener("click", downloadSelfHtml);
+  document.getElementById("btnDownloadZip").addEventListener("click", downloadSelfZip);
+
+  // =======================================================
+  // 14. INICIALIZAÇÃO
+  // =======================================================
+  applyAppearance();
+  syncDistancesForStroke("timerStroke", "timerDistance");
+  syncDistancesForStroke("multiAddStroke", "multiAddDist");
+  renderAthleteSelect();
+  initDefaultMultiLanes();
+  populateDrillSelect();
+  renderLaps();
+  selectStrokeTab("Livre");
+  renderProgressionSection();
+  renderPeriodization();
+  renderDrillsSection();
+  calculatePacePlan();
+  calculateCSS();
+  renderCalendar();
+  renderTipsSection();
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    window.addEventListener("load", function() {
+      navigator.serviceWorker.register("/sw.js").catch(function() {});
+    });
+  }
+})();
+</script>
+</body>
+</html>
