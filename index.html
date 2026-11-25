@@ -633,6 +633,59 @@
     margin-bottom: 14px;
   }
 
+
+  /* Lane Header: Athlete Name + Swap Lane ALWAYS side-by-side */
+  .lane-top-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+  .lane-athlete-select {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .lane-swap-select {
+    flex: 0 0 auto;
+    width: 112px;
+    max-width: 118px;
+    padding: 6px 6px;
+    font-size: 11px;
+    font-weight: 800;
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    border: 1.5px solid var(--accent);
+    text-overflow: ellipsis;
+  }
+  .lane-remove-btn {
+    flex: 0 0 auto;
+    padding: 6px 8px;
+  }
+  .install-step-box {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 12px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .install-step-box.highlighted {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .btn-install-header {
+    padding: 7px 10px;
+    font-size: 11px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
   /* Modal */
   .modal-overlay {
     position: fixed;
@@ -698,7 +751,8 @@
       </div>
     </div>
     <div class="header-controls">
-      <select id="athleteSelect" style="width:auto; max-width:145px; padding:7px 9px; font-size:12px;"></select>
+      <select id="athleteSelect" style="width:auto; max-width:135px; padding:7px 9px; font-size:12px;"></select>
+      <button type="button" id="btnInstallApp" class="btn btn-accent btn-install-header" title="Instalar Aplicativo no Celular ou PC">📲 Instalar</button>
       <button type="button" id="btnToggleTheme" class="btn btn-ghost btn-icon" title="Alternar Claro / Escuro">☀️</button>
       <button type="button" id="btnOpenPaletteModal" class="btn btn-ghost btn-icon" title="Paleta de Cores">🎨</button>
       <button type="button" id="btnOpenAthleteModal" class="btn btn-ghost btn-icon" title="Novo / Gerenciar Atleta">➕👤</button>
@@ -853,7 +907,7 @@
           <button type="button" id="btnResetAllLanes" class="btn btn-ghost btn-sm">↺ Zerar</button>
         </div>
       </div>
-      <p class="subtext">Troque qualquer atleta de raia na hora usando o seletor <strong>Raia ▾</strong> ou as setas <strong>⬆️/⬇️</strong>. Todas as viradas marcadas em <strong>Parcial</strong> ficam registradas e podem ser salvas direto no nome do atleta!</p>
+      <p class="subtext">O seletor <strong>🔄 Raia</strong> fica fixo logo ao lado do nome de cada atleta para remanejar em 1 toque (ou use <strong>⬆️/⬇️</strong>). Todas as viradas marcadas em <strong>Parcial</strong> ficam salvas direto na ficha do atleta!</p>
 
       <div class="row-flex" style="margin-bottom:10px;">
         <select id="multiAddAthleteSelect" style="flex:2; min-width:150px;"></select>
@@ -1366,6 +1420,46 @@
   </div>
 </div>
 
+
+<!-- MODAL: INSTALAR APLICATIVO (PWA) -->
+<div id="installModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="card-title">
+      <span>📲 Instalar DEIXA BRILHAR 🌟</span>
+      <button type="button" class="btn btn-ghost btn-sm" data-close="installModal">✕</button>
+    </div>
+    <p class="subtext" id="installModalLead">Instale na tela inicial para abrir em tela cheia com ícone próprio e usar offline na borda da piscina.</p>
+
+    <div id="installNativeWrap" style="display:none; margin-bottom:12px;">
+      <button type="button" id="btnTriggerNativeInstall" class="btn btn-emerald btn-lg">📲 Instalar Agora (1 Toque)</button>
+    </div>
+
+    <div id="installStepAndroid" class="install-step-box">
+      <strong>🤖 Android (Chrome / Edge / Samsung):</strong><br>
+      1. Toque no menu <strong>⋮</strong> (3 pontinhos) no canto superior direito.<br>
+      2. Selecione <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.<br>
+      3. Confirme tocando em <strong>Instalar</strong>.
+    </div>
+
+    <div id="installStepIOS" class="install-step-box">
+      <strong>🍎 iPhone / iPad (Safari):</strong><br>
+      1. Toque no ícone de <strong>Compartilhar</strong> (quadrado com seta para cima na barra inferior).<br>
+      2. Role para baixo e toque em <strong>"Adicionar à Tela de Início"</strong>.<br>
+      3. Toque em <strong>Adicionar</strong> no canto superior direito.
+    </div>
+
+    <div id="installStepDesktop" class="install-step-box">
+      <strong>💻 Computador (Chrome / Edge):</strong><br>
+      1. Clique no ícone de <strong>Instalar (🖥️⬇)</strong> na barra de endereço do navegador.<br>
+      2. Confirme em <strong>Instalar</strong> para criar o atalho direto.
+    </div>
+
+    <div class="row-flex" style="justify-content:flex-end; margin-top:10px;">
+      <button type="button" class="btn btn-accent btn-sm" data-close="installModal">Entendi</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: BACKUP & PUBLICAÇÃO -->
 <div id="backupModal" class="modal-overlay">
   <div class="modal-box">
@@ -1375,6 +1469,7 @@
     </div>
     <p class="subtext">Seus dados ficam salvos automaticamente no aparelho. Use os botões abaixo para exportar backup ou baixar o código completo da plataforma.</p>
     <div style="display:flex; flex-direction:column; gap:8px;">
+      <button type="button" id="btnInstallAppBackup" class="btn btn-accent">📲 Instalar App na Tela Inicial</button>
       <button type="button" id="btnExportJSON" class="btn btn-emerald">⬇️ Exportar Backup dos Atletas (.json)</button>
       <label class="btn btn-amber" style="cursor:pointer;">
         ⬆️ Importar Backup (.json)
@@ -1582,6 +1677,7 @@
     appData.theme = mode;
     saveData();
     applyAppearance();
+  updateInstallButtonUI();
   }
 
   function setPalette(pal) {
@@ -2112,10 +2208,15 @@
       const ath = appData.athletes.find(function(a) { return a.id === lane.athleteId; }) || { name: "Atleta" };
       const splits = getIsolatedSplits(lane.laps);
 
-      // Dropdown de remanejamento de raia
+      // Dropdown de remanejamento de raia (sempre colado ao lado do nome do atleta)
       let laneOptions = "";
       for (let n = 0; n < totalLanes; n++) {
-        laneOptions += '<option value="' + n + '"' + (n === idx ? " selected" : "") + '>Raia ' + (n + 1) + '</option>';
+        const targetLane = multiLanes[n];
+        const targetAth = appData.athletes.find(function(a) { return a.id === targetLane.athleteId; });
+        const label = n === idx
+          ? ("🔄 Raia " + (n + 1))
+          : ("⇄ Raia " + (n + 1) + (targetAth ? (" (" + targetAth.name + ")") : ""));
+        laneOptions += '<option value="' + n + '"' + (n === idx ? " selected" : "") + '>' + escapeHtml(label) + '</option>';
       }
 
       // Dropdown para trocar o atleta naquela raia rapidamente
@@ -2142,22 +2243,20 @@
       }
 
       return '<div class="lane-card ' + (lane.isRunning ? "running" : "") + '">' +
-        '<div class="row-flex" style="justify-content:space-between; margin-bottom:8px; gap:5px;">' +
-          '<div class="row-flex" style="gap:5px; flex:1; min-width:0;">' +
-            '<select data-lane-move="' + idx + '" title="Remanejar para outra raia" style="width:auto; padding:4px 7px; font-size:11px; font-weight:800; background:var(--accent-soft); color:var(--accent-text); border-color:var(--accent);">' + laneOptions + '</select>' +
-            '<select data-lane-athlete="' + lane.laneId + '" style="flex:1; min-width:105px; padding:5px 8px; font-size:12px; font-weight:800;">' + athOptions + '</select>' +
-          '</div>' +
-          '<div class="row-flex" style="gap:3px;">' +
-            '<button type="button" class="btn btn-ghost btn-xs" title="Mover para raia anterior" data-lane-act="up" data-lane="' + lane.laneId + '" ' + (idx === 0 ? "disabled" : "") + '>⬆️</button>' +
-            '<button type="button" class="btn btn-ghost btn-xs" title="Mover para próxima raia" data-lane-act="down" data-lane="' + lane.laneId + '" ' + (idx === totalLanes - 1 ? "disabled" : "") + '>⬇️</button>' +
-            '<button type="button" class="btn btn-ghost btn-xs" title="Remover raia" data-lane-act="remove" data-lane="' + lane.laneId + '">✕</button>' +
-          '</div>' +
+        '<div class="lane-top-row">' +
+          '<select class="lane-athlete-select" data-lane-athlete="' + lane.laneId + '" title="Selecionar atleta">' + athOptions + '</select>' +
+          '<select class="lane-swap-select" data-lane-move="' + idx + '" title="Trocar atleta de raia">' + laneOptions + '</select>' +
+          '<button type="button" class="btn btn-ghost btn-xs lane-remove-btn" title="Remover raia" data-lane-act="remove" data-lane="' + lane.laneId + '">✕</button>' +
         '</div>' +
 
-        '<div class="list-item" style="font-size:11px; margin-bottom:6px; padding:6px 10px;">' +
+        '<div class="list-item" style="font-size:11px; margin-bottom:6px; padding:6px 10px; gap:6px;">' +
           '<strong style="color:var(--accent-text);">' + lane.distance + ' ' + lane.stroke + '</strong>' +
           '<span>Saída: <strong class="mono" style="color:var(--amber-txt);">' + (lane.reaction !== null ? lane.reaction.toFixed(2) + "s" : "--") + '</strong></span>' +
           '<span>Viradas: <strong>' + lane.laps.length + '</strong></span>' +
+          '<div class="row-flex" style="gap:3px;">' +
+            '<button type="button" class="btn btn-ghost btn-xs" title="Subir 1 raia" data-lane-act="up" data-lane="' + lane.laneId + '" ' + (idx === 0 ? "disabled" : "") + '>⬆️</button>' +
+            '<button type="button" class="btn btn-ghost btn-xs" title="Descer 1 raia" data-lane-act="down" data-lane="' + lane.laneId + '" ' + (idx === totalLanes - 1 ? "disabled" : "") + '>⬇️</button>' +
+          '</div>' +
         '</div>' +
 
         '<div id="lclock-' + lane.laneId + '" class="lane-clock mono">' + formatMs(lane.elapsedMs) + '</div>' +
@@ -2869,7 +2968,7 @@
     const blob = new Blob([lfh, data, cdh, eocd], { type: "application/zip" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Deixa_Brilhar_App-v7.zip";
+    a.download = "Deixa_Brilhar_App-v9.zip";
     a.click();
   }
 
@@ -3294,6 +3393,92 @@
   });
   document.getElementById("btnDownloadHtml").addEventListener("click", downloadSelfHtml);
   document.getElementById("btnDownloadZip").addEventListener("click", downloadSelfZip);
+
+
+  // =======================================================
+  // INSTALAÇÃO DO APP (PWA — ANDROID, IOS E DESKTOP)
+  // =======================================================
+  let deferredInstallPrompt = null;
+
+  function isAppStandalone() {
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+
+  function updateInstallButtonUI() {
+    const btn = document.getElementById("btnInstallApp");
+    const backupBtn = document.getElementById("btnInstallAppBackup");
+    const nativeWrap = document.getElementById("installNativeWrap");
+    if (isAppStandalone()) {
+      if (btn) {
+        btn.textContent = "✅ App";
+        btn.className = "btn btn-emerald btn-install-header";
+        btn.title = "Aplicativo já instalado";
+      }
+      if (backupBtn) backupBtn.textContent = "✅ Aplicativo Já Instalado";
+      if (nativeWrap) nativeWrap.style.display = "none";
+    } else {
+      if (btn) {
+        btn.textContent = "📲 Instalar";
+        btn.className = "btn btn-accent btn-install-header";
+      }
+      if (nativeWrap) nativeWrap.style.display = deferredInstallPrompt ? "block" : "none";
+    }
+  }
+
+  function highlightCurrentPlatformSteps() {
+    const ua = navigator.userAgent || "";
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    const isAndroid = /Android/i.test(ua);
+    const elA = document.getElementById("installStepAndroid");
+    const elI = document.getElementById("installStepIOS");
+    const elD = document.getElementById("installStepDesktop");
+    if (elA) elA.classList.toggle("highlighted", isAndroid);
+    if (elI) elI.classList.toggle("highlighted", isIOS);
+    if (elD) elD.classList.toggle("highlighted", !isAndroid && !isIOS);
+  }
+
+  async function triggerInstallApp() {
+    if (isAppStandalone()) {
+      showToast("✅ O DEIXA BRILHAR já está instalado no seu aparelho!");
+      return;
+    }
+    if (deferredInstallPrompt) {
+      try {
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+        if (choice && choice.outcome === "accepted") {
+          showToast("🎉 Instalando DEIXA BRILHAR na sua tela inicial!");
+          deferredInstallPrompt = null;
+          closeModal("installModal");
+          updateInstallButtonUI();
+          return;
+        }
+      } catch (e) {}
+    }
+    highlightCurrentPlatformSteps();
+    updateInstallButtonUI();
+    openModal("installModal");
+  }
+
+  window.addEventListener("beforeinstallprompt", function(e) {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    updateInstallButtonUI();
+  });
+
+  window.addEventListener("appinstalled", function() {
+    deferredInstallPrompt = null;
+    updateInstallButtonUI();
+    closeModal("installModal");
+    showToast("🎉 DEIXA BRILHAR instalado com sucesso!");
+  });
+
+  document.getElementById("btnInstallApp").addEventListener("click", triggerInstallApp);
+  document.getElementById("btnInstallAppBackup").addEventListener("click", function() {
+    closeModal("backupModal");
+    triggerInstallApp();
+  });
+  document.getElementById("btnTriggerNativeInstall").addEventListener("click", triggerInstallApp);
 
   // =======================================================
   // 14. INICIALIZAÇÃO

@@ -1,4 +1,4 @@
-const CACHE_NAME = "deixa-brilhar-v8";
+const CACHE_NAME = "deixa-brilhar-v9";
 const ASSETS = [
   "/",
   "/index.html",
