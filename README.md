@@ -1,6 +1,6 @@
 # DEIXA BRILHAR 🌟 — Plataforma de Natação & Performance
 
-Aplicativo web instalável (PWA) para gestão de treinos, cronometragem individual, multi-raias simultâneas com remanejamento, salvamento de parciais/viradas, progressão por atleta, periodização diária, educativos, calculadora de pace/CSS e calendário de provas.
+Aplicativo web instalável (PWA) para gestão de treinos, cronometragem individual, multi-raias simultâneas com remanejamento rápido, gestão completa de competições (cadastro em lote/Enter, provas, tempos e projeções), salvamento de parciais/viradas, progressão por atleta, periodização diária, educativos, calculadora de pace/CSS e calendário de provas.
 
 ## Arquivos do Projeto
 - `index.html` — Aplicação completa autossuficiente

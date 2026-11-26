@@ -250,15 +250,12 @@
 
   .nav-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
   }
 
-  @media (min-width: 640px) {
-    .nav-grid { grid-template-columns: repeat(5, 1fr); }
-  }
   @media (min-width: 1024px) {
-    .nav-grid { grid-template-columns: repeat(9, 1fr); }
+    .nav-grid { grid-template-columns: repeat(10, 1fr); gap: 5px; }
   }
 
   .nav-btn {
@@ -266,21 +263,22 @@
     background: var(--bg-input);
     color: var(--text);
     border-radius: 10px;
-    padding: 6px 5px;
-    font-size: 11px;
+    padding: 6px 2px;
+    font-size: 10px;
     font-weight: 700;
     cursor: pointer;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 2px;
     transition: background 0.15s, border-color 0.15s, transform 0.1s;
     user-select: none;
+    min-width: 0;
   }
 
-  @media (min-width: 1024px) {
-    .nav-btn { flex-direction: column; padding: 7px 4px; gap: 3px; }
+  @media (min-width: 640px) {
+    .nav-btn { padding: 7px 4px; font-size: 11px; gap: 3px; }
   }
 
   .nav-btn:hover { background: var(--bg-hover); }
@@ -686,6 +684,83 @@
     white-space: nowrap;
   }
 
+
+  /* Competições Tab Styles */
+  textarea.bulk-textarea {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-light);
+    color: var(--text-strong);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    outline: none;
+    resize: vertical;
+    min-height: 92px;
+    line-height: 1.5;
+  }
+  textarea.bulk-textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-soft);
+  }
+  .comp-athlete-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-card);
+  }
+  .comp-event-row {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .comp-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .comp-metric-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 8px;
+  }
+  .comp-metric-box .mlbl {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.4px;
+  }
+  .comp-metric-box .mval {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-strong);
+    margin-top: 2px;
+  }
+  .comp-add-event-panel {
+    background: var(--bg-deep);
+    border: 1px dashed var(--accent);
+    border-radius: 14px;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .comp-inline-actual {
+    width: 96px !important;
+    padding: 5px 7px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+  }
+
   /* Modal */
   .modal-overlay {
     position: fixed;
@@ -764,6 +839,7 @@
     <div class="nav-grid" id="mainNav">
       <button type="button" class="nav-btn active" data-tab="timer"><span class="ico">⏱️</span><span class="lbl">Cronômetro</span></button>
       <button type="button" class="nav-btn" data-tab="multi"><span class="ico">🏁</span><span class="lbl">Multi-Raias</span></button>
+      <button type="button" class="nav-btn" data-tab="competitions"><span class="ico">🏆</span><span class="lbl">Competições</span></button>
       <button type="button" class="nav-btn" data-tab="progression"><span class="ico">📈</span><span class="lbl">Progressão</span></button>
       <button type="button" class="nav-btn" data-tab="strokes"><span class="ico">🏅</span><span class="lbl">Tempos</span></button>
       <button type="button" class="nav-btn" data-tab="periodization"><span class="ico">📋</span><span class="lbl">Treino Dia</span></button>
@@ -929,6 +1005,99 @@
     </div>
 
     <div id="multiLanesGrid" class="grid-2"></div>
+  </section>
+
+
+  <!-- ================================================= -->
+  <!-- 2B. COMPETIÇÕES (ATLETAS EM LOTE, PROVAS & PROJEÇÕES) -->
+  <!-- ================================================= -->
+  <section id="sec-competitions" class="section">
+    <!-- Seletor e Criador de Competição -->
+    <div class="card card-highlight">
+      <div class="card-title" style="color:var(--accent-text);">
+        <span>🏆 Gestão de Competições, Tempos & Projeções</span>
+        <div class="row-flex">
+          <button type="button" id="btnToggleNewCompBox" class="btn btn-accent btn-sm">+ Nova Competição</button>
+          <button type="button" id="btnCopyCompReport" class="btn btn-emerald btn-sm">📲 Copiar WhatsApp</button>
+        </div>
+      </div>
+
+      <div class="row-flex" style="margin-bottom:8px;">
+        <div style="flex:1; min-width:210px;">
+          <label class="field-label">Competição Selecionada</label>
+          <select id="compMgrSelect"></select>
+        </div>
+        <div style="padding-top:15px;">
+          <span id="compMgrMetaBadge" class="badge badge-slate"></span>
+        </div>
+      </div>
+
+      <!-- Caixa rápida para criar nova competição -->
+      <div id="compQuickCreateBox" style="display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+        <div class="grid-4" style="margin-bottom:8px;">
+          <div style="grid-column: span 2;">
+            <label class="field-label">Nome da Nova Competição</label>
+            <input type="text" id="compMgrNewName" placeholder="Ex: Festival de Natação 2026 / Estadual">
+          </div>
+          <div>
+            <label class="field-label">Data</label>
+            <input type="date" id="compMgrNewDate">
+          </div>
+          <div>
+            <label class="field-label">Piscina / Local</label>
+            <input type="text" id="compMgrNewLoc" placeholder="Ex: 25m - Brasília/DF">
+          </div>
+        </div>
+        <div class="row-flex" style="justify-content:flex-end;">
+          <button type="button" id="btnCancelNewComp" class="btn btn-ghost btn-sm">Cancelar</button>
+          <button type="button" id="btnSaveNewCompMgr" class="btn btn-emerald btn-sm">✅ Criar & Selecionar Competição</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIs da Competição -->
+    <div id="compKpiGrid" class="grid-4" style="margin-bottom:14px;"></div>
+
+    <!-- Cadastro Rápido de Atletas (Estilo Tópicos do Edital: Enter ou Colar Todos de Uma Vez) -->
+    <div class="card">
+      <div class="card-title">
+        <span>⚡ Cadastro Rápido de Atletas na Competição</span>
+        <button type="button" id="btnImportAllRoster" class="btn btn-ghost btn-sm" style="color:var(--accent-text);">📥 Puxar Elenco Cadastrado</button>
+      </div>
+      <p class="subtext">Igual aos tópicos do edital: digite um nome e aperte <strong>ENTER</strong> para criar na hora, ou cole vários nomes de uma vez (1 por linha).</p>
+
+      <!-- Modo 1: Digitar e dar ENTER -->
+      <div style="margin-bottom:12px;">
+        <label class="field-label">1) Inserir 1 por 1 dando ENTER</label>
+        <div class="row-flex">
+          <input type="text" id="compQuickAthleteInput" placeholder="Digite o nome do atleta e aperte ENTER (ex: Francisco)..." style="flex:1; min-width:200px;">
+          <button type="button" id="btnCompQuickAddOne" class="btn btn-accent btn-sm">+ Adicionar</button>
+        </div>
+      </div>
+
+      <!-- Modo 2: Colar / Digitar todos de uma vez -->
+      <div style="margin-bottom:10px;">
+        <label class="field-label">2) Colar ou digitar todos de uma vez (1 atleta por linha — aperte Enter para pular linha)</label>
+        <textarea id="compBulkAthletesTextarea" class="bulk-textarea" placeholder="Exemplo:&#10;Francisco&#10;Ana Clara&#10;João Pedro&#10;Maria Eduarda"></textarea>
+        <div class="row-flex" style="justify-content:space-between; margin-top:8px;">
+          <label style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--text-muted); cursor:pointer;">
+            <input type="checkbox" id="chkCompSyncRoster" checked style="width:16px; height:16px; accent-color:var(--accent);">
+            Salvar novos atletas também no elenco geral do app
+          </label>
+          <button type="button" id="btnCompBulkAdd" class="btn btn-emerald btn-sm">⚡ Adicionar Todos de Uma Vez</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtro + Lista de Atletas da Competição -->
+    <div class="card" style="padding:12px 15px;">
+      <div class="row-flex" style="justify-content:space-between;">
+        <input type="text" id="compAthleteSearch" placeholder="🔍 Filtrar atleta nesta competição..." style="flex:1; min-width:190px;">
+        <span id="compEntriesBadge" class="badge badge-cyan">0 atletas</span>
+      </div>
+    </div>
+
+    <div id="compEntriesList"></div>
   </section>
 
   <!-- ================================================= -->
@@ -1581,6 +1750,9 @@
           if (!parsed.customDrills.Medley) parsed.customDrills.Medley = [];
           if (!Array.isArray(parsed.workouts)) parsed.workouts = [];
           if (!Array.isArray(parsed.competitions)) parsed.competitions = [];
+          parsed.competitions.forEach(function(c) {
+            if (!Array.isArray(c.entries)) c.entries = [];
+          });
           if (!parsed.theme) parsed.theme = "dark";
           if (!parsed.palette) parsed.palette = "ocean";
           return parsed;
@@ -1597,8 +1769,33 @@
         { id: 1, date: todayISO, block: "1. Aquecimento", zone: "A1 - Aeróbio Leve", meters: 400, interval: "Contínuo", desc: "200m Livre + 100m Costas + 100m Educativos", done: false },
         { id: 2, date: todayISO, block: "3. Série Principal", zone: "A3 - Limiar Anaeróbio", meters: 800, interval: "a cada 1m25s", desc: "8x100m Livre ritmo constante de prova", done: false }
       ],
+      activeCompetitionId: 1,
       competitions: [
-        { id: 1, name: "Torneio Regional de Natação", date: todayISO, location: "Piscina Olímpica 50m", events: "50m Livre, 200m Medley, 800m Livre" }
+        {
+          id: 1,
+          name: "Torneio Regional de Natação",
+          date: todayISO,
+          location: "Piscina Olímpica 50m",
+          events: "50m Livre, 100m Livre, 200m Medley",
+          entries: [
+            {
+              id: 501,
+              athleteName: "Francisco",
+              athleteId: "ath_1",
+              events: [
+                { id: 601, stroke: "Livre", distance: "100m", seedTime: "01:22.00", projectedTime: "01:18.50", actualTime: "", placement: "", notes: "Atacar 2ª parcial", syncedToHistory: false }
+              ]
+            },
+            {
+              id: 502,
+              athleteName: "Ana Clara",
+              athleteId: "ath_2",
+              events: [
+                { id: 602, stroke: "Livre", distance: "50m", seedTime: "00:34.50", projectedTime: "00:33.00", actualTime: "", placement: "", notes: "Saída explosiva", syncedToHistory: false }
+              ]
+            }
+          ]
+        }
       ],
       athletes: [
         {
@@ -1677,7 +1874,6 @@
     appData.theme = mode;
     saveData();
     applyAppearance();
-  updateInstallButtonUI();
   }
 
   function setPalette(pal) {
@@ -1910,6 +2106,7 @@
     if (target) target.classList.add("active");
 
     if (tab === "multi") renderMultiLanes();
+    if (tab === "competitions") renderCompetitionsManager();
     if (tab === "progression") renderProgressionSection();
     if (tab === "strokes") renderStrokeSection();
     if (tab === "periodization") renderPeriodization();
@@ -2802,7 +2999,10 @@
           '<div style="font-size:12px; color:var(--text-muted);">📅 ' + target.toLocaleDateString("pt-BR") + ' • 📍 ' + escapeHtml(c.location) + '</div>' +
           '<div style="font-size:12px; margin-top:4px;"><strong>Provas:</strong> ' + escapeHtml(c.events) + '</div>' +
         '</div>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-del-comp="' + c.id + '">🗑️</button>' +
+        '<div class="row-flex" style="gap:5px;">' +
+          '<button type="button" class="btn btn-accent btn-sm" data-open-comp="' + c.id + '">🏆 Atletas (' + (Array.isArray(c.entries) ? c.entries.length : 0) + ')</button>' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-del-comp="' + c.id + '">🗑️</button>' +
+        '</div>' +
       '</div>';
     }).join("");
   }
@@ -2968,7 +3168,7 @@
     const blob = new Blob([lfh, data, cdh, eocd], { type: "application/zip" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Deixa_Brilhar_App-v9.zip";
+    a.download = "Deixa_Brilhar_App-v10.zip";
     a.click();
   }
 
@@ -3259,7 +3459,8 @@
     appData.competitions.push({
       id: Date.now(), name: name, date: date,
       location: document.getElementById("compLocation").value.trim() || "Local a definir",
-      events: document.getElementById("compEvents").value.trim() || "Provas gerais"
+      events: document.getElementById("compEvents").value.trim() || "Provas gerais",
+      entries: []
     });
     appData.competitions.sort(function(a, b) { return a.date.localeCompare(b.date); });
     document.getElementById("compName").value = "";
@@ -3269,12 +3470,23 @@
     showToast("Competição agendada!");
   });
   document.getElementById("competitionsList").addEventListener("click", function(e) {
+    const openBtn = e.target.closest("[data-open-comp]");
+    if (openBtn) {
+      appData.activeCompetitionId = Number(openBtn.getAttribute("data-open-comp"));
+      saveData();
+      switchMainTab("competitions");
+      return;
+    }
     const btn = e.target.closest("[data-del-comp]");
     if (btn) {
       const id = Number(btn.getAttribute("data-del-comp"));
       appData.competitions = appData.competitions.filter(function(c) { return c.id !== id; });
+      if (appData.activeCompetitionId === id) {
+        appData.activeCompetitionId = appData.competitions.length ? appData.competitions[0].id : null;
+      }
       saveData();
       renderCalendar();
+      renderCompetitionsManager();
     }
   });
 
@@ -3480,10 +3692,656 @@
   });
   document.getElementById("btnTriggerNativeInstall").addEventListener("click", triggerInstallApp);
 
+
+  // =======================================================
+  // GESTÃO DE COMPETIÇÕES (ATLETAS EM LOTE, PROVAS & PROJEÇÕES)
+  // =======================================================
+  let openCompEntryForms = {}; // { entryId: true }
+
+  function getActiveCompetition() {
+    if (!Array.isArray(appData.competitions)) appData.competitions = [];
+    if (!appData.competitions.length) {
+      const defComp = {
+        id: Date.now(),
+        name: "Competição Principal",
+        date: todayISO,
+        location: "Piscina 25m",
+        events: "Provas gerais",
+        entries: []
+      };
+      appData.competitions.push(defComp);
+      appData.activeCompetitionId = defComp.id;
+      saveData();
+    }
+    let comp = appData.competitions.find(function(c) { return c.id === appData.activeCompetitionId; });
+    if (!comp) {
+      comp = appData.competitions[0];
+      appData.activeCompetitionId = comp.id;
+    }
+    if (!Array.isArray(comp.entries)) comp.entries = [];
+    return comp;
+  }
+
+  function findOrCreateGlobalAthleteByName(name, syncToRoster) {
+    const clean = String(name || "").trim();
+    if (!clean) return null;
+    const lower = clean.toLowerCase();
+    let existing = appData.athletes.find(function(a) { return a.name.trim().toLowerCase() === lower; });
+    if (existing) return existing;
+    if (!syncToRoster) return null;
+
+    const newAth = {
+      id: "ath_" + Date.now() + "_" + Math.floor(Math.random() * 10000),
+      name: clean,
+      category: "Geral",
+      mainStroke: "Livre",
+      times: [],
+      drills: [],
+      checkedTips: {},
+      notes: []
+    };
+    appData.athletes.push(newAth);
+    return newAth;
+  }
+
+  function getBestTimeForAthleteEvent(athleteId, stroke, distance) {
+    if (!athleteId) return "";
+    const ath = appData.athletes.find(function(a) { return a.id === athleteId; });
+    if (!ath || !Array.isArray(ath.times)) return "";
+    const matching = ath.times.filter(function(t) { return t.stroke === stroke && t.distance === distance; });
+    if (!matching.length) return "";
+    const bestMs = Math.min.apply(null, matching.map(function(t) { return t.ms; }));
+    return formatMs(bestMs);
+  }
+
+  function addAthletesToCompetition(namesArray) {
+    const comp = getActiveCompetition();
+    const syncRoster = document.getElementById("chkCompSyncRoster").checked;
+    let addedCount = 0;
+    let skippedCount = 0;
+    let lastAddedId = null;
+
+    namesArray.forEach(function(rawLine) {
+      const cleanName = String(rawLine || "").replace(/^[-•*0-9.)\s]+/, "").trim();
+      if (!cleanName) return;
+      const alreadyInComp = comp.entries.some(function(en) {
+        return en.athleteName.trim().toLowerCase() === cleanName.toLowerCase();
+      });
+      if (alreadyInComp) {
+        skippedCount++;
+        return;
+      }
+      const globalAth = findOrCreateGlobalAthleteByName(cleanName, syncRoster);
+      const entryId = Date.now() + Math.floor(Math.random() * 100000);
+      comp.entries.push({
+        id: entryId,
+        athleteName: globalAth ? globalAth.name : cleanName,
+        athleteId: globalAth ? globalAth.id : null,
+        events: []
+      });
+      openCompEntryForms[entryId] = true; // Abre o formulário de prova/projeção pronto para preencher
+      lastAddedId = entryId;
+      addedCount++;
+    });
+
+    if (addedCount > 0) {
+      saveData();
+      renderAthleteSelect();
+      renderCompetitionsManager();
+      renderCalendar();
+      showToast("✅ " + addedCount + " atleta(s) adicionado(s) na competição!" + (skippedCount ? (" (" + skippedCount + " já estavam na lista)") : ""));
+    } else if (skippedCount > 0) {
+      showToast("Todos os nomes informados já estão nesta competição.");
+    } else {
+      showToast("Digite ao menos um nome de atleta.");
+    }
+    return lastAddedId;
+  }
+
+  function renderCompEventBadge(ev) {
+    const seedMs = parseTimeToMs(ev.seedTime);
+    const projMs = parseTimeToMs(ev.projectedTime);
+    const actMs = parseTimeToMs(ev.actualTime);
+    const badges = [];
+
+    if (!isNaN(seedMs) && !isNaN(projMs) && seedMs > 0 && projMs > 0) {
+      const goalDiff = (projMs - seedMs) / 1000;
+      const goalTxt = (goalDiff <= 0 ? goalDiff.toFixed(2) : "+" + goalDiff.toFixed(2)) + "s meta";
+      badges.push('<span class="badge badge-cyan">🎯 ' + goalTxt + '</span>');
+    }
+
+    if (!isNaN(actMs) && actMs > 0) {
+      if (!isNaN(projMs) && projMs > 0) {
+        const diffProj = (actMs - projMs) / 1000;
+        if (diffProj <= 0.005) {
+          badges.push('<span class="badge badge-emerald">🔥 Bateu Projeção (' + diffProj.toFixed(2) + 's)</span>');
+        } else {
+          badges.push('<span class="badge badge-amber">⏱️ +' + diffProj.toFixed(2) + 's da Projeção</span>');
+        }
+      } else if (!isNaN(seedMs) && seedMs > 0) {
+        const diffSeed = (actMs - seedMs) / 1000;
+        if (diffSeed < 0) {
+          badges.push('<span class="badge badge-emerald">⬇️ Baixou ' + Math.abs(diffSeed).toFixed(2) + 's</span>');
+        } else {
+          badges.push('<span class="badge badge-amber">+' + diffSeed.toFixed(2) + 's vs Inscrição</span>');
+        }
+      } else {
+        badges.push('<span class="badge badge-emerald">✅ Tempo Salvo</span>');
+      }
+    }
+    return badges.join(" ");
+  }
+
+  function renderCompetitionsManager() {
+    const comp = getActiveCompetition();
+
+    // Seletor de competições
+    const sel = document.getElementById("compMgrSelect");
+    sel.innerHTML = appData.competitions.map(function(c) {
+      const dStr = c.date ? c.date.split("-").reverse().join("/") : "--";
+      return '<option value="' + c.id + '"' + (c.id === comp.id ? " selected" : "") + '>' + escapeHtml(c.name) + ' (' + dStr + ')</option>';
+    }).join("");
+
+    const dFormatted = comp.date ? comp.date.split("-").reverse().join("/") : "Sem data";
+    document.getElementById("compMgrMetaBadge").textContent = "📅 " + dFormatted + " • 📍 " + (comp.location || "Local a definir");
+
+    // KPIs da competição
+    const totalAthletes = comp.entries.length;
+    let totalEvents = 0;
+    let doneEvents = 0;
+    let goalsHit = 0;
+    comp.entries.forEach(function(en) {
+      (en.events || []).forEach(function(ev) {
+        totalEvents++;
+        const actMs = parseTimeToMs(ev.actualTime);
+        const projMs = parseTimeToMs(ev.projectedTime);
+        if (!isNaN(actMs) && actMs > 0) {
+          doneEvents++;
+          if (!isNaN(projMs) && projMs > 0 && actMs <= projMs + 5) goalsHit++;
+        }
+      });
+    });
+
+    document.getElementById("compKpiGrid").innerHTML =
+      '<div class="pb-box"><div class="dist">🏊 Atletas</div><div class="val mono">' + totalAthletes + '</div><div class="cnt">Nesta competição</div></div>' +
+      '<div class="pb-box"><div class="dist">📋 Provas</div><div class="val mono">' + totalEvents + '</div><div class="cnt">Inscrições totais</div></div>' +
+      '<div class="pb-box"><div class="dist">✅ Realizadas</div><div class="val mono" style="color:var(--accent-text);">' + doneEvents + '/' + totalEvents + '</div><div class="cnt">Com tempo final</div></div>' +
+      '<div class="pb-box"><div class="dist">🔥 Metas Batidas</div><div class="val mono" style="color:var(--emerald-txt);">' + goalsHit + '</div><div class="cnt">Dentro da projeção</div></div>';
+
+    // Filtrar atletas na competição
+    const q = (document.getElementById("compAthleteSearch").value || "").trim().toLowerCase();
+    const visibleEntries = comp.entries.filter(function(en) {
+      return !q || en.athleteName.toLowerCase().indexOf(q) >= 0;
+    });
+    document.getElementById("compEntriesBadge").textContent = visibleEntries.length + " atleta(s)";
+
+    const listBox = document.getElementById("compEntriesList");
+    if (!visibleEntries.length) {
+      listBox.innerHTML = '<div class="card" style="text-align:center; color:var(--text-muted); font-size:13px;">' +
+        (totalAthletes === 0
+          ? 'Nenhum atleta adicionado ainda. Digite um nome acima e aperte <strong>ENTER</strong>, ou cole sua lista de atletas de uma vez!'
+          : 'Nenhum atleta encontrado para "' + escapeHtml(q) + '".') +
+      '</div>';
+      return;
+    }
+
+    listBox.innerHTML = visibleEntries.map(function(entry, eIdx) {
+      const evList = Array.isArray(entry.events) ? entry.events : [];
+      const isFormOpen = !!openCompEntryForms[entry.id] || evList.length === 0;
+      const defaultStroke = "Livre";
+      const defaultDist = "50m";
+      const autoPB = getBestTimeForAthleteEvent(entry.athleteId, defaultStroke, defaultDist);
+
+      const eventsHtml = evList.length
+        ? evList.map(function(ev) {
+            return '<div class="comp-event-row">' +
+              '<div class="row-flex" style="justify-content:space-between; gap:6px;">' +
+                '<div class="row-flex" style="gap:6px;">' +
+                  '<span class="badge badge-cyan">' + escapeHtml(ev.distance) + ' ' + escapeHtml(ev.stroke) + '</span>' +
+                  (ev.placement ? '<span class="badge badge-amber">🏅 ' + escapeHtml(ev.placement) + '</span>' : '') +
+                  renderCompEventBadge(ev) +
+                '</div>' +
+                '<div class="row-flex" style="gap:4px;">' +
+                  (ev.actualTime ? '<button type="button" class="btn ' + (ev.syncedToHistory ? 'btn-emerald' : 'btn-ghost') + ' btn-xs" data-ce-sync="' + entry.id + '|' + ev.id + '" title="Salvar tempo realizado na Progressão do atleta">' + (ev.syncedToHistory ? '✅ Na Progressão' : '📥 Salvar na Progressão') + '</button>' : '') +
+                  '<button type="button" class="btn btn-ghost btn-xs" data-ce-del="' + entry.id + '|' + ev.id + '" title="Excluir prova">🗑️</button>' +
+                '</div>' +
+              '</div>' +
+
+              '<div class="comp-metrics-grid">' +
+                '<div class="comp-metric-box">' +
+                  '<div class="mlbl">Inscrição / Atual</div>' +
+                  '<div class="mval mono">' + escapeHtml(ev.seedTime || "--:--.--") + '</div>' +
+                '</div>' +
+                '<div class="comp-metric-box" style="border-color:var(--accent);">' +
+                  '<div class="mlbl" style="color:var(--accent-text);">🎯 Projeção (Meta)</div>' +
+                  '<div class="mval mono" style="color:var(--accent-text);">' + escapeHtml(ev.projectedTime || "--:--.--") + '</div>' +
+                '</div>' +
+                '<div class="comp-metric-box" style="border-color:var(--emerald);">' +
+                  '<div class="mlbl" style="color:var(--emerald-txt);">🏁 Realizado (Enter)</div>' +
+                  '<div class="row-flex" style="gap:4px; margin-top:2px; flex-wrap:nowrap;">' +
+                    '<input type="text" class="mono comp-inline-actual" data-ce-actual-input="' + entry.id + '|' + ev.id + '" value="' + escapeHtml(ev.actualTime || "") + '" placeholder="00:27.10" style="flex:1; min-width:0;">' +
+                    '<button type="button" class="btn btn-emerald btn-xs" data-ce-save-actual="' + entry.id + '|' + ev.id + '" title="Salvar tempo realizado">💾</button>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+
+              (ev.notes ? '<div style="font-size:11px; color:var(--text-muted);">📝 ' + escapeHtml(ev.notes) + '</div>' : '') +
+            '</div>';
+          }).join("")
+        : '<div style="font-size:12px; color:var(--text-dim); margin-bottom:6px;">Nenhuma prova/projeção salva ainda para este atleta. Cadastre abaixo!</div>';
+
+      const formHtml = isFormOpen
+        ? '<div class="comp-add-event-panel" data-ce-form="' + entry.id + '">' +
+            '<div style="font-size:11px; font-weight:800; color:var(--accent-text); margin-bottom:8px;">➕ Nova Prova, Tempo & Projeção para ' + escapeHtml(entry.athleteName) + '</div>' +
+            '<div class="grid-4" style="margin-bottom:8px;">' +
+              '<div>' +
+                '<label class="field-label">Nado</label>' +
+                '<select data-ce-stroke="' + entry.id + '">' +
+                  '<option value="Livre">🏊 Livre</option>' +
+                  '<option value="Costas">🔄 Costas</option>' +
+                  '<option value="Peito">🐸 Peito</option>' +
+                  '<option value="Borboleta">🦋 Borboleta</option>' +
+                  '<option value="Medley">🏅 Medley</option>' +
+                '</select>' +
+              '</div>' +
+              '<div>' +
+                '<label class="field-label">Distância</label>' +
+                '<select data-ce-dist="' + entry.id + '">' +
+                  STROKE_DISTANCES.Livre.map(function(d) {
+                    return '<option value="' + d + '"' + (d === defaultDist ? " selected" : "") + '>' + d + '</option>';
+                  }).join("") +
+                '</select>' +
+              '</div>' +
+              '<div>' +
+                '<label class="field-label">Tempo Atual / Inscrição</label>' +
+                '<input type="text" class="mono" data-ce-seed="' + entry.id + '" value="' + escapeHtml(autoPB) + '" placeholder="Ex: 00:28.50">' +
+              '</div>' +
+              '<div>' +
+                '<label class="field-label">🎯 Projeção / Meta</label>' +
+                '<div class="row-flex" style="gap:4px; flex-wrap:nowrap;">' +
+                  '<input type="text" class="mono" data-ce-proj="' + entry.id + '" placeholder="Ex: 00:27.40" style="flex:1; min-width:0;">' +
+                  '<button type="button" class="btn btn-ghost btn-xs" data-ce-autoproj="' + entry.id + '" title="Sugerir projeção -2% do tempo atual">-2%</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="grid-3" style="margin-bottom:8px;">' +
+              '<div>' +
+                '<label class="field-label">Tempo Realizado (opcional)</label>' +
+                '<input type="text" class="mono" data-ce-actual="' + entry.id + '" placeholder="Preencher no dia">' +
+              '</div>' +
+              '<div>' +
+                '<label class="field-label">Colocação / Final</label>' +
+                '<input type="text" data-ce-place="' + entry.id + '" placeholder="Ex: 1º Ouro / Final A">' +
+              '</div>' +
+              '<div>' +
+                '<label class="field-label">Observação / Estratégia</label>' +
+                '<input type="text" data-ce-notes="' + entry.id + '" placeholder="Ex: Saída forte, sem respirar 5m">' +
+              '</div>' +
+            '</div>' +
+            '<div class="row-flex" style="justify-content:flex-end;">' +
+              (evList.length ? '<button type="button" class="btn btn-ghost btn-xs" data-ce-toggle-form="' + entry.id + '">Fechar</button>' : '') +
+              '<button type="button" class="btn btn-accent btn-sm" data-ce-add-btn="' + entry.id + '">💾 Salvar Prova & Projeção</button>' +
+            '</div>' +
+          '</div>'
+        : '';
+
+      return '<div class="comp-athlete-card">' +
+        '<div class="row-flex" style="justify-content:space-between; margin-bottom:10px;">' +
+          '<div class="row-flex" style="gap:7px;">' +
+            '<span class="badge badge-cyan">#' + (eIdx + 1) + '</span>' +
+            '<strong style="font-size:15px; color:var(--text-strong);">🏊 ' + escapeHtml(entry.athleteName) + '</strong>' +
+            '<span class="badge badge-slate">' + evList.length + ' prova(s)</span>' +
+          '</div>' +
+          '<div class="row-flex" style="gap:5px;">' +
+            '<button type="button" class="btn btn-accent btn-xs" data-ce-toggle-form="' + entry.id + '">➕ Prova / Projeção</button>' +
+            '<button type="button" class="btn btn-ghost btn-xs" data-ce-remove-entry="' + entry.id + '" title="Remover atleta da competição">✕</button>' +
+          '</div>' +
+        '</div>' +
+        eventsHtml +
+        formHtml +
+      '</div>';
+    }).join("");
+  }
+
+  function saveEventForCompEntry(entryId) {
+    const comp = getActiveCompetition();
+    const entry = comp.entries.find(function(en) { return en.id === entryId; });
+    if (!entry) return;
+
+    const strokeEl = document.querySelector('[data-ce-stroke="' + entryId + '"]');
+    const distEl = document.querySelector('[data-ce-dist="' + entryId + '"]');
+    const seedEl = document.querySelector('[data-ce-seed="' + entryId + '"]');
+    const projEl = document.querySelector('[data-ce-proj="' + entryId + '"]');
+    const actEl = document.querySelector('[data-ce-actual="' + entryId + '"]');
+    const placeEl = document.querySelector('[data-ce-place="' + entryId + '"]');
+    const notesEl = document.querySelector('[data-ce-notes="' + entryId + '"]');
+    if (!strokeEl || !distEl) return;
+
+    const stroke = strokeEl.value;
+    const distance = distEl.value;
+    const seedTime = (seedEl.value || "").trim();
+    const projectedTime = (projEl.value || "").trim();
+    const actualTime = (actEl.value || "").trim();
+    const placement = (placeEl.value || "").trim();
+    const notes = (notesEl.value || "").trim();
+
+    if (!seedTime && !projectedTime && !actualTime) {
+      showToast("Informe ao menos o tempo atual, a projeção ou o tempo realizado.");
+      return;
+    }
+
+    if (!Array.isArray(entry.events)) entry.events = [];
+    entry.events.push({
+      id: Date.now() + Math.floor(Math.random() * 10000),
+      stroke: stroke,
+      distance: distance,
+      seedTime: seedTime,
+      projectedTime: projectedTime,
+      actualTime: actualTime,
+      placement: placement,
+      notes: notes,
+      syncedToHistory: false
+    });
+
+    openCompEntryForms[entryId] = false;
+    saveData();
+    renderCompetitionsManager();
+    showToast("💾 " + entry.athleteName + ": " + distance + " " + stroke + " salva com projeção!");
+  }
+
+  function saveActualTimeOnCompEvent(entryId, evId) {
+    const comp = getActiveCompetition();
+    const entry = comp.entries.find(function(en) { return en.id === entryId; });
+    if (!entry) return;
+    const ev = (entry.events || []).find(function(x) { return x.id === evId; });
+    if (!ev) return;
+    const inp = document.querySelector('[data-ce-actual-input="' + entryId + '|' + evId + '"]');
+    if (!inp) return;
+
+    const val = inp.value.trim();
+    if (val) {
+      const ms = parseTimeToMs(val);
+      if (isNaN(ms) || ms <= 0) {
+        showToast("Tempo inválido! Use ex: 00:27.45 ou 27.45");
+        return;
+      }
+      ev.actualTime = formatMs(ms);
+    } else {
+      ev.actualTime = "";
+    }
+    saveData();
+    renderCompetitionsManager();
+    showToast("✅ Tempo realizado atualizado para " + entry.athleteName + "!");
+  }
+
+  function syncCompEventToAthleteHistory(entryId, evId) {
+    const comp = getActiveCompetition();
+    const entry = comp.entries.find(function(en) { return en.id === entryId; });
+    if (!entry) return;
+    const ev = (entry.events || []).find(function(x) { return x.id === evId; });
+    if (!ev || !ev.actualTime) return showToast("Preencha primeiro o Tempo Realizado.");
+
+    const ms = parseTimeToMs(ev.actualTime);
+    if (isNaN(ms) || ms <= 0) return showToast("Tempo realizado inválido.");
+
+    let ath = entry.athleteId ? appData.athletes.find(function(a) { return a.id === entry.athleteId; }) : null;
+    if (!ath) {
+      ath = findOrCreateGlobalAthleteByName(entry.athleteName, true);
+      entry.athleteId = ath.id;
+    }
+
+    ath.times.unshift({
+      id: Date.now() + Math.floor(Math.random() * 1000),
+      stroke: ev.stroke,
+      distance: ev.distance,
+      ms: Math.round(ms),
+      reaction: null,
+      startType: "🏆 " + comp.name,
+      pool: "25m",
+      laps: [],
+      date: comp.date ? comp.date.split("-").reverse().join("/") : new Date().toLocaleDateString("pt-BR")
+    });
+    ev.syncedToHistory = true;
+    saveData();
+    renderAthleteSelect();
+    renderCompetitionsManager();
+    renderProgressionSection();
+    renderStrokeSection();
+    showToast("📥 Tempo salvo na Progressão oficial de " + ath.name + "!");
+  }
+
+  function copyCompetitionReportWhatsApp() {
+    const comp = getActiveCompetition();
+    if (!comp.entries.length) return showToast("Adicione atletas na competição primeiro.");
+    const dStr = comp.date ? comp.date.split("-").reverse().join("/") : "--";
+    const lines = [
+      "🏆 *DEIXA BRILHAR — " + comp.name.toUpperCase() + "*",
+      "📅 Data: " + dStr + " | 📍 " + (comp.location || "Local a definir"),
+      ""
+    ];
+    comp.entries.forEach(function(en, idx) {
+      lines.push("*" + (idx + 1) + ". " + en.athleteName + "*");
+      if (!en.events || !en.events.length) {
+        lines.push("• Sem provas definidas");
+      } else {
+        en.events.forEach(function(ev) {
+          let row = "• *" + ev.distance + " " + ev.stroke + "*";
+          if (ev.seedTime) row += " | Atual: " + ev.seedTime;
+          if (ev.projectedTime) row += " | 🎯 Proj: *" + ev.projectedTime + "*";
+          if (ev.actualTime) row += " | 🏁 Real: *" + ev.actualTime + "*";
+          if (ev.placement) row += " (" + ev.placement + ")";
+          lines.push(row);
+        });
+      }
+      lines.push("");
+    });
+    const txt = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function() { showToast("Relatório da competição copiado para o WhatsApp!"); });
+    } else {
+      prompt("Copie o relatório:", txt);
+    }
+  }
+
+  // Listeners da Aba Competições
+  document.getElementById("compMgrSelect").addEventListener("change", function(e) {
+    appData.activeCompetitionId = Number(e.target.value);
+    saveData();
+    renderCompetitionsManager();
+  });
+
+  document.getElementById("btnToggleNewCompBox").addEventListener("click", function() {
+    const box = document.getElementById("compQuickCreateBox");
+    box.style.display = box.style.display === "none" ? "block" : "none";
+    if (box.style.display === "block") {
+      document.getElementById("compMgrNewDate").value = todayISO;
+      document.getElementById("compMgrNewName").focus();
+    }
+  });
+
+  document.getElementById("btnCancelNewComp").addEventListener("click", function() {
+    document.getElementById("compQuickCreateBox").style.display = "none";
+  });
+
+  document.getElementById("btnSaveNewCompMgr").addEventListener("click", function() {
+    const name = document.getElementById("compMgrNewName").value.trim();
+    const date = document.getElementById("compMgrNewDate").value || todayISO;
+    const loc = document.getElementById("compMgrNewLoc").value.trim() || "Local a definir";
+    if (!name) return showToast("Informe o nome da competição.");
+    const newId = Date.now();
+    appData.competitions.push({ id: newId, name: name, date: date, location: loc, events: "Provas gerais", entries: [] });
+    appData.competitions.sort(function(a, b) { return a.date.localeCompare(b.date); });
+    appData.activeCompetitionId = newId;
+    document.getElementById("compMgrNewName").value = "";
+    document.getElementById("compMgrNewLoc").value = "";
+    document.getElementById("compQuickCreateBox").style.display = "none";
+    saveData();
+    renderCompetitionsManager();
+    renderCalendar();
+    showToast("🏆 Competição \"" + name + "\" criada!");
+  });
+
+  document.getElementById("btnCopyCompReport").addEventListener("click", copyCompetitionReportWhatsApp);
+
+  // Enter-to-add (1 por 1, igual tópico do edital!)
+  function handleQuickAddSingleCompAthlete() {
+    const inp = document.getElementById("compQuickAthleteInput");
+    const val = inp.value.trim();
+    if (!val) return;
+    addAthletesToCompetition([val]);
+    inp.value = "";
+    inp.focus();
+  }
+  document.getElementById("compQuickAthleteInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleQuickAddSingleCompAthlete();
+    }
+  });
+  document.getElementById("btnCompQuickAddOne").addEventListener("click", handleQuickAddSingleCompAthlete);
+
+  // Colar todos de uma vez (lote por linha)
+  function handleBulkAddCompAthletes() {
+    const ta = document.getElementById("compBulkAthletesTextarea");
+    const lines = ta.value.split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+    if (!lines.length) return showToast("Cole ou digite ao menos 1 nome na caixa de lista.");
+    addAthletesToCompetition(lines);
+    ta.value = "";
+  }
+  document.getElementById("btnCompBulkAdd").addEventListener("click", handleBulkAddCompAthletes);
+  document.getElementById("compBulkAthletesTextarea").addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      handleBulkAddCompAthletes();
+    }
+  });
+
+  // Puxar todos os atletas já cadastrados no elenco
+  document.getElementById("btnImportAllRoster").addEventListener("click", function() {
+    const names = appData.athletes.map(function(a) { return a.name; });
+    addAthletesToCompetition(names);
+  });
+
+  document.getElementById("compAthleteSearch").addEventListener("input", renderCompetitionsManager);
+
+  // Event delegation para os cards dos atletas na competição
+  document.getElementById("compEntriesList").addEventListener("click", function(e) {
+    const toggleBtn = e.target.closest("[data-ce-toggle-form]");
+    if (toggleBtn) {
+      const eid = Number(toggleBtn.getAttribute("data-ce-toggle-form"));
+      openCompEntryForms[eid] = !openCompEntryForms[eid];
+      renderCompetitionsManager();
+      return;
+    }
+    const remEntryBtn = e.target.closest("[data-ce-remove-entry]");
+    if (remEntryBtn) {
+      const eid = Number(remEntryBtn.getAttribute("data-ce-remove-entry"));
+      const comp = getActiveCompetition();
+      comp.entries = comp.entries.filter(function(en) { return en.id !== eid; });
+      saveData();
+      renderCompetitionsManager();
+      renderCalendar();
+      return;
+    }
+    const autoProjBtn = e.target.closest("[data-ce-autoproj]");
+    if (autoProjBtn) {
+      const eid = Number(autoProjBtn.getAttribute("data-ce-autoproj"));
+      const seedEl = document.querySelector('[data-ce-seed="' + eid + '"]');
+      const projEl = document.querySelector('[data-ce-proj="' + eid + '"]');
+      const seedMs = parseTimeToMs(seedEl ? seedEl.value : "");
+      if (isNaN(seedMs) || seedMs <= 0) {
+        showToast("Digite primeiro o Tempo Atual para calcular -2%.");
+      } else if (projEl) {
+        projEl.value = formatMs(Math.round(seedMs * 0.98));
+        showToast("🎯 Projeção sugerida (-2%): " + projEl.value);
+      }
+      return;
+    }
+    const addEvBtn = e.target.closest("[data-ce-add-btn]");
+    if (addEvBtn) {
+      saveEventForCompEntry(Number(addEvBtn.getAttribute("data-ce-add-btn")));
+      return;
+    }
+    const delEvBtn = e.target.closest("[data-ce-del]");
+    if (delEvBtn) {
+      const parts = delEvBtn.getAttribute("data-ce-del").split("|");
+      const eid = Number(parts[0]);
+      const evid = Number(parts[1]);
+      const comp = getActiveCompetition();
+      const entry = comp.entries.find(function(en) { return en.id === eid; });
+      if (entry) {
+        entry.events = (entry.events || []).filter(function(x) { return x.id !== evid; });
+        saveData();
+        renderCompetitionsManager();
+      }
+      return;
+    }
+    const saveActBtn = e.target.closest("[data-ce-save-actual]");
+    if (saveActBtn) {
+      const parts = saveActBtn.getAttribute("data-ce-save-actual").split("|");
+      saveActualTimeOnCompEvent(Number(parts[0]), Number(parts[1]));
+      return;
+    }
+    const syncBtn = e.target.closest("[data-ce-sync]");
+    if (syncBtn) {
+      const parts = syncBtn.getAttribute("data-ce-sync").split("|");
+      syncCompEventToAthleteHistory(Number(parts[0]), Number(parts[1]));
+      return;
+    }
+  });
+
+  // Sincronizar distâncias e auto-preencher PB ao trocar nado/distância dentro do card
+  document.getElementById("compEntriesList").addEventListener("change", function(e) {
+    if (e.target.hasAttribute("data-ce-stroke")) {
+      const eid = Number(e.target.getAttribute("data-ce-stroke"));
+      const stroke = e.target.value;
+      const distEl = document.querySelector('[data-ce-dist="' + eid + '"]');
+      const seedEl = document.querySelector('[data-ce-seed="' + eid + '"]');
+      const list = STROKE_DISTANCES[stroke] || STROKE_DISTANCES.Livre;
+      if (distEl) {
+        distEl.innerHTML = list.map(function(d) { return '<option value="' + d + '">' + d + '</option>'; }).join("");
+        distEl.value = stroke === "Medley" ? "200m" : (list.indexOf("50m") >= 0 ? "50m" : list[0]);
+      }
+      const comp = getActiveCompetition();
+      const entry = comp.entries.find(function(en) { return en.id === eid; });
+      if (entry && seedEl && distEl) {
+        const pb = getBestTimeForAthleteEvent(entry.athleteId, stroke, distEl.value);
+        if (pb) seedEl.value = pb;
+      }
+    } else if (e.target.hasAttribute("data-ce-dist")) {
+      const eid = Number(e.target.getAttribute("data-ce-dist"));
+      const strokeEl = document.querySelector('[data-ce-stroke="' + eid + '"]');
+      const seedEl = document.querySelector('[data-ce-seed="' + eid + '"]');
+      const comp = getActiveCompetition();
+      const entry = comp.entries.find(function(en) { return en.id === eid; });
+      if (entry && strokeEl && seedEl) {
+        const pb = getBestTimeForAthleteEvent(entry.athleteId, strokeEl.value, e.target.value);
+        if (pb) seedEl.value = pb;
+      }
+    }
+  });
+
+  // Pressionar ENTER dentro dos campos de prova/projeção ou tempo realizado já salva na hora!
+  document.getElementById("compEntriesList").addEventListener("keydown", function(e) {
+    if (e.key !== "Enter") return;
+    if (e.target.hasAttribute("data-ce-actual-input")) {
+      e.preventDefault();
+      const parts = e.target.getAttribute("data-ce-actual-input").split("|");
+      saveActualTimeOnCompEvent(Number(parts[0]), Number(parts[1]));
+      return;
+    }
+    const formPanel = e.target.closest("[data-ce-form]");
+    if (formPanel) {
+      e.preventDefault();
+      saveEventForCompEntry(Number(formPanel.getAttribute("data-ce-form")));
+    }
+  });
+
   // =======================================================
   // 14. INICIALIZAÇÃO
   // =======================================================
   applyAppearance();
+  updateInstallButtonUI();
   syncDistancesForStroke("timerStroke", "timerDistance");
   syncDistancesForStroke("multiAddStroke", "multiAddDist");
   renderAthleteSelect();
@@ -3496,6 +4354,7 @@
   renderDrillsSection();
   calculatePacePlan();
   calculateCSS();
+  renderCompetitionsManager();
   renderCalendar();
   renderTipsSection();
   if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
