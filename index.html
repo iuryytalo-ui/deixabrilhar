@@ -799,6 +799,61 @@
     pointer-events: none;
   }
 
+
+  /* 10-Lane Quick Transport Bar inside each Multi-Raias Card */
+  .lane-jump-wrap {
+    margin-bottom: 8px;
+  }
+  .lane-jump-label {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lane-jump-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 3px;
+  }
+  .lane-num-btn {
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text);
+    border-radius: 7px;
+    height: 27px;
+    padding: 0;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.12s;
+    user-select: none;
+  }
+  .lane-num-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+  }
+  .lane-num-btn:active { transform: scale(0.92); }
+  .lane-num-btn.current {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-color: var(--accent-border);
+    color: #ffffff;
+    box-shadow: 0 2px 8px var(--accent-glow);
+  }
+  .lane-num-btn.occupied {
+    border-color: var(--amber);
+    color: var(--amber-txt);
+    background: var(--amber-bg);
+  }
+
   /* Modal */
   .modal-overlay {
     position: fixed;
@@ -1022,18 +1077,19 @@
           <button type="button" id="btnResetAllLanes" class="btn btn-ghost btn-sm">↺ Zerar</button>
         </div>
       </div>
-      <p class="subtext">O seletor <strong>🔄 Raia</strong> fica fixo logo ao lado do nome de cada atleta para remanejar em 1 toque (ou use <strong>⬆️/⬇️</strong>). Todas as viradas marcadas em <strong>Parcial</strong> ficam salvas direto na ficha do atleta!</p>
+      <p class="subtext">Transporte qualquer atleta direto para a <strong>Raia 1 até a Raia 10</strong> usando o seletor ao lado do nome ou tocando direto no número da raia (<strong>1 a 10</strong>). Se a raia já tiver outro atleta, os dois trocam de lugar automaticamente!</p>
 
       <div class="row-flex" style="margin-bottom:10px;">
-        <select id="multiAddAthleteSelect" style="flex:2; min-width:150px;"></select>
-        <select id="multiAddStroke" style="flex:1; min-width:105px;">
+        <select id="multiAddAthleteSelect" style="flex:2; min-width:140px;"></select>
+        <select id="multiAddLaneNum" title="Escolher Raia (1 a 10)" style="flex:1; min-width:110px;"></select>
+        <select id="multiAddStroke" style="flex:1; min-width:95px;">
           <option value="Livre">Livre</option>
           <option value="Costas">Costas</option>
           <option value="Peito">Peito</option>
           <option value="Borboleta">Borboleta</option>
           <option value="Medley">Medley</option>
         </select>
-        <select id="multiAddDist" style="flex:1; min-width:85px;"></select>
+        <select id="multiAddDist" style="flex:1; min-width:80px;"></select>
         <button type="button" id="btnAddMultiLane" class="btn btn-accent">+ Adicionar Raia</button>
       </div>
 
@@ -2406,16 +2462,50 @@
   }
 
   // =======================================================
-  // 7. MULTI-RAIAS COM REMANEJAMENTO E SALVAMENTO DE PARCIAIS
+  // 7. MULTI-RAIAS COM TRANSPORTE DIRETO (10 RAIAS) & PARCIAIS
   // =======================================================
+  const MAX_POOL_LANES = 10;
   let multiLanes = [];
   let multiLoop = null;
+
+  function getNextFreeLaneNumber() {
+    const used = {};
+    multiLanes.forEach(function(l) { used[l.laneNumber] = true; });
+    for (let n = 1; n <= MAX_POOL_LANES; n++) {
+      if (!used[n]) return n;
+    }
+    let maxN = MAX_POOL_LANES;
+    multiLanes.forEach(function(l) { if (l.laneNumber > maxN) maxN = l.laneNumber; });
+    return maxN + 1;
+  }
+
+  function sortMultiLanesByNumber() {
+    multiLanes.sort(function(a, b) { return (a.laneNumber || 99) - (b.laneNumber || 99); });
+  }
+
+  function renderMultiAddLaneSelect() {
+    const sel = document.getElementById("multiAddLaneNum");
+    if (!sel) return;
+    const nextFree = getNextFreeLaneNumber();
+    const totalOpts = Math.max(MAX_POOL_LANES, nextFree);
+    let opts = "";
+    for (let n = 1; n <= totalOpts; n++) {
+      const occ = multiLanes.find(function(l) { return l.laneNumber === n; });
+      const occAth = occ ? appData.athletes.find(function(a) { return a.id === occ.athleteId; }) : null;
+      const lbl = occ
+        ? ("Raia " + n + " (" + (occAth ? occAth.name : "Ocupada") + ")")
+        : ("Raia " + n + " (Livre)");
+      opts += '<option value="' + n + '"' + (n === nextFree ? " selected" : "") + '>' + escapeHtml(lbl) + '</option>';
+    }
+    sel.innerHTML = opts;
+  }
 
   function initDefaultMultiLanes() {
     if (!multiLanes.length && appData.athletes.length) {
       appData.athletes.slice(0, 2).forEach(function(ath, i) {
         multiLanes.push({
           laneId: "lane_" + (Date.now() + i),
+          laneNumber: i + 1,
           athleteId: ath.id,
           stroke: ath.mainStroke || "Livre",
           distance: "100m",
@@ -2428,6 +2518,8 @@
         });
       });
     }
+    sortMultiLanesByNumber();
+    renderMultiAddLaneSelect();
   }
 
   function ensureMultiLoop() {
@@ -2450,14 +2542,28 @@
     }, 25);
   }
 
-  function moveLaneToIndex(fromIdx, toIdx) {
-    if (fromIdx === toIdx || fromIdx < 0 || toIdx < 0 || fromIdx >= multiLanes.length || toIdx >= multiLanes.length) return;
-    // Troca direta de raia (swap) para que colocar Francisco na Raia 2 troque instantaneamente com quem estava lá
-    const temp = multiLanes[fromIdx];
-    multiLanes[fromIdx] = multiLanes[toIdx];
-    multiLanes[toIdx] = temp;
-    const ath = appData.athletes.find(function(a) { return a.id === temp.athleteId; });
-    showToast((ath ? ath.name : "Atleta") + " movido para a Raia " + (toIdx + 1) + "!");
+  function transportLaneToNumber(laneId, targetNum) {
+    const num = parseInt(targetNum, 10);
+    if (isNaN(num) || num < 1) return;
+    const lane = multiLanes.find(function(l) { return l.laneId === laneId; });
+    if (!lane || lane.laneNumber === num) return;
+
+    const oldNum = lane.laneNumber;
+    const ath = appData.athletes.find(function(a) { return a.id === lane.athleteId; });
+    const athName = ath ? ath.name : "Atleta";
+
+    const occupant = multiLanes.find(function(l) { return l.laneId !== laneId && l.laneNumber === num; });
+    if (occupant) {
+      occupant.laneNumber = oldNum;
+      lane.laneNumber = num;
+      const occAth = appData.athletes.find(function(a) { return a.id === occupant.athleteId; });
+      const occName = occAth ? occAth.name : "Atleta";
+      showToast("⇄ " + athName + " foi para a Raia " + num + " (" + occName + " foi para a Raia " + oldNum + ")!");
+    } else {
+      lane.laneNumber = num;
+      showToast("🏊 " + athName + " transportado para a Raia " + num + "!");
+    }
+    sortMultiLanesByNumber();
     renderMultiLanes();
   }
 
@@ -2469,7 +2575,6 @@
     const ath = appData.athletes.find(function(a) { return a.id === lane.athleteId; });
     if (!ath) return false;
 
-    // Se já salvou esta tomada antes (ex: salvou parcial intermediária e depois finalizou), atualiza o mesmo registro sem duplicar!
     const existing = lane.savedRecordId ? ath.times.find(function(t) { return t.id === lane.savedRecordId; }) : null;
     if (existing) {
       existing.ms = msToSave;
@@ -2486,7 +2591,7 @@
         distance: lane.distance,
         ms: msToSave,
         reaction: lane.reaction,
-        startType: "Multi-Raias",
+        startType: "Multi-Raias (Raia " + lane.laneNumber + ")",
         pool: document.getElementById("timerPool").value || "25m",
         laps: lane.laps.slice(),
         date: new Date().toLocaleDateString("pt-BR")
@@ -2500,26 +2605,49 @@
   }
 
   function renderMultiLanes() {
+    sortMultiLanesByNumber();
+    renderMultiAddLaneSelect();
+
     const grid = document.getElementById("multiLanesGrid");
     if (!multiLanes.length) {
-      grid.innerHTML = '<div class="card" style="grid-column:1/-1; text-align:center; color:var(--text-muted); font-size:13px;">Nenhuma raia adicionada. Selecione um atleta acima e clique em <strong>+ Adicionar Raia</strong>.</div>';
+      grid.innerHTML = '<div class="card" style="grid-column:1/-1; text-align:center; color:var(--text-muted); font-size:13px;">Nenhuma raia adicionada. Selecione um atleta e uma raia (1 a 10) acima e clique em <strong>+ Adicionar Raia</strong>.</div>';
       return;
     }
 
-    const totalLanes = multiLanes.length;
-    grid.innerHTML = multiLanes.map(function(lane, idx) {
+    let maxOpt = MAX_POOL_LANES;
+    multiLanes.forEach(function(l) { if (l.laneNumber > maxOpt) maxOpt = l.laneNumber; });
+
+    grid.innerHTML = multiLanes.map(function(lane) {
       const ath = appData.athletes.find(function(a) { return a.id === lane.athleteId; }) || { name: "Atleta" };
       const splits = getIsolatedSplits(lane.laps);
 
-      // Dropdown de remanejamento de raia (sempre colado ao lado do nome do atleta)
+      // Seletor com TODAS as 10 opções de raia (1 a 10) ao lado do nome do atleta
       let laneOptions = "";
-      for (let n = 0; n < totalLanes; n++) {
-        const targetLane = multiLanes[n];
-        const targetAth = appData.athletes.find(function(a) { return a.id === targetLane.athleteId; });
-        const label = n === idx
-          ? ("🔄 Raia " + (n + 1))
-          : ("⇄ Raia " + (n + 1) + (targetAth ? (" (" + targetAth.name + ")") : ""));
-        laneOptions += '<option value="' + n + '"' + (n === idx ? " selected" : "") + '>' + escapeHtml(label) + '</option>';
+      for (let n = 1; n <= maxOpt; n++) {
+        const occ = multiLanes.find(function(l) { return l.laneNumber === n; });
+        const occAth = occ ? appData.athletes.find(function(a) { return a.id === occ.athleteId; }) : null;
+        let label = "";
+        if (n === lane.laneNumber) {
+          label = "🏊 Raia " + n;
+        } else if (occ) {
+          label = "⇄ Raia " + n + (occAth ? (" (" + occAth.name + ")") : " (Ocupada)");
+        } else {
+          label = "➡️ Raia " + n + " (Livre)";
+        }
+        laneOptions += '<option value="' + n + '"' + (n === lane.laneNumber ? " selected" : "") + '>' + escapeHtml(label) + '</option>';
+      }
+
+      // Barra direta de 10 botões (Raia 1 até Raia 10) para transportar em 1 toque
+      let quickButtonsHtml = "";
+      for (let n = 1; n <= MAX_POOL_LANES; n++) {
+        const occ = multiLanes.find(function(l) { return l.laneNumber === n; });
+        const occAth = occ ? appData.athletes.find(function(a) { return a.id === occ.athleteId; }) : null;
+        const isCurrent = n === lane.laneNumber;
+        const cls = "lane-num-btn" + (isCurrent ? " current" : (occ ? " occupied" : ""));
+        const tip = isCurrent
+          ? ("Raia atual (" + n + ")")
+          : (occ ? ("Trocar para Raia " + n + " com " + (occAth ? occAth.name : "outro atleta")) : ("Transportar " + ath.name + " para Raia " + n + " (Livre)"));
+        quickButtonsHtml += '<button type="button" class="' + cls + '" data-lane-jump="' + lane.laneId + '|' + n + '" title="' + escapeHtml(tip) + '">' + n + '</button>';
       }
 
       // Dropdown para trocar o atleta naquela raia rapidamente (em ordem alfabética A-Z)
@@ -2548,18 +2676,22 @@
       return '<div class="lane-card ' + (lane.isRunning ? "running" : "") + '">' +
         '<div class="lane-top-row">' +
           '<select class="lane-athlete-select" data-lane-athlete="' + lane.laneId + '" title="Selecionar atleta">' + athOptions + '</select>' +
-          '<select class="lane-swap-select" data-lane-move="' + idx + '" title="Trocar atleta de raia">' + laneOptions + '</select>' +
+          '<select class="lane-swap-select" data-lane-move-id="' + lane.laneId + '" title="Transportar atleta para qualquer raia (1 a 10)">' + laneOptions + '</select>' +
           '<button type="button" class="btn btn-ghost btn-xs lane-remove-btn" title="Remover raia" data-lane-act="remove" data-lane="' + lane.laneId + '">✕</button>' +
+        '</div>' +
+
+        '<div class="lane-jump-wrap">' +
+          '<div class="lane-jump-label">' +
+            '<span>🏊 Transportar para Raia (1 a 10):</span>' +
+            '<span style="color:var(--accent-text);">Raia ' + lane.laneNumber + '</span>' +
+          '</div>' +
+          '<div class="lane-jump-grid">' + quickButtonsHtml + '</div>' +
         '</div>' +
 
         '<div class="list-item" style="font-size:11px; margin-bottom:6px; padding:6px 10px; gap:6px;">' +
           '<strong style="color:var(--accent-text);">' + lane.distance + ' ' + lane.stroke + '</strong>' +
           '<span>Saída: <strong class="mono" style="color:var(--amber-txt);">' + (lane.reaction !== null ? lane.reaction.toFixed(2) + "s" : "--") + '</strong></span>' +
           '<span>Viradas: <strong>' + lane.laps.length + '</strong></span>' +
-          '<div class="row-flex" style="gap:3px;">' +
-            '<button type="button" class="btn btn-ghost btn-xs" title="Subir 1 raia" data-lane-act="up" data-lane="' + lane.laneId + '" ' + (idx === 0 ? "disabled" : "") + '>⬆️</button>' +
-            '<button type="button" class="btn btn-ghost btn-xs" title="Descer 1 raia" data-lane-act="down" data-lane="' + lane.laneId + '" ' + (idx === totalLanes - 1 ? "disabled" : "") + '>⬇️</button>' +
-          '</div>' +
         '</div>' +
 
         '<div id="lclock-' + lane.laneId + '" class="lane-clock mono">' + formatMs(lane.elapsedMs) + '</div>' +
@@ -2591,8 +2723,6 @@
       renderMultiLanes();
       return;
     }
-    if (act === "up") { moveLaneToIndex(idx, idx - 1); return; }
-    if (act === "down") { moveLaneToIndex(idx, idx + 1); return; }
 
     if (act === "toggle") {
       if (!lane.isRunning) {
@@ -2614,7 +2744,6 @@
       lane.reaction = +((performance.now() - lane.startTime) / 1000).toFixed(2);
     } else if (act === "lap" && lane.isRunning) {
       lane.laps.push(Math.floor(performance.now() - lane.startTime));
-      // Se auto-save ligado, já grava/atualiza a parcial na ficha do atleta instantaneamente!
       if (document.getElementById("chkAutoSaveMulti").checked) {
         saveLaneToAthlete(lane, true);
       }
@@ -3284,7 +3413,7 @@
     const blob = new Blob([lfh, data, cdh, eocd], { type: "application/zip" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Deixa_Brilhar_App-v11.zip";
+    a.download = "Deixa_Brilhar_App-v12.zip";
     a.click();
   }
 
@@ -3359,8 +3488,14 @@
     renderMultiLanes();
   });
   document.getElementById("btnAddMultiLane").addEventListener("click", function() {
+    const chosenNum = parseInt(document.getElementById("multiAddLaneNum").value, 10) || getNextFreeLaneNumber();
+    const existing = multiLanes.find(function(l) { return l.laneNumber === chosenNum; });
+    if (existing) {
+      existing.laneNumber = getNextFreeLaneNumber();
+    }
     multiLanes.push({
       laneId: "lane_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+      laneNumber: chosenNum,
       athleteId: document.getElementById("multiAddAthleteSelect").value,
       stroke: document.getElementById("multiAddStroke").value,
       distance: document.getElementById("multiAddDist").value,
@@ -3374,14 +3509,20 @@
     renderMultiLanes();
   });
   document.getElementById("multiLanesGrid").addEventListener("click", function(e) {
+    const jumpBtn = e.target.closest("[data-lane-jump]");
+    if (jumpBtn) {
+      const parts = jumpBtn.getAttribute("data-lane-jump").split("|");
+      transportLaneToNumber(parts[0], Number(parts[1]));
+      return;
+    }
     const btn = e.target.closest("[data-lane-act]");
     if (btn) handleLaneAction(btn.getAttribute("data-lane-act"), btn.getAttribute("data-lane"));
   });
   document.getElementById("multiLanesGrid").addEventListener("change", function(e) {
-    if (e.target.hasAttribute("data-lane-move")) {
-      const fromIdx = Number(e.target.getAttribute("data-lane-move"));
-      const toIdx = Number(e.target.value);
-      moveLaneToIndex(fromIdx, toIdx);
+    if (e.target.hasAttribute("data-lane-move-id")) {
+      const lid = e.target.getAttribute("data-lane-move-id");
+      const targetNum = Number(e.target.value);
+      transportLaneToNumber(lid, targetNum);
     } else if (e.target.hasAttribute("data-lane-athlete")) {
       const lid = e.target.getAttribute("data-lane-athlete");
       const lane = multiLanes.find(function(l) { return l.laneId === lid; });
@@ -4496,6 +4637,7 @@
       const athB = appData.athletes.find(function(x) { return x.id === b.athleteId; });
       return compareNamesPT(athA ? athA.name : "", athB ? athB.name : "");
     });
+    multiLanes.forEach(function(lane, idx) { lane.laneNumber = idx + 1; });
     renderMultiLanes();
     showToast("🔤 Raias organizadas em ordem alfabética (A → Z)!");
   });
