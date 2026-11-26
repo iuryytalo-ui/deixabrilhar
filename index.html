@@ -761,6 +761,44 @@
     font-weight: 800 !important;
   }
 
+
+  /* Alphabetical Filter Bar (A-Z) */
+  .alpha-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+    align-items: center;
+  }
+  .alpha-btn {
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text-strong);
+    border-radius: 8px;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 7px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.14s;
+    user-select: none;
+  }
+  .alpha-btn:hover { background: var(--bg-hover); border-color: var(--accent); }
+  .alpha-btn.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-color: var(--accent-border);
+    color: #ffffff;
+    box-shadow: 0 2px 8px var(--accent-glow);
+  }
+  .alpha-btn.empty {
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
   /* Modal */
   .modal-overlay {
     position: fixed;
@@ -979,6 +1017,7 @@
         <div class="row-flex">
           <button type="button" id="btnStartAllLanes" class="btn btn-emerald btn-sm">📢 Largada Geral</button>
           <button type="button" id="btnStaggerStart" class="btn btn-purple btn-sm">⏱️ Largada 5s</button>
+          <button type="button" id="btnSortLanesAZ" class="btn btn-ghost btn-sm" title="Organizar raias em ordem alfabética A-Z">🔤 A-Z</button>
           <button type="button" id="btnSaveAllLanes" class="btn btn-accent btn-sm">💾 Salvar Todas</button>
           <button type="button" id="btnResetAllLanes" class="btn btn-ghost btn-sm">↺ Zerar</button>
         </div>
@@ -1089,12 +1128,18 @@
       </div>
     </div>
 
-    <!-- Filtro + Lista de Atletas da Competição -->
+    <!-- Filtro Alfabético + Lista de Atletas da Competição -->
     <div class="card" style="padding:12px 15px;">
       <div class="row-flex" style="justify-content:space-between;">
-        <input type="text" id="compAthleteSearch" placeholder="🔍 Filtrar atleta nesta competição..." style="flex:1; min-width:190px;">
+        <input type="text" id="compAthleteSearch" placeholder="🔍 Filtrar atleta pelo nome..." style="flex:1; min-width:170px;">
+        <select id="compSortOrder" style="width:auto; min-width:135px; padding:8px 10px; font-size:12px;">
+          <option value="az" selected>🔤 Ordem A → Z</option>
+          <option value="za">🔤 Ordem Z → A</option>
+          <option value="added">🕒 Ordem Cadastro</option>
+        </select>
         <span id="compEntriesBadge" class="badge badge-cyan">0 atletas</span>
       </div>
+      <div id="compAlphaBar" class="alpha-bar"></div>
     </div>
 
     <div id="compEntriesList"></div>
@@ -1113,10 +1158,18 @@
         </div>
       </div>
 
-      <div class="grid-3">
+      <div class="grid-4">
         <div>
           <label class="field-label">🔍 Pesquisar Atleta pelo Nome</label>
-          <input type="text" id="progSearchInput" placeholder="Digite o nome (ex: Francisco, Ana Clara)...">
+          <input type="text" id="progSearchInput" placeholder="Digite o nome (ex: Ana Clara, Francisco)...">
+        </div>
+        <div>
+          <label class="field-label">🔤 Ordenar Nomes</label>
+          <select id="progSortOrder">
+            <option value="az" selected>A → Z (Alfabética)</option>
+            <option value="za">Z → A (Inversa)</option>
+            <option value="times">Mais Tempos Salvos</option>
+          </select>
         </div>
         <div>
           <label class="field-label">Filtrar Nado</label>
@@ -1144,6 +1197,7 @@
         </div>
       </div>
 
+      <div id="progAlphaBar" class="alpha-bar"></div>
       <div id="progAthleteChips" class="chip-row"></div>
     </div>
 
@@ -2086,6 +2140,58 @@
     else if (list.indexOf("50m") >= 0) distEl.value = "50m";
   }
 
+
+  const ALPHABET_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+  function compareNamesPT(aName, bName) {
+    return String(aName || "").trim().localeCompare(String(bName || "").trim(), "pt-BR", { sensitivity: "base" });
+  }
+
+  function getInitialLetter(name) {
+    const clean = String(name || "").trim();
+    if (!clean) return "#";
+    const norm = clean.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+    const ch = norm.charAt(0);
+    return (ch >= "A" && ch <= "Z") ? ch : "#";
+  }
+
+  function getSortedAthletes(order) {
+    const list = appData.athletes.slice();
+    if (order === "za") {
+      list.sort(function(a, b) { return compareNamesPT(b.name, a.name); });
+    } else if (order === "times") {
+      list.sort(function(a, b) {
+        const diff = (b.times ? b.times.length : 0) - (a.times ? a.times.length : 0);
+        return diff !== 0 ? diff : compareNamesPT(a.name, b.name);
+      });
+    } else {
+      list.sort(function(a, b) { return compareNamesPT(a.name, b.name); });
+    }
+    return list;
+  }
+
+  function sortGlobalAthletesAZ() {
+    if (Array.isArray(appData.athletes)) {
+      appData.athletes.sort(function(a, b) { return compareNamesPT(a.name, b.name); });
+    }
+  }
+
+  function renderAlphaBarHtml(containerId, namesList, selectedLetter, dataAttr) {
+    const box = document.getElementById(containerId);
+    if (!box) return;
+    const present = {};
+    namesList.forEach(function(n) {
+      present[getInitialLetter(n)] = true;
+    });
+    let out = '<button type="button" class="alpha-btn ' + (selectedLetter === "ALL" ? "active" : "") + '" ' + dataAttr + '="ALL">Todos</button>';
+    ALPHABET_LETTERS.forEach(function(letter) {
+      const hasAny = !!present[letter];
+      const cls = "alpha-btn" + (selectedLetter === letter ? " active" : "") + (!hasAny && selectedLetter !== letter ? " empty" : "");
+      out += '<button type="button" class="' + cls + '" ' + dataAttr + '="' + letter + '">' + letter + '</button>';
+    });
+    box.innerHTML = out;
+  }
+
   function escapeHtml(text) {
     return String(text || "")
       .replace(/&/g, "&amp;")
@@ -2416,8 +2522,8 @@
         laneOptions += '<option value="' + n + '"' + (n === idx ? " selected" : "") + '>' + escapeHtml(label) + '</option>';
       }
 
-      // Dropdown para trocar o atleta naquela raia rapidamente
-      const athOptions = appData.athletes.map(function(a) {
+      // Dropdown para trocar o atleta naquela raia rapidamente (em ordem alfabética A-Z)
+      const athOptions = getSortedAthletes("az").map(function(a) {
         return '<option value="' + a.id + '"' + (a.id === lane.athleteId ? " selected" : "") + '>' + escapeHtml(a.name) + '</option>';
       }).join("");
 
@@ -2561,27 +2667,35 @@
   // 8. PROGRESSÃO & HISTÓRICO DE PARCIAIS POR ATLETA
   // =======================================================
   let progSelectedAthleteId = null;
+  let progAlphaLetter = "ALL";
 
   function renderProgressionSection() {
     const query = (document.getElementById("progSearchInput").value || "").trim().toLowerCase();
+    const sortMode = document.getElementById("progSortOrder") ? document.getElementById("progSortOrder").value : "az";
     const strokeFilter = document.getElementById("progStrokeFilter").value;
     const distFilter = document.getElementById("progDistFilter").value;
 
-    const matching = appData.athletes.filter(function(a) {
-      return !query || a.name.toLowerCase().indexOf(query) >= 0;
+    const sortedAll = getSortedAthletes(sortMode);
+    renderAlphaBarHtml("progAlphaBar", sortedAll.map(function(a) { return a.name; }), progAlphaLetter, "data-prog-letter");
+
+    const matching = sortedAll.filter(function(a) {
+      const okQ = !query || a.name.toLowerCase().indexOf(query) >= 0;
+      const okL = progAlphaLetter === "ALL" || getInitialLetter(a.name) === progAlphaLetter;
+      return okQ && okL;
     });
 
     if (!progSelectedAthleteId || !appData.athletes.some(function(a) { return a.id === progSelectedAthleteId; })) {
-      progSelectedAthleteId = appData.activeAthleteId || appData.athletes[0].id;
+      progSelectedAthleteId = appData.activeAthleteId || sortedAll[0].id;
     }
-    if (query && matching.length > 0 && !matching.some(function(a) { return a.id === progSelectedAthleteId; })) {
+    if ((query || progAlphaLetter !== "ALL") && matching.length > 0 && !matching.some(function(a) { return a.id === progSelectedAthleteId; })) {
       progSelectedAthleteId = matching[0].id;
     }
 
-    // Chips de seleção rápida de atleta
+    // Chips de seleção rápida de atleta (em ordem alfabética)
     const chipsBox = document.getElementById("progAthleteChips");
     if (!matching.length) {
-      chipsBox.innerHTML = '<span style="font-size:12px; color:var(--rose-txt);">Nenhum atleta encontrado com "' + escapeHtml(query) + '".</span>';
+      const reason = progAlphaLetter !== "ALL" ? ('letra "' + progAlphaLetter + '"') : ('"' + escapeHtml(query) + '"');
+      chipsBox.innerHTML = '<span style="font-size:12px; color:var(--rose-txt);">Nenhum atleta encontrado para ' + reason + '.</span>';
     } else {
       chipsBox.innerHTML = matching.map(function(a) {
         return '<button type="button" class="athlete-chip ' + (a.id === progSelectedAthleteId ? "active" : "") + '" data-prog-ath="' + a.id + '">' +
@@ -3080,11 +3194,13 @@
   // 12. ATLETAS, MODAIS E EXPORTAÇÃO
   // =======================================================
   function renderAthleteSelect() {
-    const html = appData.athletes.map(function(a) {
+    sortGlobalAthletesAZ();
+    const sorted = getSortedAthletes("az");
+    const html = sorted.map(function(a) {
       return '<option value="' + a.id + '"' + (a.id === appData.activeAthleteId ? " selected" : "") + '>' + escapeHtml(a.name) + '</option>';
     }).join("");
     document.getElementById("athleteSelect").innerHTML = html;
-    const plain = appData.athletes.map(function(a) {
+    const plain = sorted.map(function(a) {
       return '<option value="' + a.id + '">' + escapeHtml(a.name) + '</option>';
     }).join("");
     document.getElementById("multiAddAthleteSelect").innerHTML = plain;
@@ -3168,7 +3284,7 @@
     const blob = new Blob([lfh, data, cdh, eocd], { type: "application/zip" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Deixa_Brilhar_App-v10.zip";
+    a.download = "Deixa_Brilhar_App-v11.zip";
     a.click();
   }
 
@@ -3697,6 +3813,7 @@
   // GESTÃO DE COMPETIÇÕES (ATLETAS EM LOTE, PROVAS & PROJEÇÕES)
   // =======================================================
   let openCompEntryForms = {}; // { entryId: true }
+  let compAlphaLetter = "ALL";
 
   function getActiveCompetition() {
     if (!Array.isArray(appData.competitions)) appData.competitions = [];
@@ -3868,19 +3985,32 @@
       '<div class="pb-box"><div class="dist">✅ Realizadas</div><div class="val mono" style="color:var(--accent-text);">' + doneEvents + '/' + totalEvents + '</div><div class="cnt">Com tempo final</div></div>' +
       '<div class="pb-box"><div class="dist">🔥 Metas Batidas</div><div class="val mono" style="color:var(--emerald-txt);">' + goalsHit + '</div><div class="cnt">Dentro da projeção</div></div>';
 
-    // Filtrar atletas na competição
+    // Barra alfabética (A-Z) + ordenação e filtro na competição
+    renderAlphaBarHtml("compAlphaBar", comp.entries.map(function(en) { return en.athleteName; }), compAlphaLetter, "data-comp-letter");
+
     const q = (document.getElementById("compAthleteSearch").value || "").trim().toLowerCase();
-    const visibleEntries = comp.entries.filter(function(en) {
-      return !q || en.athleteName.toLowerCase().indexOf(q) >= 0;
+    const compSort = document.getElementById("compSortOrder") ? document.getElementById("compSortOrder").value : "az";
+    let visibleEntries = comp.entries.filter(function(en) {
+      const okQ = !q || en.athleteName.toLowerCase().indexOf(q) >= 0;
+      const okL = compAlphaLetter === "ALL" || getInitialLetter(en.athleteName) === compAlphaLetter;
+      return okQ && okL;
     });
+
+    if (compSort === "az") {
+      visibleEntries.sort(function(a, b) { return compareNamesPT(a.athleteName, b.athleteName); });
+    } else if (compSort === "za") {
+      visibleEntries.sort(function(a, b) { return compareNamesPT(b.athleteName, a.athleteName); });
+    }
+
     document.getElementById("compEntriesBadge").textContent = visibleEntries.length + " atleta(s)";
 
     const listBox = document.getElementById("compEntriesList");
     if (!visibleEntries.length) {
+      const filterDesc = compAlphaLetter !== "ALL" ? ('letra "' + compAlphaLetter + '"') : ('"' + escapeHtml(q) + '"');
       listBox.innerHTML = '<div class="card" style="text-align:center; color:var(--text-muted); font-size:13px;">' +
         (totalAthletes === 0
           ? 'Nenhum atleta adicionado ainda. Digite um nome acima e aperte <strong>ENTER</strong>, ou cole sua lista de atletas de uma vez!'
-          : 'Nenhum atleta encontrado para "' + escapeHtml(q) + '".') +
+          : 'Nenhum atleta encontrado para ' + filterDesc + '.') +
       '</div>';
       return;
     }
@@ -4119,7 +4249,8 @@
       "📅 Data: " + dStr + " | 📍 " + (comp.location || "Local a definir"),
       ""
     ];
-    comp.entries.forEach(function(en, idx) {
+    const sortedEntries = comp.entries.slice().sort(function(a, b) { return compareNamesPT(a.athleteName, b.athleteName); });
+    sortedEntries.forEach(function(en, idx) {
       lines.push("*" + (idx + 1) + ". " + en.athleteName + "*");
       if (!en.events || !en.events.length) {
         lines.push("• Sem provas definidas");
@@ -4146,6 +4277,7 @@
   // Listeners da Aba Competições
   document.getElementById("compMgrSelect").addEventListener("change", function(e) {
     appData.activeCompetitionId = Number(e.target.value);
+    compAlphaLetter = "ALL";
     saveData();
     renderCompetitionsManager();
   });
@@ -4337,9 +4469,41 @@
     }
   });
 
+
+  // Listeners de Ordenação e Filtro Alfabético (A-Z)
+  document.getElementById("progSortOrder").addEventListener("change", renderProgressionSection);
+  document.getElementById("progAlphaBar").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-prog-letter]");
+    if (btn) {
+      progAlphaLetter = btn.getAttribute("data-prog-letter");
+      renderProgressionSection();
+    }
+  });
+
+  document.getElementById("compSortOrder").addEventListener("change", renderCompetitionsManager);
+  document.getElementById("compAlphaBar").addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-comp-letter]");
+    if (btn) {
+      compAlphaLetter = btn.getAttribute("data-comp-letter");
+      renderCompetitionsManager();
+    }
+  });
+
+  document.getElementById("btnSortLanesAZ").addEventListener("click", function() {
+    if (multiLanes.length < 2) return;
+    multiLanes.sort(function(a, b) {
+      const athA = appData.athletes.find(function(x) { return x.id === a.athleteId; });
+      const athB = appData.athletes.find(function(x) { return x.id === b.athleteId; });
+      return compareNamesPT(athA ? athA.name : "", athB ? athB.name : "");
+    });
+    renderMultiLanes();
+    showToast("🔤 Raias organizadas em ordem alfabética (A → Z)!");
+  });
+
   // =======================================================
   // 14. INICIALIZAÇÃO
   // =======================================================
+  sortGlobalAthletesAZ();
   applyAppearance();
   updateInstallButtonUI();
   syncDistancesForStroke("timerStroke", "timerDistance");
